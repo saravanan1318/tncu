@@ -15,6 +15,7 @@
       <meta name="keywords" content="tamil nadu cooperative union" />
       <meta name="description" content="tamil nadu cooperative union"/>
       <meta name="author" content="Government of India" />
+      <meta name="csrf-token" content="{{ csrf_token() }}">
 
   @include('partials.styles')
 </head>

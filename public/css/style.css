@@ -116,3 +116,8 @@
     font-weight: 500; }
   .work:hover .img .icon {
     opacity: 1; }
+
+    .subHeadings{
+      background-color: #194565;
+      color: #fff;
+  }

@@ -12,10 +12,10 @@
                 <div class="list-wrpaaer nav flex-column d-block  mb-2 p-2 " style="height:337px">
                    <ul class="list-aggregate" id="marquee-vertical">
                       <li>
-                         <p style="color: darkred;">
+                         <a href="/applicationform" style="color: darkred;">
                             Application form
                             <img src="{{asset('images/new.gif')}}" alt="Blink New">
-                         </p>
+                         </a>
                       </li>
                    </ul>
                 </div>

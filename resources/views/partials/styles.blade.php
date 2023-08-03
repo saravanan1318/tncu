@@ -4,10 +4,9 @@
 <!-- Bootstrap CSS -->
 <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link  rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
 <link rel="stylesheet" href="{{asset('css/main.css')}}">
 <link href="{{asset('css/blast.min.css')}}" rel="stylesheet" />
-<link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/simple.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('css/carousel.min.css')}}">
 <link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
@@ -152,6 +151,9 @@
     .icon-medium{
         width: 120px;
         margin: 5px;
+    }
+    .error{
+        color: red;
     }
  </style>
 

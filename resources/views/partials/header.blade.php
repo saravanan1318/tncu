@@ -22,22 +22,22 @@
        <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
              <li class="nav-item active">
-                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
              </li>
              <li class="nav-item dropdown">
-                <a class="nav-link" href="about-us.html">About Us</a>
+                <a class="nav-link" href="#">About Us</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="coop_societies.html">Regionwise List of Cooperative Societies</a>
+                <a class="nav-link" href="#">Regionwise List of Cooperative Societies</a>
              </li>
              <li class="nav-item">
                 <a class="nav-link" href="https://tncu.tn.gov.in/portalpolicies.pdf">Web Portal Policies</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="feedback.html">Your Views</a>
+                <a class="nav-link" href="#">Your Views</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="journals.html">Journals</a>
+                <a class="nav-link" href="#">Journals</a>
              </li>
           </ul>
           </li>

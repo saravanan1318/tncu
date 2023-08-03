@@ -1,15 +1,18 @@
-<script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+<script src="{{asset('js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.zaccordion.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.marquee.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/script.js')}}"></script>
+<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>  
+<script src="{{asset('js/script.js')}}"></script>
+<script src="{{asset('js/jquery.validate.js')}}"></script>
 <script type="text/javascript">
 $('.carousel-item:first-child').addClass('active');
 </script>

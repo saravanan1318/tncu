@@ -15,5 +15,8 @@ use App\Http\Controllers\WebsiteController;
 */
 
 Route::get('/', [WebsiteController::class, 'index']);
+Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
+Route::post('store-applicationform', [WebsiteController::class, 'store']);
+
 
 
