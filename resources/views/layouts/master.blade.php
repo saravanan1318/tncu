@@ -21,6 +21,21 @@
 </head>
 <body>
 <div class="container-fluid">
+    <div class="row ">
+        <!-- topbar -->
+        <div class="d-none d-md-block d-lg-block d-xl-block w-100 topbar">
+            <div class="col-md-11 mx-auto h-100">
+                <div class="d-inline-block w-100">
+                    <div class="d-inline float-right">
+                        <ul class="navbar-nav d-inline">
+                            <li class="nav-item d-inline"><a href="?lang={{ __('header.shortlang') }}">{{ __('header.lang') }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- /topbar -->
+    </div>
     <div class="row">
         <div class="bgimg">
             <div class="col-sm-12 col-md-12 mx-auto mt-2">

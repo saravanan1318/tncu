@@ -7,7 +7,7 @@
           </a>
        </div>
        <div class="d-block d-md-inline-block text-center text-md-left ml-2 logotext ">
-          <span class="d-block">Tamil Nadu Cooperative Union</span> 
+          <span class="d-block">{{ __('header.tnhead') }}</span> 
           <span class="d-block">GOVERNMENT OF TAMILNADU</span>
        </div>
        <img class="d-none d-md-inline-block float-right mr-5" alt="Tanhoda Logo"  src="{{asset('images/tncu-logo.png')}}" width="92">

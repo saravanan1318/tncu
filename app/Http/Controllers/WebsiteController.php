@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\StudentParams;
+use App;
 
 class WebsiteController extends Controller
 {
@@ -14,7 +15,10 @@ class WebsiteController extends Controller
         return view("home");
     }
 
-    function applicationform(){
+    function applicationform(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);  
         return view("applicationform");
     }
 
@@ -29,33 +33,46 @@ class WebsiteController extends Controller
         $user->role = 3;
         $user->save();
 
+        $commonpath = 'uploads';
 
         $communityfilename = "NA";
-        if($request->file()) {
-            $fileName = time().'_'.$request->file('Communityfile')->getClientOriginalName();
-            $filePath = $request->file('Communityfile')->storeAs('uploads', $fileName, 'public');
-            $communityfilename = '/storage/' . $filePath .$fileName;
+        if($request->file('Communityfile')) {
+            $subdirectory = "/community";
+            $Communityfile = $request->file('Communityfile');
+            $communityfilename = time().'_'.$user->id.'_'.$Communityfile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $Communityfile->move($destinationPath1,$communityfilename);
+            $communityfilename = $destinationPath1.$communityfilename;
         }
 
-        $tccertificatefile = "NA";
-        if($request->file()) {
-            $fileName = time().'_'.$request->file('tccertificatefile')->getClientOriginalName();
-            $filePath = $request->file('tccertificatefile')->storeAs('uploads', $fileName, 'public');
-            $tccertificatefile = '/storage/' . $filePath .$fileName;
+        $tccertificatefilename = "NA";
+        if($request->file('tccertificatefile')) {
+            $subdirectory = "/tccertificate";
+            $tccertificatefile = $request->file('tccertificatefile');
+            $tccertificatefilename = time().'_'.$user->id.'_'.$tccertificatefile->getClientOriginalName();
+            $destinationPath2 = $commonpath.$subdirectory;
+            $tccertificatefile->move($destinationPath2,$tccertificatefilename);
+            $tccertificatefilename = $destinationPath2.$tccertificatefilename;
         }
 
-        $UploadImgfile = "NA";
-        if($request->file()) {
-            $fileName = time().'_'.$request->file('UploadImg')->getClientOriginalName();
-            $filePath = $request->file('UploadImg')->storeAs('uploads', $fileName, 'public');
-            $UploadImgfile = '/storage/' . $filePath .$fileName;
+        $UploadImgfilename = "NA";
+        if($request->file('UploadImg')) {
+            $subdirectory = "/profile";
+            $UploadImg = $request->file('UploadImg');
+            $UploadImgfilename = time().'_'.$user->id.'_'.$UploadImg->getClientOriginalName();
+            $destinationPath3 = $commonpath.$subdirectory;
+            $UploadImg->move($destinationPath3,$UploadImgfilename);
+            $UploadImgfilename = $destinationPath3.$UploadImgfilename;
         }
 
-        $fcsignfile = "NA";
-        if($request->file()) {
-            $fileName = time().'_'.$request->file('fcsign')->getClientOriginalName();
-            $filePath = $request->file('fcsign')->storeAs('uploads', $fileName, 'public');
-            $fcsignfile = '/storage/' . $filePath .$fileName;
+        $fcsignfilename = "NA";
+        if($request->file('fcsign')) {
+            $subdirectory = "/fcsign";
+            $fcsign = $request->file('fcsign');
+            $fcsignfilename = time().'_'.$user->id.'_'.$fcsign->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $fcsign->move($destinationPath4,$fcsignfilename);
+            $fcsignfilename = $destinationPath4.$fcsignfilename;
         }
 
         $student = new StudentParams;
@@ -90,7 +107,10 @@ class WebsiteController extends Controller
         $student->typeofd = $request->typeofd;
         $student->iswidow = $request->iswidow;
         $student->isserviceman = $request->isserviceman;
-        $student->tccertificatefile = $request->tccertificatefile;
+        $student->divorcee = $request->divorcee;
+        $student->refugee = $request->refugee;
+        $student->athlete = $request->athlete;
+        $student->tccertificatefile = $tccertificatefilename;
         $student->slmedium = $request->slmedium;
         $student->slYOP = $request->slYOP;
         $student->slnameinst = $request->slnameinst;
@@ -121,8 +141,8 @@ class WebsiteController extends Controller
         $student->bggrade = $request->bggrade;
         $student->icm = $request->icm;
         $student->Amount = $request->Amount;
-        $student->UploadImg = $request->UploadImg;
-        $student->fcsign = $request->fcsign;
+        $student->UploadImg = $UploadImgfilename;
+        $student->fcsign = $fcsignfilename;
         $student->save();
 
         return redirect('applicationform')->with('status', 'Application submitted successfully');

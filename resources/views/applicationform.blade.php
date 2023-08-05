@@ -12,19 +12,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-2 col-md-2 mb-4">
+        <div class="col-sm-1 col-md-1 mb-4">
         </div>
-       <div class="col-sm-8 col-md-8 mb-4">
+       <div class="col-sm-10 col-md-10 mb-4">
         <form action="{{url('store-applicationform')}}" id="regform" enctype="multipart/form-data" method="post" novalidate="novalidate">
             @csrf
             <fieldset>
-                <legend style="text-align: center;padding:10px;background-color:#194565;color:#fff">DIPLOMA IN COOPERATIVE MANAGEMENT</legend>
+                <legend style="text-align: center;padding:10px;background-color:#194565;color:#fff">{{ __('form.heading') }}</legend>
     
                 <div class="container-fluid">
     
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b>Personal Details</b>
+                            <b>{{__('form.personal')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -105,7 +105,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="AadharNumber" maxlength="12" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="">
+                                    <input autocomplete="off" class="form-control" id="AadharNumber" maxlength="12" data-val="true" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="Email" data-val-required="The Email field is required." name="email" placeholder=" Email Id" type="text" value="">
+                                    <input autocomplete="off" class="form-control" id="Email" data-val="true" data-val-required="The Email field is required." name="email" placeholder=" Email Id" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="Parent" data-val-required="The Email field is required." name="parent" placeholder=" Parent / Guardian" type="text" value="">
+                                    <input autocomplete="off" class="form-control" id="Parent" data-val="true" data-val-required="The Email field is required." name="parent" placeholder=" Parent / Guardian" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -176,31 +176,31 @@
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Door/ Flat/Plot No
+                                Door/ Flat/Plot No <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="plotno" maxlength="50" name="plotno" placeholder="Door/ Flat/Plot No" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="plotno" maxlength="50" name="plotno" placeholder="Door/ Flat/Plot No" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Street/ Road Name
+                                Street/ Road Name <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="streetname" maxlength="50" name="streetname" placeholder="Street/ Road Name" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="streetname" maxlength="50" name="streetname" placeholder="Street/ Road Name" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Town/ City
+                                Town/ City <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="city" maxlength="50" name="city" placeholder="Town/ City" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="city" maxlength="50" name="city" placeholder="Town/ City" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Pincode field is required." id="pincode" maxlength="50" name="pincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="pincode" maxlength="50" name="pincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -254,31 +254,31 @@
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Door/ Flat/Plot No
+                                Door/ Flat/Plot No <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="pplotno" maxlength="50" name="pplotno" placeholder="Door/ Flat/Plot No" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="pplotno" maxlength="50" name="pplotno" placeholder="Door/ Flat/Plot No" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Street/ Road Name
+                                Street/ Road Name <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="pstreetname" maxlength="50" name="pstreetname" placeholder="Street/ Road Name" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="pstreetname" maxlength="50" name="pstreetname" placeholder="Street/ Road Name" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Town/ City
+                                Town/ City <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="pcity" maxlength="50" name="pcity" placeholder="Avenue /Block /Sector" type="text" value="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="pcity" maxlength="50" name="pcity" placeholder="Avenue /Block /Sector" type="text" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Pincode field is required." id="ppincode" maxlength="50" name="ppincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="ppincode" maxlength="50" name="ppincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -323,7 +323,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Community field is required." id="community" name="community" onchange="cmamount()" required="">
-                                        <option value="">- Choose -</option>
+                                        <option value="0">- Choose -</option>
                                         <option value="1">BC - Backward Class</option>
                                         <option value="2">BCM - Backward Class Muslims</option>
                                         <option value="3">MBC/DNC-Most Backward
@@ -372,14 +372,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Differently Abled Category
+                                        Do you belong to Differently Abled Category <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control" id="IsDifferentlyAbled" name="isdifferentlyabled" onchange="tofd()">
-                                        <option value="">-Choose-</option>
-                                        <option value="1">Yes</option>
+                                    <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled" onchange="tofd()" required="">
                                         <option value="2">No</option>
+                                        <option value="1">Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -425,10 +424,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control valid" id="iswidow" name="iswidow" onchange="iswid()" required="">
-                                        <option value="">- Choose -</option>
-                                        <option value="1">Yes</option>
+                                    <select class="form-control valid" id="iswidow" name="iswidow" required="">
                                         <option value="2">No</option>
+                                        <option value="1">Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -444,10 +442,63 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control valid" id="isserviceman" name="isserviceman" onchange="isserv()" required="">
-                                        <option value="">- Choose -</option>
-                                        <option value="1">Yes</option>
+                                    <select class="form-control valid" id="isserviceman" name="isserviceman"  required="">
                                         <option value="2">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="editor-label">
+                                        Divorcee
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control valid" id="divorcee" name="divorcee" required="">
+                                        <option value="2">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="editor-label">
+                                        Refugee from Srilanka or Burma
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control valid" id="refugee" name="refugee" required="">
+                                        <option value="2">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="editor-label">
+                                        Athlete (National/State/District level): <span style="color:red;">*</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control valid" id="athlete" name="athlete" required="">
+                                        <option value="2">No</option>
+                                        <option value="1">Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -619,12 +670,26 @@
                             <b>Declaration</b>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 10px">
+                    <div class="row" style="margin-top: 10px;text-align:justify">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12">
-                                        <input type="checkbox" name="terms" id="terms" required="">
+                                    <input type="checkbox" id="declaration1" name="declaration1" data-val="true" data-val-required="This field is required." required=""  style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
+
                                         In the state of advanced language training, selected trainers undergo training sessions, adhere to the rules and regulations, and follow the guidelines for examinations and assessment procedures. I am aware of the procedures for registration and application for the examination and certification related to training. I attend the training and participate in the parent association's meetings without any issues, except for reasons beyond my control. I will report and return the training fees collected by the parent association, excluding Kama, and I will strictly adhere to the rules and regulations in Kama's examination department. I voluntarily accept the consequences of not adhering to the regulations of the training state and understand the consequences of non-compliance.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="checkbox" id="declaration2" name="declaration2" data-val="true" data-val-required="This field is required." required="" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
+                                        I have submitted my application for employment in various organizations during the days I receive training, but I have not received any response to obtain a job due to the lack of experience. I hereby submit my sincere self-declaration to the authorities for consideration.
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="checkbox" id="declaration3" name="declaration3" data-val="true" data-val-required="This field is required." required="" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
+                                        I have submitted the incorrect information, and I am aware that any action can be taken against me according to the laws and regulations, and I am willing to face legal actions through the court or any department related to this matter. I affirm the truthfulness of this statement.
                                 </div>
                             </div>
                         </div>
@@ -638,7 +703,7 @@
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input class="form-control" id="Amount" name="Amount" type="text" value="120" readonly="">
+                                    <input class="form-control" id="Amount" name="Amount" type="text" value="Rs.100" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -702,7 +767,7 @@
                 </fieldset>
             </form>
        </div>
-       <div class="col-sm-2 col-md-2 mb-4"></div>
+       <div class="col-sm-1 col-md-1 mb-4"></div>
     </div>
  </div>
 @endsection

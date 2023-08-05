@@ -335,55 +335,45 @@ $("#caspa").click(function () {
 
     if ($(this).prop("checked") == true) {
         // alert("Checkbox is checked.");
-        var a = $("#DFPNo").val();
-        var b = $("#SRname").val();
-        var c = $("#ABS").val();
-        var d = $("#VCname").val();
-        var e = $("#Talukname").val();
-        var f = $("#District").val();
-        var g = $("#State").val();
-        var h = $("#Pincode").val();
+        var a = $("#plotno").val();
+        var b = $("#streetname").val();
+        var c = $("#city").val();
+        var d = $("#district").val();
+        var e = $("#state").val();
+        var f = $("#pincode").val();
         //alert(d);
-        document.getElementById('pDFPNo').value = a;
-        document.getElementById('pSRname').value = b;
-        document.getElementById('pABS').value = c;
-        document.getElementById('pVCname').value = d;
-        document.getElementById('pTalukname').value = e;
-        document.getElementById('pDistrict').value = f;
-        document.getElementById('pState').value = g;
-        document.getElementById('pPincode').value = h;
+        document.getElementById('pplotno').value = a;
+        document.getElementById('pstreetname').value = b;
+        document.getElementById('pcity').value = c;
+        document.getElementById('pdistrict').value = d;
+        document.getElementById('pstate').value = e;
+        document.getElementById('ppincode').value = f;
 
-        $("#pDFPNo").attr('readonly', 'readonly');
-        $("#pSRname").attr('readonly', 'readonly');
-        $("#pABS").attr('readonly', 'readonly');
-        $("#pVCname").attr('readonly', 'readonly');
-        $("#pTalukname").attr('readonly', 'readonly');
-        $("#pDistrict").attr('readonly', 'readonly');
-        $("#pState").attr('readonly', 'readonly');
-        $("#pPincode").attr('readonly', 'readonly');
+        $("#pplotno").attr('readonly', 'readonly');
+        $("#pstreetname").attr('readonly', 'readonly');
+        $("#pcity").attr('readonly', 'readonly');
+        $("#pdistrict").attr('readonly', 'readonly');
+        $("#pstate").attr('readonly', 'readonly');
+        $("#ppincode").attr('readonly', 'readonly');
         // $("#pDFPNo").val()= d;
     }
     else if ($(this).prop("checked") == false) {
         //alert("Checkbox is unchecked.");
 
-        document.getElementById('pDFPNo').value = '';
-        document.getElementById('pSRname').value = '';
-        document.getElementById('pABS').value = '';
-        document.getElementById('pVCname').value = '';
-        document.getElementById('pTalukname').value = '';
-        document.getElementById('pDistrict').value = '';
-        document.getElementById('pState').value = '';
-        document.getElementById('pPincode').value = '';
+        document.getElementById('pplotno').value = '';
+        document.getElementById('pstreetname').value = '';
+        document.getElementById('pcity').value = '';
+        document.getElementById('pdistrict').value = '';
+        document.getElementById('pstate').value = '';
+        document.getElementById('ppincode').value = '';
 
 
-        $("#pDFPNo").removeAttr('readonly');
-        $("#pSRname").removeAttr('readonly');
-        $("#pABS").removeAttr('readonly');
-        $("#pVCname").removeAttr('readonly');
-        $("#pTalukname").removeAttr('readonly');
-        $("#pDistrict").removeAttr('readonly');
-        $("#pState").removeAttr('readonly');
-        $("#pPincode").removeAttr('readonly');
+        $("#pplotno").removeAttr('readonly');
+        $("#pstreetname").removeAttr('readonly');
+        $("#pcity").removeAttr('readonly');
+        $("#pdistrict").removeAttr('readonly');
+        $("#pstate").removeAttr('readonly');
+        $("#ppincode").removeAttr('readonly');
     }
 });
 
@@ -1079,35 +1069,12 @@ function tofd() {
     var id = $("#IsDifferentlyAbled").val();
     if (id == "1") {
         $("#typeof").show();
-        //var r =$("#typeof").val();
-        //alert(r);
-        //$("#Iswidow").val() ='2'; prop('selectedIndex', 10);
-        //$("#Iswidow").val("2").change();
-        //$("#Isserviceman").val("2").change();
-        $("#Iswidow").prop('selectedIndex', 2);
-        $("#Isserviceman").prop('selectedIndex', 2);
-        //$("#Iswidow").val("2")
-        //$("#Isserviceman").val("2")
-        $('#Iswidow').css('pointer-events', 'none');
-        $('#Isserviceman').css('pointer-events', 'none');
-        //$("#Iswidow").attr('disabled',true);
-        //$("#Isserviceman").attr('disabled',true);
     }
     if (id == "2") {
         //$("#typeof").prop('selectedIndex', 0);
         $("#typeof").hide();
         $("#typeofd").val("0").change();
-        //$("#Iswidow").removeAttr('disabled','disabled');
-        //$("#Isserviceman").removeAttr('disabled','disabled');
-        //$("#typeof").val("").change();
-        $("#Iswidow").val("").change();
-        $("#Isserviceman").val("").change();
-        $('#Iswidow').css('pointer-events', 'visible');
-        $('#Isserviceman').css('pointer-events', 'visible');
-
     }
-
-
 }
 
 function iswid() {
@@ -2516,9 +2483,10 @@ $(document).ready(function (e) {
 
         console.log("Form is trying to submit");
         e.preventDefault();
-       
-        var $form = $(this);
-        $("#regform").submit();
+        if($("#regform").validate()){
+            $("#regform").submit();
+        }
+    
     });
 
 
@@ -2549,3 +2517,5 @@ $(document).ready(function () {
     });
 
 });
+$("#typeof").hide();
+$("#typeofd").val("0").change();
