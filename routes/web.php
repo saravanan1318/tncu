@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\IcmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,9 @@ Route::get('/', [WebsiteController::class, 'index']);
 Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
 Route::post('store-applicationform', [WebsiteController::class, 'store']);
 
+
+
+/**ICM */
+Route::get('/icm/dashboard', [IcmController::class, 'index']);
 
 
