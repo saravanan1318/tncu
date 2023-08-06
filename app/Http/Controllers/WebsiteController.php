@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\StudentParams;
+use App\Models\Mtr_Icm;
 use App;
+use Hash;
 
 class WebsiteController extends Controller
 {
@@ -19,7 +21,9 @@ class WebsiteController extends Controller
 
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);  
-        return view("applicationform");
+
+        $icmlists = Mtr_Icm::all();
+        return view("applicationform",compact('icmlists'));
     }
 
     function store(Request $request){
@@ -29,7 +33,7 @@ class WebsiteController extends Controller
         $user->phone = $request->mobile1;
         $user->state = $request->state;
         $user->email = $request->email;
-        $user->password = $request->mobile1;
+        $user->password = Hash::make($request->mobile1);
         $user->role = 3;
         $user->save();
 
@@ -42,7 +46,7 @@ class WebsiteController extends Controller
             $communityfilename = time().'_'.$user->id.'_'.$Communityfile->getClientOriginalName();
             $destinationPath1 = $commonpath.$subdirectory;
             $Communityfile->move($destinationPath1,$communityfilename);
-            $communityfilename = $destinationPath1.$communityfilename;
+            $communityfilename = $destinationPath1.'/'.$communityfilename;
         }
 
         $tccertificatefilename = "NA";
@@ -52,7 +56,7 @@ class WebsiteController extends Controller
             $tccertificatefilename = time().'_'.$user->id.'_'.$tccertificatefile->getClientOriginalName();
             $destinationPath2 = $commonpath.$subdirectory;
             $tccertificatefile->move($destinationPath2,$tccertificatefilename);
-            $tccertificatefilename = $destinationPath2.$tccertificatefilename;
+            $tccertificatefilename = $destinationPath2.'/'.$tccertificatefilename;
         }
 
         $UploadImgfilename = "NA";
@@ -62,7 +66,7 @@ class WebsiteController extends Controller
             $UploadImgfilename = time().'_'.$user->id.'_'.$UploadImg->getClientOriginalName();
             $destinationPath3 = $commonpath.$subdirectory;
             $UploadImg->move($destinationPath3,$UploadImgfilename);
-            $UploadImgfilename = $destinationPath3.$UploadImgfilename;
+            $UploadImgfilename = $destinationPath3.'/'.$UploadImgfilename;
         }
 
         $fcsignfilename = "NA";
@@ -72,7 +76,7 @@ class WebsiteController extends Controller
             $fcsignfilename = time().'_'.$user->id.'_'.$fcsign->getClientOriginalName();
             $destinationPath4 = $commonpath.$subdirectory;
             $fcsign->move($destinationPath4,$fcsignfilename);
-            $fcsignfilename = $destinationPath4.$fcsignfilename;
+            $fcsignfilename = $destinationPath4.'/'.$fcsignfilename;
         }
 
         $student = new StudentParams;

@@ -626,39 +626,16 @@
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     <div class="editor-label">
                                         Choose ICM<span style="color:red;">*</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-10">
                                     <select class="form-control" data-val="true" data-val-required="The icm field is required." id="icm" name="icm" required="">
-                                        <option value="" disabled="" selected="">Select an option</option>
-                                        <option value="Ramalingam ICM">Ramalingam ICM</option>
-                                        <option value="Dr.M.G.R, ICM">Dr.M.G.R, ICM</option>
-                                        <option value="Dharmapuri ICM">Dharmapuri ICM</option>
-                                        <option value="Dindigul ICM">Dindigul ICM</option>
-                                        <option value="Erode ICM">Erode ICM</option>
-                                        <option value="Perarignar Anna ICM">Perarignar Anna ICM</option>
-                                        <option value="Pandianadu ICM">Pandianadu ICM</option>
-                                        <option value="Nagercoil ICM">Nagercoil ICM</option>
-                                        <option value="Namakkal ICM">Namakkal ICM</option>
-                                        <option value="Nachiappa ICM">Nachiappa ICM</option>
-                                        <option value="Thiyagi Sankaralinganar ICM">Thiyagi Sankaralinganar ICM</option>
-                                        <option value="Sivagangai ICM">Sivagangai ICM</option>
-                                        <option value="Samiappa ICM">Samiappa ICM</option>
-                                        <option value="Theni ICM">Theni ICM</option>
-                                        <option value="Thiruvannamalai ICM">Thiruvannamalai ICM</option>
-                                        <option value="Thiruvarur ICM">Thiruvarur ICM</option>
-                                        <option value="M.D.K ICM">M.D.K ICM</option>
-                                        <option value="Trichy ICM">Trichy ICM</option>
-                                        <option value="Vellore ICM">Vellore ICM</option>
-                                        <option value="Villupuram ICM">Villupuram ICM</option>
-                                        <option value="Bargur ITI">Bargur ITI</option>
-                                        <option value="Pattukkottai ITI">Pattukkottai ITI</option>
-                                        <option value="Lalgudi Polytechnic">Lalgudi Polytechnic</option>
-                                        <option value="Chennai ICM">Chennai ICM</option>
-                                        <option value="Thoothukudi ICM">Thoothukudi ICM</option>
+                                        @foreach ($icmlists as $icmlist)
+                                            <option value="{{ $icmlist->id }}" >{{ $icmlist->icm_name }} - {{ $icmlist->subcentre_name }}</option>
+                                        @endforeach
                                       </select>
                                 </div>
                             </div>

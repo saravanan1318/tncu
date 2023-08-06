@@ -44,8 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function phone(): HasOne
+    public function student(): HasOne
     {
         return $this->hasOne(StudentParams::class);
+    }
+
+    public function icm(): HasOne
+    {
+        return $this->hasOne(Mtr_Icm::class);
     }
 }
