@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\StudentParams;
 use App\Models\Mtr_Icm;
+use PDF;
 use App;
 use Hash;
 
@@ -35,6 +36,7 @@ class WebsiteController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->mobile1);
         $user->role = 3;
+        $user->icm_id = $request->icm;
         $user->save();
 
         $commonpath = 'uploads';
@@ -149,7 +151,31 @@ class WebsiteController extends Controller
         $student->fcsign = $fcsignfilename;
         $student->save();
 
-        return redirect('applicationform')->with('status', 'Application submitted successfully');
+        return redirect('applicationreview/'.$student->id)->with('status', 'Application submitted successfully');
+
+    }
+
+
+    function applicationreview(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);  
+
+        $Studentdetails = StudentParams::where('id',$request->id)->first();
+        return view("applicationreview",compact('Studentdetails'));
+    }
+
+    function applicationpdf(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);  
+
+        $data = StudentParams::where('id',$request->id)->first()->toArray();
+
+        //dd($Studentdetails);
+
+        $pdf = PDF::loadView('applicationpdf', $data);
+        return $pdf->stream('resume.pdf');
 
     }
 }

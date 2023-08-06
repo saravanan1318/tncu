@@ -18,6 +18,8 @@ use App\Http\Controllers\LoginFormController;
 
 Route::get('/', [WebsiteController::class, 'index']);
 Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
+Route::get('applicationreview/{id}', [WebsiteController::class, 'applicationreview']);
+Route::get('applicationpdf/{id}', [WebsiteController::class, 'applicationpdf']);
 Route::post('store-applicationform', [WebsiteController::class, 'store']);
 
 
