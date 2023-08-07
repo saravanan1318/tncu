@@ -88,8 +88,11 @@ class WebsiteController extends Controller
             $fcsignfilename = $destinationPath4.'/'.$fcsignfilename;
         }
 
+        
+
         $student = new StudentParams;
         $student->user_id = $user->id;
+        $student->arrn_number = 0;
         $student->fullname = $request->fullname;
         $student->gender = $request->gender;
         $student->dob = $request->dob;
@@ -157,6 +160,10 @@ class WebsiteController extends Controller
         $student->UploadImg = $UploadImgfilename;
         $student->fcsign = $fcsignfilename;
         $student->save();
+
+        $arrn_number = $request->icm.date("Y").sprintf("%06d", $student->id);
+        $student->arrn_number = $arrn_number;
+        $student->update();
 
         return redirect('applicationreview/'.$student->id)->with('status', 'Application submitted successfully');
 

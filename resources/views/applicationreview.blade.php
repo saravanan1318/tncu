@@ -583,7 +583,7 @@
                                         <div class="editor-label">Photo</div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <img id="cimage" src="{{$Studentdetails->cimage}}" alt="your image" style="margin-top: 10px;width:150px ">
+                                        <img id="cimage" src="{{asset($Studentdetails->UploadImg)}}" alt="your image" style="margin-top: 10px;width:150px ">
                                     </div>
                                 </div>
                             </div>
@@ -596,7 +596,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <img id="csign" src="{{$Studentdetails->fcsign}}" alt="your image" style="margin-top: 30px;width:130px ">
+                                    <img id="csign" src="{{asset($Studentdetails->fcsign)}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
                         </div>
