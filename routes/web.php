@@ -17,6 +17,7 @@ use App\Http\Controllers\LoginFormController;
 */
 
 Route::get('/', [WebsiteController::class, 'index']);
+Route::get('/notification', [WebsiteController::class, 'notification']);
 Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
 Route::get('applicationreview/{id}', [WebsiteController::class, 'applicationreview']);
 Route::get('applicationpdf/{id}', [WebsiteController::class, 'applicationpdf']);
@@ -37,3 +38,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
+Route::get('/clear-config', function() {
+    $exitCode = Artisan::call('config:clear');
+    // return what you want
+});
+Route::get('/clear-optimize', function() {
+    $exitCode = Artisan::call('optimize');
+    // return what you want
+});
+Route::get('/clear-route', function() {
+    $exitCode = Artisan::call('config:route');
+    // return what you want
+});

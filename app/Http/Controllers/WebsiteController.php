@@ -18,6 +18,13 @@ class WebsiteController extends Controller
         return view("home");
     }
 
+    function notification(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);  
+        return view("notification");
+    }
+
     function applicationform(Request $request){
 
         App::setLocale($request->lang);
