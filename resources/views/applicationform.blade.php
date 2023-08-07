@@ -740,7 +740,7 @@
                         <div class="col-sm-4">
                             <p style="text-align: center;">
                                 <!--<button type="button" id="btnPreview" class="btnStyle">Preview</button> -->
-                                <a type="submit" name="btnPayment" href="{{url('store-applicationform')}}" id="btnPayment" value="Submit Application" class="btnStyle btn btn-primary"></a>
+                                <input type="submit" name="btnPayment" id="btnPayment" value="Submit Application" class="btnStyle btn btn-primary">
                                 <!--                <input type="button" name="btnPayment" id="btnPayment" value="Make Payment" class="btnStyle">-->
                             </p>
                         </div>
