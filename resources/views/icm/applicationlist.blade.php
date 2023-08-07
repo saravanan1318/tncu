@@ -39,7 +39,7 @@
                     @foreach($studentDatas as $studentData)
                     <tr>
                         <th scope="row">{{ $studentData->id }}</th>
-                        <td>{{ $studentData->arn_number }}</td>
+                        <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
                         <td><a href='/applicationreview/{{$studentData->id}}'>view</a></td>
                         <td><a href='/{{$studentData->tccertificatefile}}'>view</a></td>
