@@ -41,9 +41,9 @@
                         <th scope="row">{{ $studentData->id }}</th>
                         <td>{{ $studentData->arn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
-                        <td><a href='/applicationreview/{{$Studentdetails->id}}'>view</a></td>
-                        <td><a href='/{{$Studentdetails->tccertificatefile}}'>view</a></td>
-                        <td><a href='/{{$Studentdetails->Communityfile}}'>view</a></td>
+                        <td><a href='/applicationreview/{{$studentData->id}}'>view</a></td>
+                        <td><a href='/{{$studentData->tccertificatefile}}'>view</a></td>
+                        <td><a href='/{{$studentData->Communityfile}}'>view</a></td>
                     </tr>
                     @endforeach
                 </tbody>
