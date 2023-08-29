@@ -61,7 +61,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="input-group date" id="datetimepickerDOB" readonly="readonly">
-                                            <input class="form-control" data-val="true" data-val-required="The DOB field is required." id="DOB" name="dob" onkeydown="return false" type="date" value="" required="">
+                                            <input class="form-control" data-val="true" data-val-required="The DOB field is required." id="DOB" name="dob" type="date">
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" placeholder="Age" type="text" readonly="" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" min='18' placeholder="Age" type="text" readonly="" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                                         <option value="Jain">Jain</option>
                                         <option value="Muslim">Muslim</option>
                                         <option value="Sikh">Sikh</option>
-                                        <option value="Sikh">Others</option>
+                                        <option value="Others">Others</option>
                                     </select>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@
                                     <select class="form-control" data-val="true" data-val-required="The Community field is required." id="community" name="community" onchange="cmamount()" required="">
                                         <option value="0">- Choose -</option>
                                         <option value="BC - Backward Class">BC - Backward Class</option>
-                                        <option value="BCM - Backward Class Muslims">BCM - Backward Class Muslims</option>
+                                        <option value="BC(M) - Backward Class Muslims">BC(M) - Backward Class Muslims</option>
                                         <option value="MBC/DNC-Most Backward
                                         Class/Denotified Community">MBC/DNC-Most Backward
                                                           Class/Denotified Community
@@ -338,7 +338,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="editor-label">
                                 Sub Caste <span style="color:red;">*</span>
                             </div>
@@ -348,7 +348,7 @@
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Subcaste field is required." id="subcaste" maxlength="20" name="subcaste" onkeydown="return true" placeholder="Sub Caste" type="text" value="" required="">
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="clearfix"></div>
                     <div class="row"  style="margin-top: 10px">
@@ -373,21 +373,26 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Differently Abled Category <span style="color:red;">*</span>
+                                        Do you belong to Differently Abled Category (Yes / No) <span style="color:red;">*</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled" onchange="tofd()" required="">
+                                <div class="col-md-3">
+                                    <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled"  required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
                         
                     </div>
                     <div class="clearfix"></div>
-                    <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
+                    {{-- <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -421,20 +426,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div> --}}
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Destitute Widow Category <span style="color:red;">*</span>
+                                        Do you belong to Destitute Widow Category (Yes / No) : <span style="color:red;">*</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select class="form-control valid" id="iswidow" name="iswidow" required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
@@ -445,14 +455,39 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Ex-Serviceman Category <span style="color:red;">*</span>
+                                        Do you belong to Ex-Serviceman Category (Yes / No) : <span style="color:red;">*</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select class="form-control valid" id="isserviceman" name="isserviceman"  required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px;display: none;" id="isservicemandiv" >
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="editor-label">
+                                        Wife / Son / Daughter of : <span style="color:red;">*</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control valid" id="selectedserviceman" name="selectedserviceman"  required="">
+                                        <option value="">-SELECT-</option>
+                                        <option value="Wife">Wife</option>
+                                        <option value="Son">Son</option>
+                                        <option value="Daughter">Daughter</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
@@ -463,14 +498,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Divorcee
+                                        Divorcee (Yes / No) :
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select class="form-control valid" id="divorcee" name="divorcee" required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
@@ -481,14 +521,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Refugee from Srilanka or Burma
+                                        Refugee from Srilanka or Burma (Yes / No) :
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select class="form-control valid" id="refugee" name="refugee" required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
@@ -499,14 +544,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Athlete (National/State/District level): <span style="color:red;">*</span>
+                                        Athlete (National/State/District level)  (Yes / No) : <span style="color:red;">*</span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select class="form-control valid" id="athlete" name="athlete" required="">
+                                        <option value="">-SELECT-</option>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+
                                 </div>
                             </div>
                         </div>
@@ -556,7 +606,7 @@
                                 </tr>
         
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">S.S.L.C
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">S.S.L.C<span style="color:red;">*</span>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="slmedium">
@@ -566,16 +616,16 @@
                                         </select>
         
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" min="1980" max="2018"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="asltotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="aslsecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="aslpercentage"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="slgrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" min="1980" max="2018" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" name="asltotalmark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" name="aslsecumark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" name="aslpercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="slgrade" required=""></td>
                                 </tr>
         
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">HSC (+2)
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">HSC (+2)<span style="color:red;">*</span>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="hsmedium">
@@ -584,12 +634,12 @@
                                             <option value="English">English</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" min="1980" max="2018"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ahstotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ahssecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ahspercentage"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="hsgrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" min="1980" max="2018" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" name="ahstotalmark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" name="ahssecumark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" name="ahspercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="hsgrade" required=""></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">Degree (3Years)
@@ -602,9 +652,9 @@
                                         </select></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" min="1980" max="2018"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugtotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugsecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugpercentage"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" name="ugtotalmark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" name="ugsecumark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" name="ugpercentage" readonly></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="uggrade"></td>
                                 </tr>
                                 <tr>
@@ -619,9 +669,9 @@
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgYOP" min="1980" max="2018"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgtotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgsecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgpercentage"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" name="bgtotalmark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" name="bgsecumark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" name="bgpercentage" readonly></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="bggrade"></td>
                                 </tr>
                             </tbody>
@@ -641,7 +691,7 @@
                                 <div class="col-md-10">
                                     <select class="form-control" data-val="true" data-val-required="The icm field is required." id="icm" name="icm" required="">
                                         @foreach ($icmlists as $icmlist)
-                                            <option value="{{ $icmlist->id }}" >{{ $icmlist->icm_name }} - {{ $icmlist->subcentre_name }}</option>
+                                            <option value="{{ $icmlist->id }}" >{{ $icmlist->icm_name }}</option>
                                         @endforeach
                                       </select>
                                 </div>
@@ -698,13 +748,13 @@
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="col-sm-6">
 
                                 <div class="row">
             
                                     <div class="col-sm-12">
-                                        <div class="editor-label">Upload your Photo</div>
+                                        <div class="editor-label">Upload your Photo<span style="color:red;">*</span></div>
                                     </div>
             
             
@@ -719,15 +769,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="editor-label">
-                                        Upload your Signature
+                                        Upload your Signature<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <input id="fcsign" name="fcsign" type="file" value="" onchange="readUR(this);" required=""><br>
+                                    <font color="red"><i> (png / jpg/ Jpeg) Less than 20 KB</i></font> <br>
+                                    <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="editor-label">
+                                        Upload your Parent Signature<span style="color:red;">*</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR(this);" required=""><br>
                                     <font color="red"><i> (png / jpg/ Jpeg) Less than 20 KB</i></font> <br>
                                     <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
@@ -754,4 +818,9 @@
        <div class="col-sm-1 col-md-1 mb-4"></div>
     </div>
  </div>
+<script>
+function isdifferentlyabled(value){
+    console.log(value);
+}
+</script>
 @endsection

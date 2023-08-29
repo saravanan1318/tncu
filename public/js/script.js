@@ -1,3 +1,112 @@
+let today = new Date(),
+day = today.getDate(),
+month = today.getMonth()+1, //January is 0
+year = today.getFullYear()-18;
+if(day<10){
+    day='0'+day
+} 
+if(month<10){
+    month='0'+month
+}
+today = year+'-'+month+'-'+day;
+console.log(today);
+document.getElementById("DOB").setAttribute("max", today);
+document.getElementById("DOB").setAttribute("value", today);
+
+
+
+$('#IsDifferentlyAbled').on('change', function() {
+    if(this.value == "Yes"){
+        $("#IsDifferentlyAbledfile").show();
+    }else{
+        $("#IsDifferentlyAbledfile").hide();
+    }
+});
+
+
+$('#iswidow').on('change', function() {
+    if(this.value == "Yes"){
+        $("#iswidowfile").show();
+    }else{
+        $("#iswidowfile").hide();
+    }
+});
+
+
+$('#isserviceman').on('change', function() {
+    if(this.value == "Yes"){
+        $("#isservicemandiv").show();
+    }else{
+        $("#isservicemandiv").hide();
+    }
+});
+
+
+$('#divorcee').on('change', function() {
+    if(this.value == "Yes"){
+        $("#divorceefile").show();
+    }else{
+        $("#divorceefile").hide();
+    }
+});
+
+
+$('#refugee').on('change', function() {
+    if(this.value == "Yes"){
+        $("#refugeefile").show();
+    }else{
+        $("#refugeefile").hide();
+    }
+});
+
+$('#athlete').on('change', function() {
+    if(this.value == "Yes"){
+        $("#athletefile").show();
+    }else{
+        $("#athletefile").hide();
+    }
+});
+
+$('#asltotalmark,#aslsecumark,#aslpercentage').on('blur', function() {
+   var asltotalmark = parseInt($("#asltotalmark").val());
+   var aslsecumark = parseInt($("#aslsecumark").val());
+
+   if(asltotalmark != "" && aslsecumark != ""){
+    var aslpercentage = aslsecumark/asltotalmark * 100;
+    $("#aslpercentage").val(Math.round(aslpercentage * 100) / 100);
+   }
+});
+
+$('#ahstotalmark,#ahssecumark,#ahspercentage').on('blur', function() {
+    var ahstotalmark = parseInt($("#ahstotalmark").val());
+    var ahssecumark = parseInt($("#ahssecumark").val());
+ 
+    if(ahssecumark != "" && ahssecumark != ""){
+     var ahspercentage = ahssecumark/ahstotalmark * 100;
+     $("#ahspercentage").val(ahspercentage);
+     $("#ahspercentage").val(Math.round(ahspercentage * 100) / 100);
+    }
+});
+
+$('#ugtotalmark,#ugsecumark,#ugpercentage').on('blur', function() {
+    var ugtotalmark = parseInt($("#ugtotalmark").val());
+    var ugsecumark = parseInt($("#ugsecumark").val());
+ 
+    if(ugtotalmark != "" && ugsecumark != ""){
+     var ugpercentage = ugsecumark/ugtotalmark * 100;
+     $("#ugpercentage").val(Math.round(ugpercentage * 100) / 100);
+    }
+});
+
+ $('#bgtotalmark,#bgsecumark,#bgpercentage').on('blur', function() {
+    var bgtotalmark = parseInt($("#bgtotalmark").val());
+    var bgsecumark = parseInt($("#bgsecumark").val());
+ 
+    if(bgtotalmark != "" && bgsecumark != ""){
+     var aslpercentage = bgsecumark/bgtotalmark * 100;
+     $("#bgpercentage").val(Math.round(bgpercentage * 100) / 100);
+    }
+ });
 
 //var date = new Date("Mon Jan 01 2018 00:00:00 GMT+0530");
 var date = new Date();
@@ -192,9 +301,8 @@ function othernation() {
 
 
 function otherregion() {
-    //alert("rd");spousename
     var id = $("#Religion").val();
-    if (id == "8") {
+    if (id == "Others") {
         $("#otherreligion").show();
     }
     else {
@@ -1064,18 +1172,18 @@ function iticalc() {
 //end
 
 
-function tofd() {
-    //alert("rd");
-    var id = $("#IsDifferentlyAbled").val();
-    if (id == "1") {
-        $("#typeof").show();
-    }
-    if (id == "2") {
-        //$("#typeof").prop('selectedIndex', 0);
-        $("#typeof").hide();
-        $("#typeofd").val("0").change();
-    }
-}
+// function tofd() {
+//     //alert("rd");
+//     var id = $("#IsDifferentlyAbled").val();
+//     if (id == "1") {
+//         $("#typeof").show();
+//     }
+//     if (id == "2") {
+//         //$("#typeof").prop('selectedIndex', 0);
+//         $("#typeof").hide();
+//         $("#typeofd").val("0").change();
+//     }
+// }
 
 function iswid() {
     //alert("rd");
