@@ -384,7 +384,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
+                                    <input id="IsDifferentlyAbledfile" name="isdifferentlyabledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
 
                                 </div>
                             </div>

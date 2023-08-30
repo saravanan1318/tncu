@@ -1,19 +1,30 @@
-let today = new Date(),
-day = today.getDate(),
-month = today.getMonth()+1, //January is 0
-year = today.getFullYear()-18;
-if(day<10){
-    day='0'+day
-} 
-if(month<10){
-    month='0'+month
+// let today = new Date(),
+// day = today.getDate(),
+// month = today.getMonth()+1, //January is 0
+// year = today.getFullYear()-18;
+// if(day<10){
+//     day='0'+day
+// } 
+// if(month<10){
+//     month='0'+month
+// }
+// today = year+'-'+month+'-'+day;
+// console.log(today);
+// document.getElementById("DOB").setAttribute("max", today);
+// document.getElementById("DOB").setAttribute("value", today);
+
+
+function printDiv(){
+    console.log("printDiv");
+    var divContents = document.getElementById("printdiv").innerHTML;
+    var a = window.open('', '', 'height=500, width=500');
+    a.document.write('<html>');
+    a.document.write('<body > <h1>Div contents are <br>');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    a.print();
 }
-today = year+'-'+month+'-'+day;
-console.log(today);
-document.getElementById("DOB").setAttribute("max", today);
-document.getElementById("DOB").setAttribute("value", today);
-
-
 
 $('#IsDifferentlyAbled').on('change', function() {
     if(this.value == "Yes"){

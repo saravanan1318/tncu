@@ -1,4 +1,4 @@
-<div class="row bg-footer">
+<footer class="row bg-footer">
     <div class="col-md-12 mx-auto py-3 pb-3 pt-0-imp mb-3">
        <div class="row no-gutters">
           <div class="col-md-11 mx-auto p-3 footer">
@@ -13,4 +13,4 @@
           </div>
        </div>
     </div>
- </div>
+ </footer>

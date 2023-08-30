@@ -58,6 +58,67 @@ class WebsiteController extends Controller
             $communityfilename = $destinationPath1.'/'.$communityfilename;
         }
 
+        $isdifferentlyabledfilename = "NA";
+        if($request->file('isdifferentlyabledfile')) {
+            $subdirectory = "/isdifferentlyabledfile";
+            $isdifferentlyabledfile = $request->file('isdifferentlyabledfile');
+            $isdifferentlyabledfilename = time().'_'.$user->id.'_'.$isdifferentlyabledfile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $isdifferentlyabledfile->move($destinationPath1,$isdifferentlyabledfilename);
+            $isdifferentlyabledfilename = $destinationPath1.'/'.$isdifferentlyabledfilename;
+        }
+
+        $isservicemanfilename = "NA";
+        if($request->file('isservicemanfile')) {
+            $subdirectory = "/isserviceman";
+            $isservicemanfile = $request->file('isservicemanfile');
+            $isservicemanfilename = time().'_'.$user->id.'_'.$isservicemanfile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $isservicemanfile->move($destinationPath1,$isservicemanfilename);
+            $isservicemanfilename = $destinationPath1.'/'.$isservicemanfilename;
+        }
+
+        $iswidowfilename = "NA";
+        if($request->file('iswidowfile')) {
+            $subdirectory = "/isserviceman";
+            $iswidowfile = $request->file('iswidowfile');
+            $iswidowfilename = time().'_'.$user->id.'_'.$iswidowfile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $iswidowfile->move($destinationPath1,$iswidowfilename);
+            $iswidowfilename = $destinationPath1.'/'.$iswidowfilename;
+        }
+
+        $divorceefilename = "NA";
+        if($request->file('divorceefile')) {
+            $subdirectory = "/divorcee";
+            $divorceefile = $request->file('divorceefile');
+            $divorceefilename = time().'_'.$user->id.'_'.$divorceefile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $divorceefile->move($destinationPath1,$divorceefilename);
+            $divorceefilename = $destinationPath1.'/'.$divorceefilename;
+        }
+
+        $refugeefilename = "NA";
+        if($request->file('refugeefile')) {
+            $subdirectory = "/refugee";
+            $refugeefile = $request->file('refugeefile');
+            $refugeefilename = time().'_'.$user->id.'_'.$refugeefile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $refugeefile->move($destinationPath1,$refugeefilename);
+            $refugeefilename = $destinationPath1.'/'.$refugeefilename;
+        }
+
+
+        $athletefilename = "NA";
+        if($request->file('athletefile')) {
+            $subdirectory = "/athlete";
+            $athletefile = $request->file('athletefile');
+            $athletefilename = time().'_'.$user->id.'_'.$athletefile->getClientOriginalName();
+            $destinationPath1 = $commonpath.$subdirectory;
+            $athletefile->move($destinationPath1,$athletefilename);
+            $athletefilename = $destinationPath1.'/'.$athletefilename;
+        }
+
         $tccertificatefilename = "NA";
         if($request->file('tccertificatefile')) {
             $subdirectory = "/tccertificate";
@@ -88,7 +149,15 @@ class WebsiteController extends Controller
             $fcsignfilename = $destinationPath4.'/'.$fcsignfilename;
         }
 
-        
+        $parentsignfilename = "NA";
+        if($request->file('parentsign')) {
+            $subdirectory = "/parentsign";
+            $parentsign = $request->file('parentsign');
+            $parentsignfilename = time().'_'.$user->id.'_'.$parentsign->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $parentsign->move($destinationPath4,$parentsignfilename);
+            $parentsignfilename = $destinationPath4.'/'.$parentsignfilename;
+        }
 
         $student = new StudentParams;
         $student->user_id = $user->id;
@@ -117,15 +186,20 @@ class WebsiteController extends Controller
         $student->pstate = $request->pstate;
         $student->ppincode = $request->ppincode;
         $student->community = $request->community;
-        $student->subcaste = $request->subcaste;
+        $student->subcaste = "";
         $student->Communityfile = $communityfilename;
         $student->isdifferentlyabled = $request->isdifferentlyabled;
-        $student->typeofd = $request->typeofd;
+        $student->isdifferentlyabledfile = $isdifferentlyabledfilename;
         $student->iswidow = $request->iswidow;
+        $student->iswidowfile = $iswidowfilename;
         $student->isserviceman = $request->isserviceman;
+        $student->isservicemanfile = $isservicemanfilename;
         $student->divorcee = $request->divorcee;
+        $student->divorceefile = $divorceefilename;
         $student->refugee = $request->refugee;
+        $student->refugeefile = $refugeefilename;
         $student->athlete = $request->athlete;
+        $student->athletefile = $athletefilename;
         $student->tccertificatefile = $tccertificatefilename;
         $student->slmedium = $request->slmedium;
         $student->slYOP = $request->slYOP;
@@ -159,16 +233,27 @@ class WebsiteController extends Controller
         $student->Amount = $request->Amount;
         $student->UploadImg = $UploadImgfilename;
         $student->fcsign = $fcsignfilename;
+        $student->parentsign = $parentsignfilename;
         $student->save();
 
         $arrn_number = $request->icm.date("Y").sprintf("%06d", $student->id);
         $student->arrn_number = $arrn_number;
         $student->update();
 
-        return redirect('applicationreview/'.$student->id)->with('status', 'Application submitted successfully');
+        return redirect('application-acknowledgement/'.$student->id)->with('status', 'Application submitted successfully');
 
     }
 
+
+    function applicationacknowledgement(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);  
+
+        $Studentdetails = StudentParams::where('id',$request->id)->first();
+
+        return view("applicationacknowledgement",compact('Studentdetails'));
+    }
 
     function applicationreview(Request $request){
 
@@ -184,12 +269,12 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);  
 
-        $data = StudentParams::where('id',$request->id)->first()->toArray();
+        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
 
         //dd($Studentdetails);
-
-        $pdf = PDF::loadView('applicationpdf', $data);
-        return $pdf->stream('resume.pdf');
+        return view("applicationreview",compact('Studentdetails'));
+        // $pdf = PDF::loadView('applicationpdf', $Studentdetails);
+        // return $pdf->stream('resume.pdf');
 
     }
 }
