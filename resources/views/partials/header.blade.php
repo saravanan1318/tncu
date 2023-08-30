@@ -7,8 +7,8 @@
           </a>
        </div>
        <div class="d-block d-md-inline-block text-center text-md-left ml-2 logotext ">
-          <span class="d-block">{{ __('header.tnhead') }}</span> 
-          <span class="d-block">GOVERNMENT OF TAMILNADU</span>
+          <span class="d-block">{{ __('header.tnhead') }}</span>
+          <span class="d-block"> {{__('header.gvhead')}}</span>
        </div>
        <img class="d-none d-md-inline-block float-right mr-5" alt="Tanhoda Logo"  src="{{asset('images/tncu-logo.png')}}" width="92">
     </div>
@@ -22,22 +22,22 @@
        <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
              <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/"> {{__('header.hhome')}} <span class="sr-only">(current)</span></a>
              </li>
              <li class="nav-item dropdown">
-                <a class="nav-link" href="#">About Us</a>
+                <a class="nav-link" href="#"> {{__('header.abt')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="#">Regionwise List of Cooperative Societies</a>
+                <a class="nav-link" href="#"> {{__('header.rgl')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="https://tncu.tn.gov.in/portalpolicies.pdf">Web Portal Policies</a>
+                <a class="nav-link" href="https://tncu.tn.gov.in/portalpolicies.pdf"> {{__('header.wpp')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="#">Your Views</a>
+                <a class="nav-link" href="#"> {{__('header.yv')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="#">Journals</a>
+                <a class="nav-link" href="#"> {{__('header.journal')}}</a>
              </li>
           </ul>
           </li>

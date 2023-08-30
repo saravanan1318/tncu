@@ -32,7 +32,7 @@
              <div class="carousel-inner">
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/tncubanner.jpeg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>

@@ -19,9 +19,9 @@
             @csrf
             <fieldset>
                 <legend style="text-align: center;padding:10px;background-color:#194565;color:#fff">{{ __('form.heading') }}</legend>
-    
+
                 <div class="container-fluid">
-    
+
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
                             <b>{{__('form.personal')}}</b>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Name <span style="color:red;">*</span>
+                                {{__('form.name')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -41,21 +41,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Gender <span style="color:red;">*</span>
+                                {{__('form.gender')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Gender field is required." id="Gender" name="gender" required="">
-                                        <option value="">- Choose -</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="">- {{__('form.select')}}' -</option>
+                                        <option value="Male">{{__('form.male')}}</option>
+                                        <option value="Female">{{__('form.female')}}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Date of Birth (dd-MM-yyyy)<span style="color:red;">*</span>
+                                {{__('form.dob')}}<span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Age (in completed years)<span style="color:red;">*</span>
+                                {{__('form.age')}}<span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -79,29 +79,29 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Mobile number <span style="color:red;">*</span>
+                                {{__('form.mobile')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Mobilenumber field is required." id="Mobile1" maxlength="10" minlength="10" name="mobile1" placeholder="Mobile" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" min="10" value="" onkeyup="validateLength(this)" required="">
-    
+
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Alternate mobile number
+                                {{__('form.altmobile')}}
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <input autocomplete="off" class="form-control" id="Mobile2" maxlength="10" name="mobile2" placeholder="Alternate mobile number" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="">
                                 </div>
                             </div>
-    
+
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Aadhar Number <span style="color:red;">*</span>
+                                {{__('form.aadhar')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Email <span style="color:red;">*</span>
+                                {{__('form.email')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Parent / Guardian <span style="color:red;">*</span>
+                                {{__('form.pg')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -131,32 +131,32 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-    
+
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Religion <span style="color:red;">*</span>
+                                {{__('form.religion')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Religion field is required." id="Religion" name="religion" onchange="otherregion()" required="">
-                                        <option value="">- Choose -</option>
-                                        <option value="Athiest">Athiest</option>
-                                        <option value="Budhist">Budhist</option>
-                                        <option value="Christian">Christian</option>
-                                        <option value="Hindu">Hindu</option>
-                                        <option value="Jain">Jain</option>
-                                        <option value="Muslim">Muslim</option>
-                                        <option value="Sikh">Sikh</option>
-                                        <option value="Others">Others</option>
+                                        <option value="">- {{__('form.select')}}-</option>
+                                        <option value="Athiest">{{__('form.atheist')}}</option>
+                                        <option value="Budhist">{{__('form.buddhist')}}</option>
+                                        <option value="Christian">{{__('form.christian')}}</option>
+                                        <option value="Hindu">{{__('form.hindu')}}</option>
+                                        <option value="Jain">{{__('form.jain')}}</option>
+                                        <option value="Muslim">{{__('form.muslim')}}</option>
+                                        <option value="Sikh">{{__('form.sikh')}}</option>
+                                        <option value="Others">{{__('form.others')}}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div class="col-md-6" id="otherreligion" style="display: none;">
                             <div class="editor-label">
-                                Enter Other Religion <span style="color:red;">*</span>
+                                {{__('form.otherreligion')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -169,14 +169,14 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b>Address for Communication</b>
+                            <b>{{__('form.address')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Door/ Flat/Plot No <span style="color:red;">*</span>
+                                {{__('form.door')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Street/ Road Name <span style="color:red;">*</span>
+                                {{__('form.street')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Town/ City <span style="color:red;">*</span>
+                                {{__('form.city')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -206,7 +206,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                District <span style="color:red;">*</span>
+                                {{__('form.district')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -216,7 +216,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                State <span style="color:red;">*</span>
+                                {{__('form.state')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -226,7 +226,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Pincode <span style="color:red;">*</span>
+                                {{__('form.pincode')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -239,7 +239,7 @@
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-10">
                             <div class="editor-label">
-                                <b>Permanent Address same as Communication Address :If Yes click here</b>
+                                <b> {{__('form.samepermanent')}}</b>
                                 <input type="checkbox" name="caspa" id="caspa" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: right; margin-left: 0.5em;" >
                             </div>
                         </div>
@@ -247,14 +247,14 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b>Permanent Address</b>
+                            <b> {{__('form.address')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Door/ Flat/Plot No <span style="color:red;">*</span>
+                                {{__('form.door')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -264,7 +264,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Street/ Road Name <span style="color:red;">*</span>
+                                {{__('form.street')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -274,7 +274,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Town/ City <span style="color:red;">*</span>
+                                {{__('form.city')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -284,7 +284,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                District <span style="color:red;">*</span>
+                                {{__('form.district')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -294,7 +294,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                State <span style="color:red;">*</span>
+                                {{__('form.state')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -304,7 +304,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Pincode <span style="color:red;">*</span>
+                                {{__('form.pincode')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -318,22 +318,21 @@
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
-                                Community <span style="color:red;">*</span>
+                                {{__('form.community')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Community field is required." id="community" name="community" onchange="cmamount()" required="">
-                                        <option value="0">- Choose -</option>
-                                        <option value="BC - Backward Class">BC - Backward Class</option>
-                                        <option value="BC(M) - Backward Class Muslims">BC(M) - Backward Class Muslims</option>
+                                        <option value="0">- {{__('form.select')}} -</option>
+                                        <option value="BC - Backward Class"> {{__('form.bc')}}</option>
+                                        <option value="BC(M) - Backward Class Muslims"> {{__('form.bcm')}}</option>
                                         <option value="MBC/DNC-Most Backward
-                                        Class/Denotified Community">MBC/DNC-Most Backward
-                                                          Class/Denotified Community
+                                        Class/Denotified Community"> {{__('form.mbc/dnc')}}
                                         </option>
-                                        <option value="SC - Scheduled Caste">SC - Scheduled Caste</option>
-                                        <option value="ST - Scheduled Tribe">ST - Scheduled Tribe</option>
-                                        <option value="SCA - Scheduled Caste Arunthathiar">SCA - Scheduled Caste Arunthathiar</option>
-                                        <option value="OC / Others">OC / Others</option>
+                                        <option value="SC - Scheduled Caste"> {{__('form.sc')}}</option>
+                                        <option value="ST - Scheduled Tribe"> {{__('form.st')}}</option>
+                                        <option value="SCA - Scheduled Caste Arunthathiar"> {{__('form.sca')}}</option>
+                                        <option value="OC / Others"> {{__('form.oc')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -344,7 +343,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-    
+
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Subcaste field is required." id="subcaste" maxlength="20" name="subcaste" onkeydown="return true" placeholder="Sub Caste" type="text" value="" required="">
                                 </div>
                             </div>
@@ -356,7 +355,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Community Certificate file upload<span style="color:red;">*</span>
+                                        {{__('form.communityupload')}}<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -365,7 +364,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="row"  style="margin-top: 10px">
@@ -373,23 +372,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Differently Abled Category (Yes / No) <span style="color:red;">*</span>
+                                        {{__('form.pwd')}} <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled"  required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="IsDifferentlyAbledfile" name="isdifferentlyabledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
+                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
 
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="clearfix"></div>
                     {{-- <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
@@ -432,14 +431,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Destitute Widow Category (Yes / No) : <span style="color:red;">*</span>
+                                        {{__('form.widow')}} : <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="iswidow" name="iswidow" required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -455,14 +454,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Do you belong to Ex-Serviceman Category (Yes / No) : <span style="color:red;">*</span>
+                                        {{__('form.exmilitary')}} : <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="isserviceman" name="isserviceman"  required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -474,15 +473,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Wife / Son / Daughter of : <span style="color:red;">*</span>
+                                        {{__('form.exmilitaryheir')}} : <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="selectedserviceman" name="selectedserviceman"  required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="Wife">Wife</option>
-                                        <option value="Son">Son</option>
-                                        <option value="Daughter">Daughter</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="Wife">{{__('form.wife')}}</option></option>
+                                        <option value="Son">{{__('form.son')}}</option>
+                                        <option value="Daughter">{{__('form.daghter')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -498,14 +497,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Divorcee (Yes / No) :
+                                        {{__('form.divorcee')}}:
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="divorcee" name="divorcee" required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -521,14 +520,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Refugee from Srilanka or Burma (Yes / No) :
+                                        {{__('form.refugee')}} :
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="refugee" name="refugee" required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -544,14 +543,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        Athlete (National/State/District level)  (Yes / No) : <span style="color:red;">*</span>
+                                        {{__('form.athlete')}} : <span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="athlete" name="athlete" required="">
-                                        <option value="">-SELECT-</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="">-{{__('form.select')}}-</option>
+                                        <option value="No">{{__('form.no')}}</option>
+                                        <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -567,7 +566,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        TC Certificate:<span style="color:red;">*</span>
+                                        {{__('form.tc')}}:<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -582,7 +581,7 @@
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b>Educational Qualification</b>
+                            <b>{{__('form.edu')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -593,28 +592,27 @@
                                     color: white;
                                     text-align: center;
                                     font-weight: bold;">
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Educational
-                                                                                        Qualification
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.edu')}}
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Medium of Instruction</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Name of the Institution</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Year of Passing</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Total Marks</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Marks Secured</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"> Percentage</td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Grade/Class</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.mi')}}</td></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.inst')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.year')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.tm')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.ms')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"> {{__('form.percentage')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.grade')}}</td>
                                 </tr>
-        
+
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">S.S.L.C<span style="color:red;">*</span>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.sslc')}}<span style="color:red;">*</span>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="slmedium">
-                                            <option value="">--Choose--</option>
-                                            <option value="Tamil">Tamil</option>
-                                            <option value="English">English</option>
+                                            <option value="">--{{__('form.choose')}}--</option>
+                                            <option value="Tamil">{{__('form.tamil')}}</option>
+                                            <option value="English">{{__('form.english')}}</option>
                                         </select>
-        
+
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" min="1980" max="2018" required=""></td>
@@ -623,15 +621,15 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" name="aslpercentage" readonly></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="slgrade" required=""></td>
                                 </tr>
-        
+
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">HSC (+2)<span style="color:red;">*</span>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.hsc')}}<span style="color:red;">*</span>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="hsmedium">
-                                            <option value="">--Choose--</option>
-                                            <option value="Tamil">Tamil</option>
-                                            <option value="English">English</option>
+                                            <option value="">--{{__('form.choose')}}--</option>
+                                            <option value="Tamil">{{__('form.tamil')}}l</option>
+                                            <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" required=""></td>
@@ -642,13 +640,13 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="hsgrade" required=""></td>
                                 </tr>
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Degree (3Years)
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.degree')}}
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="ugmedium">
-                                            <option value="">--Choose--</option>
-                                            <option value="Tamil">Tamil</option>
-                                            <option value="English">English</option>
+                                            <option value="">--{{__('form.choose')}}--</option>
+                                            <option value="Tamil">{{__('form.tamil')}}</option>
+                                            <option value="English">{{__('form.english')}}</option>
                                         </select></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" min="1980" max="2018"></td>
@@ -658,13 +656,13 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="uggrade"></td>
                                 </tr>
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Post Gradguate Degree
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.graduation')}}
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <select style="width:100px; border:solid 1px #ffffff;" name="bgmedium">
-                                            <option value="">--Choose--</option>
-                                            <option value="Tamil">Tamil</option>
-                                            <option value="English">English</option>
+                                            <option value="">--{{__('form.choose')}}--</option>
+                                            <option value="Tamil">{{__('form.tamil')}}</option>
+                                            <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst"></td>
@@ -685,7 +683,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="editor-label">
-                                        Choose ICM<span style="color:red;">*</span>
+                                        {{__('form.icm')}}<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-10">
@@ -701,7 +699,7 @@
                     <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-sm-12 subHeadings">
-                            <b>Declaration</b>
+                            <b>{{__('form.declaration')}}</b>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px;text-align:justify">
@@ -709,28 +707,27 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="checkbox" id="declaration1" name="declaration1" data-val="true" data-val-required="This field is required." required=""  style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
-
-                                        In the state of advanced language training, selected trainers undergo training sessions, adhere to the rules and regulations, and follow the guidelines for examinations and assessment procedures. I am aware of the procedures for registration and application for the examination and certification related to training. I attend the training and participate in the parent association's meetings without any issues, except for reasons beyond my control. I will report and return the training fees collected by the parent association, excluding Kama, and I will strictly adhere to the rules and regulations in Kama's examination department. I voluntarily accept the consequences of not adhering to the regulations of the training state and understand the consequences of non-compliance.
+                                    {{__('form.details')}}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="checkbox" id="declaration2" name="declaration2" data-val="true" data-val-required="This field is required." required="" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
-                                        I have submitted my application for employment in various organizations during the days I receive training, but I have not received any response to obtain a job due to the lack of experience. I hereby submit my sincere self-declaration to the authorities for consideration.
+                                    {{__('form.details2')}} .
 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="checkbox" id="declaration3" name="declaration3" data-val="true" data-val-required="This field is required." required="" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
-                                        I have submitted the incorrect information, and I am aware that any action can be taken against me according to the laws and regulations, and I am willing to face legal actions through the court or any department related to this matter. I affirm the truthfulness of this statement.
+                                    {{__('form.details3')}}.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-sm-12 subHeadings">
-                            <b>Payment Details</b>
+                            <b>{{__('form.pay')}}</b>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
@@ -744,7 +741,7 @@
                     </div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-sm-12 subHeadings">
-                            <b>Upload Documents</b>
+                            <b>{{__('form.docs')}}</b>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
@@ -752,15 +749,15 @@
                             <div class="col-sm-6">
 
                                 <div class="row">
-            
+
                                     <div class="col-sm-12">
-                                        <div class="editor-label">Upload your Photo<span style="color:red;">*</span></div>
+                                        <div class="editor-label">{{__('form.photo')}}<span style="color:red;">*</span></div>
                                     </div>
-            
-            
+
+
                                     <div class="col-sm-12">
                                         <input type="file" onchange="readURL(this);" id="UploadImg" name="UploadImg" required="">
-                                        <font color="red"><i> (Jpg / Jpeg / Png) Less than 50 KB</i></font> <br>
+                                        <font color="red"><i> {{__('form.less')}}</i></font> <br>
                                         <img id="cimage" src="{{asset('images/maleIcon.png')}}" alt="your image" style="margin-top: 10px;width:150px ">
                                     </div>
                                     <div class="col-sm-12">
@@ -773,12 +770,12 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="editor-label">
-                                        Upload your Signature<span style="color:red;">*</span>
+                                        {{__('form.sign')}}<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <input id="fcsign" name="fcsign" type="file" value="" onchange="readUR(this);" required=""><br>
-                                    <font color="red"><i> (png / jpg/ Jpeg) Less than 20 KB</i></font> <br>
+                                    <font color="red"><i>{{__('form.lessthan')}}</i></font> <br>
                                     <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
@@ -787,12 +784,12 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="editor-label">
-                                        Upload your Parent Signature<span style="color:red;">*</span>
+                                        {{__('form.psign')}}<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR(this);" required=""><br>
-                                    <font color="red"><i> (png / jpg/ Jpeg) Less than 20 KB</i></font> <br>
+                                    <font color="red"><i> {{__('form.lessthan')}}</i></font> <br>
                                     <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
@@ -811,7 +808,7 @@
                         <div class="col-sm-4">
                         </div>
                     </div>
-                   
+
                 </fieldset>
             </form>
        </div>

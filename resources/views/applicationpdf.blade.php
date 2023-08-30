@@ -336,6 +336,21 @@
                         
                     </div>
                     <div class="clearfix"></div>
+                    <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="editor-label">
+                                        Type of Disability
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                        <input autocomplete="off" id="typeofd" name="typeofd" type="text" value="{{$typeofd}}" required="" readonly="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-12">
                             <div class="row">
