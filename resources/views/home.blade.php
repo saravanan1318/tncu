@@ -5,15 +5,15 @@
     <div class="row">
        <div class="col-sm-12 col-md-3 mb-4">
           <!-- <h6 style="text-align: center; background-color: #c00; padding: 8px; color: white;">
-             <i class="fa fa-bell" aria-hidden="true"></i>&nbsp;IMPORTANT NOTIFICATIONS</h6> -->
+             <i class="fa fa-bell" aria-hidden="true"></i>IMPORTANT NOTIFICATIONS</h6> -->
           <nav class="nav flex-column d-block imponoti mb-2 p-2 ">
-             <h6><i class='fa fa-bell'></i>&nbsp; IMPORTANT NOTIFICATIONS</h6>
+             <h6><i class='fa fa-bell'></i>IMPORTANT NOTIFICATIONS</h6>
              <div class="block-hdnews" >
                 <div class="list-wrpaaer nav flex-column d-block  mb-2 p-2 " style="height:337px">
                    <ul class="list-aggregate" id="marquee-vertical">
                       <li>
                          <a href="/applicationform" style="color: darkred;">
-                            Application form
+                            Online Student Registration
                             <img src="{{asset('images/new.gif')}}" alt="Blink New">
                          </a>
                       </li>
@@ -32,7 +32,7 @@
              <div class="carousel-inner">
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -113,7 +113,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="carousel-item">
                    <div class="work">
-                      <img class="d-block w-100"  src="{{asset('images/carousel.webp')}}" alt="First slide" height="450">   
+                      <img class="d-block w-100"  src="{{asset('images/TNCU.jpg')}}" alt="First slide" height="450">
                       <!--                                 <article class="carousel-caption d-none d-md-block">
                          <h5>First slide label</h5>
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
@@ -166,7 +166,7 @@
              <span class="sr-only">Next</span>
              </a>
           </div>
-          <!-- ==================  2-carousel bootstrap.// ==================  -->  
+          <!-- ==================  2-carousel bootstrap.// ==================  -->
           <br/>
        </div>
        <div class="col-sm-12 col-md-3 ml-auto">
@@ -184,58 +184,7 @@
                      <div class="implinks" id="implink">
                          <div class="row">
 
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.tnpds.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/PDS.jpg" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.nabard.org/" target="_blank"><img src="https://rcstn.in/images/imp-link/nabard.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0 ">
-                                 <a href="http://www.tncsc.tn.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/tncscbanner.jpg" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://ncdc.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/ncdc.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://trifed.tribal.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/trifed.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.nafed-india.com/" target="_blank"><img src="https://rcstn.in/images/imp-link/Nafed-India.png" class="icon-medium"></a>
-                             </div>
 
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://ncui.coop/" target="_blank"><img src="https://rcstn.in/images/imp-link/NCUI.jpg" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.nafcub.org/" target="_blank"><img src="https://rcstn.in/images/imp-link/NAF.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.nafcard.org/" target="_blank"><img src="https://rcstn.in/images/imp-link/NAFCARD.png" class="icon-medium"></a>
-                             </div>
-                                <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.tnscbank.com/" target="_blank"><img src="https://rcstn.in/images/imp-link/tnsacb.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.tanfed.tn.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/tanfed.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.coopelection.tn.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/TNSCEC.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.tncu.tn.gov.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/TNCU.jpg" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="implinksrbdrb.php" target="_blank"><img src="https://rcstn.in/images/imp-link/drb.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.tncoopsrb.in/" target="_blank"><img src="https://rcstn.in/images/imp-link/srb.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="http://www.tamilvu.org/" target="_blank"><img src="https://rcstn.in/images/imp-link/tamivu.png" class="icon-medium"></a>
-                             </div>
-                             <div class="col-4 col-md-6 col-lg-6 pt-2 pl-1 ml-0 mr-0 pr-0">
-                                 <a href="https://www.tnagrisnet.tn.gov.in/#" target="_blank"><img src="https://rcstn.in/images/imp-link/AGRIDEPT.png" class="icon-medium"></a>
-                             </div>
                          </div>
              </div></div></nav>
           </div>
