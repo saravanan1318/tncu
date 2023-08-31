@@ -60,9 +60,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="input-group date" id="datetimepickerDOB" readonly="readonly">
-                                            <input class="form-control" data-val="true" data-val-required="The DOB field is required." id="DOB" name="dob" type="date">
-                                        </div>
+                                        <input  type="text" class="form-control" id="DOB" name="dob" placeholder="yyy-mm-dd">
                                     </div>
                                 </div>
                             </div>
@@ -359,7 +357,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <input id="Communityfile" name="Communityfile" type="file" value="" onchange="readUR(this);" required="">
+                                    <input id="Communityfile" name="Communityfile" type="file" value=""  required="">
 
                                 </div>
                             </div>
@@ -383,7 +381,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="" onchange="readUR(this);" required="">
+                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value=""  required="">
 
                                 </div>
                             </div>
@@ -442,7 +440,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value=""  required="">
 
                                 </div>
                             </div>
@@ -479,13 +477,14 @@
                                 <div class="col-md-3">
                                     <select class="form-control valid" id="selectedserviceman" name="selectedserviceman"  required="">
                                         <option value="">-{{__('form.select')}}-</option>
-                                        <option value="Wife">{{__('form.wife')}}</option></option>
+                                        <option value="Self">Self</option>
+                                        <option value="Wife">{{__('form.wife')}}</option>
                                         <option value="Son">{{__('form.son')}}</option>
                                         <option value="Daughter">{{__('form.daghter')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value="" onchange="readUR(this);" required="">
+                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value=""  required="">
 
                                 </div>
                             </div>
@@ -508,7 +507,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value=""  required="">
 
                                 </div>
                             </div>
@@ -531,7 +530,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value=""  required="">
 
                                 </div>
                             </div>
@@ -554,7 +553,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value="" onchange="readUR(this);" required="">
+                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value=""  required="">
 
                                 </div>
                             </div>
@@ -571,7 +570,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        <input id="tccertificatefile" name="tccertificatefile" type="file" value="" onchange="readUR(this);" required="">
+                                        <input id="tccertificatefile" name="tccertificatefile" type="file" value=""  required="">
                                     </div>
                                 </div>
                             </div>
@@ -619,14 +618,19 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" name="asltotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" name="aslsecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" name="aslpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="slgrade" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="slgrade" required=""></td>
                                 </tr>
 
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.hsc')}}<span style="color:red;">*</span>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">
+                                        <select style="width:120px; border:solid 1px #ffffff;" name="hsordiploma" required="">
+                                            <option value="">--{{__('form.choose')}}<span style="color:red;">*</span>--</option>
+                                            <option value="{{__('form.hsc')}}">{{__('form.hsc')}}</option>
+                                            <option value="Diploma(3 Years)">Diploma (3 Years)</option>
+                                        </select>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:100px; border:solid 1px #ffffff;" name="hsmedium">
+                                        <select style="width:100px; border:solid 1px #ffffff;" name="hsmedium" required="">
                                             <option value="">--{{__('form.choose')}}--</option>
                                             <option value="Tamil">{{__('form.tamil')}}l</option>
                                             <option value="English">{{__('form.english')}}</option>
@@ -637,7 +641,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" name="ahstotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" name="ahssecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" name="ahspercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="hsgrade" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="hsgrade" required=""></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.degree')}}
@@ -653,7 +657,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" name="ugtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" name="ugsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" name="ugpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="uggrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="uggrade"></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.graduation')}}
@@ -670,7 +674,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" name="bgtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" name="bgsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" name="bgpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="bggrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="bggrade"></td>
                                 </tr>
                             </tbody>
                             </table>
@@ -738,6 +742,41 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                Payment Type<span style="color:red;">*</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" required="">
+                                        <option value="">- {{__('form.select')}}' -</option>
+                                        <option value="online">online</option>
+                                        <option value="offline">offline</option>
+                                    </select>                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px;display: none;" id="paymenttypediv" >
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challon No"  required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" id="bankname" name="bankname" type="text"  placeholder="Bank Name"  required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Bank District Name"  required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <input id="challonfile" name="challonfile" type="file" value="" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-sm-12 subHeadings">
@@ -756,9 +795,9 @@
 
 
                                     <div class="col-sm-12">
-                                        <input type="file" onchange="readURL(this);" id="UploadImg" name="UploadImg" required="">
+                                        <input type="file" onchange="readURL1(this);" id="UploadImg" name="UploadImg" required="">
                                         <font color="red"><i> {{__('form.less')}}</i></font> <br>
-                                        <img id="cimage" src="{{asset('images/maleIcon.png')}}" alt="your image" style="margin-top: 10px;width:150px ">
+                                        <img id="image1" src="{{asset('images/maleIcon.png')}}" alt="your image" style="margin-top: 10px;width:150px ">
                                     </div>
                                     <div class="col-sm-12">
                                         <span class="field-validation-error" data-valmsg-for="UploadImg" data-valmsg-replace="true"></span>
@@ -774,9 +813,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <input id="fcsign" name="fcsign" type="file" value="" onchange="readUR(this);" required=""><br>
+                                    <input id="fcsign" name="fcsign" type="file" value="" onchange="readUR2(this);" required=""><br>
                                     <font color="red"><i>{{__('form.lessthan')}}</i></font> <br>
-                                    <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
+                                    <img id="image2" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
                         </div>
@@ -788,9 +827,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR(this);" required=""><br>
+                                    <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR3(this);" required=""><br>
                                     <font color="red"><i> {{__('form.lessthan')}}</i></font> <br>
-                                    <img id="csign" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
+                                    <img id="image3" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
                         </div>

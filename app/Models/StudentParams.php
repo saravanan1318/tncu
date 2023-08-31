@@ -17,4 +17,8 @@ class StudentParams extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function icm() {
+        return $this->hasOne('App\Models\Mtr_Icm','id','icm');
+    }
+
 }

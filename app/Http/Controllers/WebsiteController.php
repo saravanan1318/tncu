@@ -159,6 +159,56 @@ class WebsiteController extends Controller
             $parentsignfilename = $destinationPath4.'/'.$parentsignfilename;
         }
 
+        $slgradefilename = "NA";
+        if($request->file('slgrade')) {
+            $subdirectory = "/slgrade";
+            $slgrade = $request->file('slgrade');
+            $slgradefilename = time().'_'.$user->id.'_'.$slgrade->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $slgrade->move($destinationPath4,$slgradefilename);
+            $slgradefilename = $destinationPath4.'/'.$slgradefilename;
+        }
+
+        $hsgradefilename = "NA";
+        if($request->file('hsgrade')) {
+            $subdirectory = "/hsgrade";
+            $hsgrade = $request->file('hsgrade');
+            $hsgradefilename = time().'_'.$user->id.'_'.$hsgrade->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $hsgrade->move($destinationPath4,$hsgradefilename);
+            $hsgradefilename = $destinationPath4.'/'.$hsgradefilename;
+        }
+
+        $uggradefilename = "NA";
+        if($request->file('uggrade')) {
+            $subdirectory = "/uggrade";
+            $uggrade = $request->file('uggrade');
+            $uggradefilename = time().'_'.$user->id.'_'.$uggrade->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $uggrade->move($destinationPath4,$uggradefilename);
+            $uggradefilename = $destinationPath4.'/'.$uggradefilename;
+        }
+
+        $bggradefilename = "NA";
+        if($request->file('bggrade')) {
+            $subdirectory = "/bggrade";
+            $bggrade = $request->file('bggrade');
+            $bggradefilename = time().'_'.$user->id.'_'.$uggrade->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $bggrade->move($destinationPath4,$bggradefilename);
+            $bggradefilename = $destinationPath4.'/'.$bggradefilename;
+        }
+
+        $challonfilename = "NA";
+        if($request->file('challonfile')) {
+            $subdirectory = "/challon";
+            $challonfile = $request->file('challonfile');
+            $challonfilename = time().'_'.$user->id.'_'.$challonfile->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $challonfile->move($destinationPath4,$challonfilename);
+            $challonfilename = $destinationPath4.'/'.$challonfilename;
+        }
+
         $student = new StudentParams;
         $student->user_id = $user->id;
         $student->arrn_number = 0;
@@ -207,36 +257,50 @@ class WebsiteController extends Controller
         $student->asltotalmark = $request->asltotalmark;
         $student->aslsecumark = $request->aslsecumark;
         $student->aslpercentage = $request->aslpercentage;
-        $student->slgrade = $request->slgrade;
+        $student->slgrade = $slgradefilename;
+        $student->hsordiploma = $request->hsordiploma;
         $student->hsmedium = $request->hsmedium;
         $student->hsnameinst = $request->hsnameinst;
         $student->hsYOP = $request->hsYOP;
         $student->ahstotalmark = $request->ahstotalmark;
         $student->ahssecumark = $request->ahssecumark;
         $student->ahspercentage = $request->ahspercentage;
-        $student->hsgrade = $request->hsgrade;
+        $student->hsgrade = $hsgradefilename;
         $student->ugmedium = $request->ugmedium;
         $student->ugnameinst = $request->ugnameinst;
         $student->ugYOP = $request->ugYOP;
         $student->ugtotalmark = $request->ugtotalmark;
         $student->ugsecumark = $request->ugsecumark;
         $student->ugpercentage = $request->ugpercentage;
-        $student->uggrade = $request->uggrade;
+        $student->uggrade = $uggradefilename;
         $student->bgmedium = $request->bgmedium;
         $student->bgnameinst = $request->bgnameinst;
         $student->bgYOP = $request->bgYOP;
         $student->bgtotalmark = $request->bgtotalmark;
         $student->bgsecumark = $request->bgsecumark;
         $student->bgpercentage = $request->bgpercentage;
-        $student->bggrade = $request->bggrade;
+        $student->bggrade = $bggradefilename;
         $student->icm = $request->icm;
         $student->Amount = $request->Amount;
+        $student->challonno = $request->challonno;
+        $student->bankname = $request->bankname;
+        $student->paymentdistrict = $request->paymentdistrict;
+        $student->challonfile = $challonfilename;
         $student->UploadImg = $UploadImgfilename;
         $student->fcsign = $fcsignfilename;
         $student->parentsign = $parentsignfilename;
         $student->save();
 
-        $arrn_number = $request->icm.date("Y").sprintf("%06d", $student->id);
+        $gender = "F";
+
+        if($student->gender == "Male"){
+            $gender = "M";
+        }
+        
+        $icmname = Mtr_icm::where('id',$student->icm)->first();
+      
+        $icmname =  strtoupper(substr($icmname['icm_name'], 0, 3));
+        $arrn_number = $icmname.date("Y").$gender.sprintf("%06d", $student->id);
         $student->arrn_number = $arrn_number;
         $student->update();
 

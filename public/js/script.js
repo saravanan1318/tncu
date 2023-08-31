@@ -1,19 +1,33 @@
-// let today = new Date(),
-// day = today.getDate(),
-// month = today.getMonth()+1, //January is 0
-// year = today.getFullYear()-18;
-// if(day<10){
-//     day='0'+day
-// } 
-// if(month<10){
-//     month='0'+month
-// }
-// today = year+'-'+month+'-'+day;
+
 // console.log(today);
 // document.getElementById("DOB").setAttribute("max", today);
 // document.getElementById("DOB").setAttribute("value", today);
+$( function() {
 
+    let today = new Date(),
+    day = today.getDate(),
+    month = today.getMonth()+1, //January is 0
+    year = today.getFullYear()-18;
+    if(day<10){
+        day='0'+day
+    } 
+    if(month<10){
+        month='0'+month
+    }
+    today = year+'-'+month+'-'+day;
 
+    $("#DOB").datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-99:-18',
+        maxDate: new Date(today),
+        onSelect: function(dateText) {
+            console.log("Selected date: " + dateText + "; input's current value: " + this.value);
+            setAge(this.value)
+        }
+      });
+  });
 function printDiv(){
     console.log("printDiv");
     var divContents = document.getElementById("printdiv").innerHTML;
@@ -52,6 +66,16 @@ $('#isserviceman').on('change', function() {
     }
 });
 
+$('#paymenttype').on('change', function() {
+    if(this.value == "offline"){
+        $("#paymenttypediv").show();
+        $("#btnPayment").prop('disabled', false);
+    }else{
+        $("#paymenttypediv").hide();
+        alert("Payment mode not enabled kindly do offline");
+        $("#btnPayment").prop('disabled', true);
+    }
+});
 
 $('#divorcee').on('change', function() {
     if(this.value == "Yes"){
@@ -128,7 +152,7 @@ date.setDate(date.getDate() - 1);
 
 function setAge(d) {
 
-
+    console.log("d",d);
     var Ag = moment().diff(d, 'years', true);
 
 
@@ -2472,13 +2496,13 @@ $(document).ready(function () {
 
 
 //img
-function readURL(input) {
+function readURL1(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         //alert(reader);
 
         reader.onload = function (e) {
-            $('#cimage')
+            $('#image1')
                 .attr('src', e.target.result);
             //alert(e.target.result);
         };
@@ -2487,12 +2511,12 @@ function readURL(input) {
     }
 }
 
-function readUR(input) {
+function readUR2(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#csign')
+            $('#image2')
                 .attr('src', e.target.result);
         };
 
@@ -2500,6 +2524,18 @@ function readUR(input) {
     }
 }
 
+function readUR3(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#image3')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 $(document).ready(function (e) {
 
@@ -2597,16 +2633,51 @@ $(document).ready(function (e) {
 
     });
 
-
-    $("#btnPayment").click(function (e) {
-
-        console.log("Form is trying to submit");
-        e.preventDefault();
-        if($("#regform").validate()){
-            $("#regform").submit();
-        }
-    
+    $("#regform").validate({
+    focusCleanup: true,
+    onfocusout: function(element) {
+        // "eager" validation
+        this.element(element);  
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
     });
+
+    $.validator.addMethod("maxDate", function(value, element) {
+      
+
+        let today = new Date(),
+        day = today.getDate(),
+        month = today.getMonth()+1, //January is 0
+        year = today.getFullYear()-18;
+        if(day<10){
+            day='0'+day
+        } 
+        if(month<10){
+            month='0'+month
+        }
+        today = year+'-'+month+'-'+day;
+        var curDate = new Date(today);
+        var inputDate = new Date(value);
+        if (inputDate < curDate)
+            return true;
+        return false;
+    }, "Selected date is not eligible");
+
+   
+
+    // $("#regform").validate(
+    //     {
+    //         // rules, options, etc.,
+    //         onfocusout: function(element) {
+    //             // "eager" validation
+    //             this.element(element);  
+    //         }
+    //     }
+    // )
+
+  
 
 
     // $("#btnPayment").click(function(e){

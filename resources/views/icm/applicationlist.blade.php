@@ -30,6 +30,7 @@
                         <th scope="col">#</th>
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
+                        <th scope="col">Age</th>
                         <th scope="col">View Application</th>
                         <th scope="col">View TC certificate</th>
                         <th scope="col">View Community certificate</th>
@@ -41,6 +42,7 @@
                         <th scope="row">{{ $studentData->id }}</th>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
+                        <td>{{ $studentData->age }}</td>
                         <td><a href='/applicationreview/{{$studentData->id}}'>view</a></td>
                         <td><a href='/{{$studentData->tccertificatefile}}'>view</a></td>
                         <td><a href='/{{$studentData->Communityfile}}'>view</a></td>

@@ -9,7 +9,7 @@
            <p style="color: green"> Congratulations <br> Your Application number generated successfully </p><br>
            <h2> Full Name: {{$Studentdetails->fullname}}</h2>
            <h2> Email: {{$Studentdetails->email}}</h2>
-           <h2> ARR No: {{$Studentdetails->arrn_number}}</h2>
+           <h2> ARN No: {{$Studentdetails->arrn_number}}</h2>
            <a class="btn btn-success" href="/applicationreview/{{$Studentdetails->id}}"> Preview Application </a>
         </div>
         <div class="col-md-2">
