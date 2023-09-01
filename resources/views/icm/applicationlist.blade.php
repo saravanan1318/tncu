@@ -31,11 +31,9 @@
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
                         <th scope="col">Age</th>
-                        <th scope="col">Aauthar No</th>
-                        <th scope="col">Aauthar No</th>
+                        <th scope="col">Aadhaar No</th>
                         <th scope="col">View Application</th>
                         <th scope="col">View TC certificate</th>
-                        <th scope="col">View Community certificate</th>
                         <th scope="col">View Community certificate</th>
                     </tr>
                 </thead>
