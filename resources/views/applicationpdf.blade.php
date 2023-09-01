@@ -19,9 +19,9 @@
             @csrf
             <fieldset>
                 <legend style="text-align: center;padding:10px;background-color:#194565;color:#fff">{{ __('form.heading') }}</legend>
-    
+
                 <div class="container-fluid">
-    
+
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
                             <b>{{__('form.personal')}}</b>
@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Mobilenumber field is required." id="Mobile1" maxlength="10" minlength="10" name="mobile1" placeholder="Mobile" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" min="10" value="{{$mobile1}}" onkeyup="validateLength(this)" required="" readonly="">
-    
+
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                     <input autocomplete="off" class="form-control" id="Mobile2" maxlength="10" name="mobile2" placeholder="Alternate mobile number" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="{{$mobile2}}" readonly="">
                                 </div>
                             </div>
-    
+
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="AadharNumber" maxlength="12" data-val="true" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="{{$aadhar}}" required="" readonly="">
+                                    <input autocomplete="off" class="form-control" id="AadharNumber" maxlength="12" data-val="true" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhaar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="{{$aadhar}}" required="" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-    
+
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-6">
                             <div class="editor-label">
@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         @if(!empty($otherreligion))
                         <div class="col-md-6" id="otherreligion" style="display: none;">
                             <div class="editor-label">
@@ -312,7 +312,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-    
+
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Subcaste field is required." id="subcaste" maxlength="20" name="subcaste" onkeydown="return true" placeholder="Sub Caste" type="text" value="{{$subcaste}}" required="" readonly="">
                                 </div>
                             </div>
@@ -333,7 +333,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
@@ -452,7 +452,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"> Percentage</td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">Grade/Class</td>
                                 </tr>
-        
+
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">S.S.L.C
                                     </td>
@@ -466,7 +466,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="aslpercentage"  value="{{$aslpercentage}}" readonly=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:70px; border:solid 1px #ffffff;" name="slgrade"  value="{{$slgrade}}" readonly=""></td>
                                 </tr>
-        
+
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">HSC (+2)
                                     </td>
