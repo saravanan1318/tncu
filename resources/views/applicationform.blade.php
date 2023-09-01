@@ -754,7 +754,7 @@
                                         <option value="">- {{__('form.select')}}' -</option>
                                         <option value="online">online</option>
                                         <option value="offline">offline</option>
-                                    </select>                                
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -769,7 +769,7 @@
                                     <input class="form-control" id="bankname" name="bankname" type="text"  placeholder="Bank Name"  required="">
                                 </div>
                                 <div class="col-md-3">
-                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Bank District Name"  required="">
+                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name"  required="">
                                 </div>
                                 <div class="col-md-3">
                                     <input id="challonfile" name="challonfile" type="file" value="" required="">
