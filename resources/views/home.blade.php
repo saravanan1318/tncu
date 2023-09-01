@@ -13,7 +13,7 @@
                    <ul class="list-aggregate" id="">
                       <li>
                          <a href="/applicationform" style="color: darkred;">
-                           Online Student registration form
+                           Diplomo Course Online Application
                             <img src="{{asset('images/new.gif')}}" alt="Blink New">
                          </a>
                       </li>
