@@ -43,7 +43,7 @@ return [
     'bcm' => 'BCM- Backward Class Muslim',
     'mbc/dnc' => 'MBC/DNC- Most Backward Class/Denotified Community',
     'sca' => 'SCA- Scheduled Caste Arunthathiar',
-    'oc' => 'OC- OC- Others',
+    'oc' => 'OC- Others',
     'select' => 'Select',
     'communityupload' => ' Community Certificate file upload',
     'pwd' => 'Do you belong to Differently Abled Category (yes/no)',

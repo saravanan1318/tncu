@@ -42,7 +42,7 @@ return [
     'bcm' => 'BCM- Backward Class Muslim',
     'mbc/dnc' => 'MBC/DNC- Most Backward Class/Denotified Community',
     'sca' => 'SCA- Scheduled Caste Arunthathiar',
-    'oc' => 'OC- OC- Others',
+    'oc' => 'OC- Others',
     'communityupload' => 'சாதி சான்றிதழ் பதிவேற்றம்',
     'pwd' => 'நீங்கள் மாற்றுத் திறனாளிகள் பிரிவைச் சேர்ந்தவரா?',
     'no' => 'இல்லை',

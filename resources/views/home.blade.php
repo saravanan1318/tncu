@@ -5,7 +5,7 @@
     <div class="row">
        <div class="col-sm-12 col-md-3 mb-4">
           <!-- <h6 style="text-align: center; background-color: #c00; padding: 8px; color: white;">
-             <i class="fa fa-bell" aria-hidden="true"></i>IMPORTANT NOTIFICATIONS</h6> -->
+             <i class="fa fa-bell" aria-hidden="false"></i>IMPORTANT NOTIFICATIONS</h6> -->
           <nav class="nav flex-column d-block imponoti mb-2 p-2 ">
              <h6><i class='fa fa-bell'></i>IMPORTANT NOTIFICATIONS</h6>
              <div class="block-hdnews" >
@@ -175,83 +175,19 @@
                 <h6>
                    <center style="background-color: #028482; padding: 8px; color: #fff; font-weight: 700;"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;IMPORTANT LINKS</center>
                 </h6>
-                <!--<a class="nav-link" href="#"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Journals</a>
-                <a class="nav-link" href="#"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Journals</a>
-                <a class="nav-link" href="#"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Journals</a>-->
+                <a class="nav-link" href="./doc/DCMProspectus-2023.pdf"><i class="fa fa-link" aria-hidden="true"></i>How To Apply</a>
+                <a class="nav-link" href="/doc/Allicm2023.pdf"><i class="fa fa-link" aria-hidden="true"></i>Help To Contact</a>
+              <!--  <a class="nav-link" href="#"><i class="fa fa-link" aria-hidden="true"></i>FAQ</a> -->
 
 
                  <div class="card-body list-group-design3 p-0">
                      <div class="implinks" id="implink">
-                         <div class="row">
 
-
-                         </div>
-             </div></div></nav>
+                     </div>
+                </div>
+            </nav>
           </div>
        </div>
     </div>
- </div>
- {{--  <div class="container">  --}}
-    <h1 class="text-center">Recent Events</h1>
-    <div class="row">
-       <div class="featured-carousel owl-carousel">
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-          <div class="item">
-             <div class="work">
-                <div class="img d-flex align-items-center justify-content-center rounded">
-                   <img class="img d-flex align-items-center justify-content-center rounded" src="{{asset('images/recentdummy.webp')}}" alt="No image found" >
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
+
 @endsection
