@@ -165,7 +165,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b>{{__('form.Paddress')}}</b>
+                            <b>{{__('form.address')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -243,7 +243,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-12 subHeadings">
-                            <b> {{__('form.address')}}</b>
+                            <b> {{__('form.Paddress')}}</b>
                         </div>
                     </div>
                     <div class="clearfix"></div>
