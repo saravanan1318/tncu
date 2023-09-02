@@ -191,7 +191,7 @@
        </div>
     </div>
  </div>
- <div class="container">
+ {{--  <div class="container">  --}}
     <h1 class="text-center">Recent Events</h1>
     <div class="row">
        <div class="featured-carousel owl-carousel">
