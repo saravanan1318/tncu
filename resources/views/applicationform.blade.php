@@ -139,8 +139,6 @@
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Religion field is required." id="Religion" name="religion" onchange="otherregion()" required="">
                                         <option value="">- {{__('form.select')}}-</option>
-                                        <option value="Athiest">{{__('form.atheist')}}</option>
-                                        <option value="Budhist">{{__('form.buddhist')}}</option>
                                         <option value="Christian">{{__('form.christian')}}</option>
                                         <option value="Hindu">{{__('form.hindu')}}</option>
                                         <option value="Jain">{{__('form.jain')}}</option>

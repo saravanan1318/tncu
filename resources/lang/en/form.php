@@ -14,7 +14,7 @@ return [
     'altmobile' => 'Alternate Mobile Number',
     'aadhar' => 'Aadhar Number',
     'email' => 'Email ID',
-    'pg' => 'Parents/Gaurdian',
+    'pg' => 'Parents/Guardian',
     'religion' => 'Religion',
     'athiest' => 'Athiest',
     'budhist' => 'Budhist',
