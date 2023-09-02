@@ -324,7 +324,8 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);  
 
-        $Studentdetails = StudentParams::where('id',$request->id)->first();
+        $Studentdetails = StudentParams::with('mtr_icm')->where('id',$request->id)->first();
+        //dd($Studentdetails);
         return view("applicationreview",compact('Studentdetails'));
     }
 
