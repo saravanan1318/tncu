@@ -761,15 +761,15 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label>Challon No.</label>
-                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challon No"  required="">
+                                    <label>Challan No.</label>
+                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challan No"  required="">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Bank Name</label>
                                     <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name"  required="">
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Bank District</label>
+                                    <label>Branch Name</label>
                                     <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name"  required="">
                                 </div>
                                 <div class="col-md-3">
