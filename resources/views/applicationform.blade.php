@@ -233,7 +233,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
-                        <div class="col-md-10">
+                        <div class="col-md-7">
                             <div class="editor-label">
                                 <b> {{__('form.samepermanent')}}</b>
                                 <input type="checkbox" name="caspa" id="caspa" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: right; margin-left: 0.5em;" >
@@ -725,6 +725,19 @@
                                     {{__('form.details3')}}.
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-sm-12 subHeadings">
+                            <b>{{__('form.Pdeclaration')}}</b>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="checkbox" id="declaration3" name="declaration3" data-val="true" data-val-required="This field is required." required="" style="width:1.5em; height:1.5em; position: relative; display:inline-block; border: 1px solid #a9a9a9; float: left; margin-right: 0.5em;" >
+                            {{__('form.details4')}}.
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
@@ -827,6 +840,7 @@
                                         {{__('form.psign')}}<span style="color:red;">*</span>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-12">
                                     <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR3(this);" required=""><br>
                                     <font color="red"><i> {{__('form.lessthan')}}</i></font> <br>
