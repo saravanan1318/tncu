@@ -10,14 +10,14 @@ $( function() {
     year = today.getFullYear()-18;
     if(day<10){
         day='0'+day
-    } 
+    }
     if(month<10){
         month='0'+month
     }
     today = year+'-'+month+'-'+day;
 
     $("#DOB").datepicker({
-        dateFormat: 'dd-mm-yy',
+        dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true,
         yearRange: '-99:-18',
@@ -115,7 +115,7 @@ $('#asltotalmark,#aslsecumark,#aslpercentage').on('blur', function() {
 $('#ahstotalmark,#ahssecumark,#ahspercentage').on('blur', function() {
     var ahstotalmark = parseInt($("#ahstotalmark").val());
     var ahssecumark = parseInt($("#ahssecumark").val());
- 
+
     if(ahssecumark != "" && ahssecumark != ""){
      var ahspercentage = ahssecumark/ahstotalmark * 100;
      $("#ahspercentage").val(ahspercentage);
@@ -126,7 +126,7 @@ $('#ahstotalmark,#ahssecumark,#ahspercentage').on('blur', function() {
 $('#ugtotalmark,#ugsecumark,#ugpercentage').on('blur', function() {
     var ugtotalmark = parseInt($("#ugtotalmark").val());
     var ugsecumark = parseInt($("#ugsecumark").val());
- 
+
     if(ugtotalmark != "" && ugsecumark != ""){
      var ugpercentage = ugsecumark/ugtotalmark * 100;
      $("#ugpercentage").val(Math.round(ugpercentage * 100) / 100);
@@ -136,7 +136,7 @@ $('#ugtotalmark,#ugsecumark,#ugpercentage').on('blur', function() {
  $('#bgtotalmark,#bgsecumark,#bgpercentage').on('blur', function() {
     var bgtotalmark = parseInt($("#bgtotalmark").val());
     var bgsecumark = parseInt($("#bgsecumark").val());
- 
+
     if(bgtotalmark != "" && bgsecumark != ""){
      var bgpercentage = bgsecumark/bgtotalmark * 100;
      $("#bgpercentage").val(Math.round(bgpercentage * 100) / 100);
@@ -2637,7 +2637,7 @@ $(document).ready(function (e) {
     focusCleanup: true,
     onfocusout: function(element) {
         // "eager" validation
-        this.element(element);  
+        this.element(element);
     },
     submitHandler: function(form) {
         form.submit();
@@ -2645,7 +2645,7 @@ $(document).ready(function (e) {
     });
 
     $.validator.addMethod("maxDate", function(value, element) {
-      
+
 
         let today = new Date(),
         day = today.getDate(),
@@ -2653,7 +2653,7 @@ $(document).ready(function (e) {
         year = today.getFullYear()-18;
         if(day<10){
             day='0'+day
-        } 
+        }
         if(month<10){
             month='0'+month
         }
@@ -2665,19 +2665,19 @@ $(document).ready(function (e) {
         return false;
     }, "Selected date is not eligible");
 
-   
+
 
     // $("#regform").validate(
     //     {
     //         // rules, options, etc.,
     //         onfocusout: function(element) {
     //             // "eager" validation
-    //             this.element(element);  
+    //             this.element(element);
     //         }
     //     }
     // )
 
-  
+
 
 
     // $("#btnPayment").click(function(e){
