@@ -94,6 +94,6 @@ return [
     'lessthan' => '(png / jpg/ Jpeg) Less than 20 KB',
     'details' => "If I am selected  as  a trainee by your institute of cooperative management, I hereby abide the laws, rules and discipline of the training centre and regularly participate in the classes and examination by maintaining regular attendance and avoiding leaves. Also participate in monthly parents meeting regarding monthly attendance and training. If unable to continue the training due to unavoidable reasons, I agree that I will not demand to refund the tuition fees paid. Also I will attend the classroom examinations without fail. In case of violating legal conditions of the training institute, I agree to be removed from the training without any prior notice.",
     'details2' => "I submit my self-declaration to the principal with evidence that I am not working in any other company and getting salary by signing in attendance register during my training days.",
-    'details3' => "	I am bound to take any action if it comes to the notice of the principal that if I have submitted wrong information and I give an undertaking that I will not pursue any court of departmental case in this regard",
+    'details3' => "I am bound to take any action if it comes to the notice of the principal that if I have submitted wrong information and I give an undertaking that I will not pursue any court of departmental case in this regard",
     'psign' => "Upload your Parents Signature",
 ];
