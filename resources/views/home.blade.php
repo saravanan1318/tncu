@@ -13,7 +13,7 @@
                    <ul class="list-aggregate" id="">
                       <li>
                          <a href="/applicationform" style="color: darkred;">
-                           Diploma Course Online Application
+                           Diploma Course Online Application 2023 - 2024
                             <img src="{{asset('images/new.gif')}}" alt="Blink New">
                          </a>
                       </li>
