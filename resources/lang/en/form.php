@@ -25,7 +25,7 @@ return [
     'sikh' => 'Sikh',
     'others' => 'Others',
     'otherreligion' => ' Enter Other Religion',
-    'address' => 'Address for Communication',
+    'address' => ' Permanent Address',
     'door' => 'Door No./Flat No./Plot No.',
     'street' => 'Street',
     'city' => 'city',
