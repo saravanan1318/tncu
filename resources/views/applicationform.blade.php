@@ -60,7 +60,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input  type="text" class="form-control" id="DOB" name="dob" placeholder="DD-MM-YYYY">
+                                        <input  type="text" class="form-control" id="DOB" name="dob" placeholder="DD-MM-YYYY" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -761,12 +761,15 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-3">
+                                    <label>Challon No.</label>
                                     <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challon No"  required="">
                                 </div>
                                 <div class="col-md-3">
+                                    <label>Bank Name</label>
                                     <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name"  required="">
                                 </div>
                                 <div class="col-md-3">
+                                    <label>Bank District</label>
                                     <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name"  required="">
                                 </div>
                                 <div class="col-md-3">

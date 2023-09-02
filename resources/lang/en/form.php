@@ -76,7 +76,7 @@ return [
     'tm' => 'Total Marks',
     'ms' => 'Marks Secured',
     'percentage' => 'Percentage',
-    'grade' => 'Grade/Class',
+    'grade' => 'Upload Marksheet',
     'sslc' => 'S.S.L.C',
     'tamil' => 'Tamil',
     'english' => 'English',

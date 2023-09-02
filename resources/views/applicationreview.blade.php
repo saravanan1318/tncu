@@ -468,7 +468,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">HSC (+2)
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{$Studentdetails->hsordiploma}}
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
                                         <input autocomplete="off" id="hsmedium" name="hsmedium" type="text" value="{{$Studentdetails->hsmedium}}" required="">
@@ -517,11 +517,11 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="editor-label">
-                                        Choose ICM<span style="color:red;">*</span>
+                                        ICM<span style="color:red;">*</span>
                                     </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <input autocomplete="off" id="icm" name="icm" type="text" value="{{$Studentdetails->icm}}" required="" readonly="">
+                                    <input autocomplete="off" id="icm" name="icm" type="text" value="{{$Studentdetails->mtr_icm->icm_name}}" required="" readonly="">
                                 </div>
                             </div>
                         </div>
@@ -570,25 +570,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Challon No.</label>
+                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challon No" value="{{$Studentdetails->challonno}}" required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Bank Name</label>
+                                    <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name" value="{{$Studentdetails->bankname}}" required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Bank District</label>
+                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name" value="{{$Studentdetails->paymentdistrict}}" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-sm-12 subHeadings">
                             <b>Upload Documents</b>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 10px">
-                        <div class="col-md-6">
-                            <div class="col-sm-6">
+                        <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="editor-label">Photo</div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <img id="cimage" src="{{asset($Studentdetails->UploadImg)}}" alt="your image" style="margin-top: 10px;width:150px ">
+                                        <img id="cimage" src="{{asset($Studentdetails->UploadImg)}}" alt="your image" style="margin-top: 10px;width:150px;height:150px ">
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="editor-label">
@@ -596,7 +613,19 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <img id="csign" src="{{asset($Studentdetails->fcsign)}}" alt="your image" style="margin-top: 30px;width:130px ">
+                                    <img id="csign" src="{{asset($Studentdetails->fcsign)}}" alt="your image" style="margin-top: 30px;width:130px;height:150px ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="editor-label">
+                                       Parent Signature
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <img id="csign" src="{{asset($Studentdetails->parentsign)}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
                             </div>
                         </div>
@@ -607,7 +636,7 @@
                         <div class="col-sm-4">
                             <p style="text-align: center;">
                                 <!--<button type="button" id="btnPreview" class="btnStyle">Preview</button> -->
-                                <a href="{{url('applicationpdf/'.$Studentdetails->id)}}" class="btnStyle btn btn-primary">Download Application</a>
+                                {{-- <a href="{{url('applicationpdf/'.$Studentdetails->id)}}" class="btnStyle btn btn-primary">Download Application</a> --}}
                                 <!--                <input type="button" name="btnPayment" id="btnPayment" value="Make Payment" class="btnStyle">-->
                             </p>
                         </div>

@@ -17,7 +17,7 @@ $( function() {
     today = year+'-'+month+'-'+day;
 
     $("#DOB").datepicker({
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
         yearRange: '-99:-18',
@@ -138,7 +138,7 @@ $('#ugtotalmark,#ugsecumark,#ugpercentage').on('blur', function() {
     var bgsecumark = parseInt($("#bgsecumark").val());
  
     if(bgtotalmark != "" && bgsecumark != ""){
-     var aslpercentage = bgsecumark/bgtotalmark * 100;
+     var bgpercentage = bgsecumark/bgtotalmark * 100;
      $("#bgpercentage").val(Math.round(bgpercentage * 100) / 100);
     }
  });
