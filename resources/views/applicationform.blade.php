@@ -310,7 +310,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="editor-label">
-                                {{__('form.Nationality')}} <span style="color:red;">*</span>
+                                {{__('form.nationality')}} <span style="color:red;">*</span>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
