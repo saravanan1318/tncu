@@ -230,6 +230,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="editor-label">
+                                {{__('form.nationality')}} <span style="color:red;">*</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Nationality field is required." id="Nationality" maxlength="50" name="Nationality" placeholder="Nationality" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
