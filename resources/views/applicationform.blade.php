@@ -324,7 +324,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Nationality field is required." id="Nationality" maxlength="50" name="Nationality" placeholder="Nationality" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="255" data-val-required="The Nationality field is required." id="Nationality" maxlength="255" name="Nationality" placeholder="Nationality" type="text" value=""  required="">
                                 </div>
                             </div>
                         </div>
