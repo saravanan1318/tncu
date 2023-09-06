@@ -315,6 +315,7 @@ class WebsiteController extends Controller
         session()->put('locale', $request->lang);  
 
         $Studentdetails = StudentParams::where('id',$request->id)->first();
+        $result = (new PHPMailerController)->composeEmail($Studentdetails['id']);
 
         return view("applicationacknowledgement",compact('Studentdetails'));
     }
@@ -329,17 +330,29 @@ class WebsiteController extends Controller
         return view("applicationreview",compact('Studentdetails'));
     }
 
-    function applicationpdf(Request $request){
+    function applicationpdfold(Request $request){
 
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);  
 
         $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
 
+        $pdf = PDF::loadView('applicationpdf', compact('Studentdetails'));
+
+        return $pdf->download('sample.pdf');
         //dd($Studentdetails);
-        return view("applicationreview",compact('Studentdetails'));
+       // return view("applicationpdf",compact('Studentdetails'));
         // $pdf = PDF::loadView('applicationpdf', $Studentdetails);
         // return $pdf->stream('resume.pdf');
+
+    }
+    function applicationpdf(Request $request){
+
+        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
+
+        $pdf = PDF::loadView('applicationpdf', compact('Studentdetails'));
+
+        return $pdf->download('sample.pdf');
 
     }
 }
