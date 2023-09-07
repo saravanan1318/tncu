@@ -6,14 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\StudentParams;
 use App\Models\Mtr_Icm;
-use PDF;
 use App;
 use Hash;
+use PDF; 
+use Illuminate\Support\Facades\Storage;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 class WebsiteController extends Controller
 {
     //
 
+    protected $fpdf;
+ 
+    public function __construct()
+    {
+        $this->fpdf = new Fpdf;
+    }
+    
     function index(){
         return view("home");
     }
@@ -346,13 +355,156 @@ class WebsiteController extends Controller
         // return $pdf->stream('resume.pdf');
 
     }
-    function applicationpdf(Request $request){
+    function applicationpdfold2(Request $request){
 
         $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
+
+        //return view("applicationpdf",compact('Studentdetails'));
 
         $pdf = PDF::loadView('applicationpdf', compact('Studentdetails'));
 
         return $pdf->download('sample.pdf');
 
     }
+
+    function applicationpdf(Request $request){
+
+        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
+
+        $this->fpdf->AddPage();
+        $this->fpdf->SetFont( 'Helvetica', 'B', 14 );
+        $this->fpdf->Cell( 0, 10, 'APPLICATION FORM FOR DIPLOMA IN COOPERATIVE MANAGEMENT ', 0, 1, "C" );
+        $this->fpdf->Cell( 0, 10, 'Tamil Nadu Cooperative Union', 0, 1, "C" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 12 );
+        $dAid = 'Application Registration Number: ' . $Studentdetails['arrn_number'];
+        $this->fpdf->Cell( 0, 10, $dAid, 0, 1, "R" );
+        $this->fpdf->SetLineWidth( 0.5 );
+        $this->fpdf->Line( 10, 40, 200, 40 );
+        $this->fpdf->Ln();
+
+        $this->fpdf->SetLineWidth( 0.1 );
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'Post applied for', 1, 0, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, 'DIPLOMA IN COOPERATIVE MANAGEMENT', 1, 1, "C" );
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'Advertisement No. and Date', 1, 0, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, '1050/PE3/2017(1-6)   20.06.2018', 1, 1, "C" );
+        $this->fpdf->Ln();
+        $this->fpdf->Image( $Studentdetails['UploadImg'], 160, 43, 28 );
+        
+        $regDateTime = $Studentdetails['created_at'];
+        $date       = date( "d-m-Y", strtotime($regDateTime) );
+        $date1      = date( "h:i:s A" , strtotime($regDateTime));
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'Date of Registration', 1, 0, "L" );
+
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, $date, 1, 1, "C" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'Time', 1, 0, "L" );
+
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, $date1, 1, 1, "C" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'IP Address', 1, 0, "L" );
+
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, $ip_address, 1, 1, "C" );
+
+        $this->fpdf->Ln();
+        $this->fpdf->Ln();
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 12 );
+        $this->fpdf->Cell( 40, 5, 'Personal Details', 0, 0, "L" );
+        $this->fpdf->Ln();
+        $this->fpdf->SetLineWidth( 0.1 );
+        $this->fpdf->Line( 10, $this->fpdf->GetY(), 200, $this->fpdf->GetY() );
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Name', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Gender', 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['fullname'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['gender'], 0, 1, "L" );
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Date of Birth', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Age', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, date("d-m-Y",strtotime($Studentdetails['dob'])), 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['age'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Mobile number', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Alternate mobile number', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['mobile1'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['mobile2'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Aadhar Number', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Email', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['aadhar'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['email'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Parent / Guardian', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Religion', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['parent'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['religion'], 0, 1, "L" );
+        
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Address for Communication', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Permanent Address', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['plotno'].','.$Studentdetails['streetname'].','.$Studentdetails['city'].','.$Studentdetails['district'].','.$Studentdetails['state'].','.$Studentdetails['pincode'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['pplotno'].','.$Studentdetails['pstreetname'].','.$Studentdetails['pcity'].','.$Studentdetails['pdistrict'].','.$Studentdetails['pstate'].','.$Studentdetails['ppincode'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Community', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Differently Abled', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['religion'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['isdifferentlyabled'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Destitute Widow', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Ex-Serviceman Category', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['iswidow'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['isserviceman'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Divorcee', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Refugee from Srilanka or Burma', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['divorcee'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['refugee'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Athlete (National/State/District level)', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['athlete'], 0, 1, "L" );
+
+        $this->fpdf->AddPage();
+
+        $this->fpdf->Image( $Studentdetails['fcsign'], 100, 43, 28 );
+        $this->fpdf->Image( $Studentdetails['parentsign'], 160, 43, 28 );
+
+        $this->fpdf->Output();
+        exit;
+    }
+
 }
