@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\IcmController;
 use App\Http\Controllers\LoginFormController;
-
+use App\Http\Controllers\PHPMailerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-
+Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
