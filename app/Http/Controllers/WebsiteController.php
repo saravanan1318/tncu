@@ -385,7 +385,7 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetLineWidth( 0.1 );
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
-        $this->fpdf->Cell( 50, 5, 'Post applied for', 1, 0, "L" );
+        $this->fpdf->Cell( 50, 5, 'Course applied for', 1, 0, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 70, 5, 'DIPLOMA IN COOPERATIVE MANAGEMENT', 1, 1, "C" );
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
