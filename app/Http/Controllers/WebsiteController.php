@@ -8,7 +8,7 @@ use App\Models\StudentParams;
 use App\Models\Mtr_Icm;
 use App;
 use Hash;
-use PDF; 
+use PDF;
 use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
@@ -17,12 +17,12 @@ class WebsiteController extends Controller
     //
 
     protected $fpdf;
- 
+
     public function __construct()
     {
         $this->fpdf = new Fpdf;
     }
-    
+
     function index(){
         return view("home");
     }
@@ -30,14 +30,14 @@ class WebsiteController extends Controller
     function notification(Request $request){
 
         App::setLocale($request->lang);
-        session()->put('locale', $request->lang);  
+        session()->put('locale', $request->lang);
         return view("notification");
     }
 
     function applicationform(Request $request){
 
         App::setLocale($request->lang);
-        session()->put('locale', $request->lang);  
+        session()->put('locale', $request->lang);
 
         $icmlists = Mtr_Icm::all();
         return view("applicationform",compact('icmlists'));
@@ -305,9 +305,9 @@ class WebsiteController extends Controller
         if($student->gender == "Male"){
             $gender = "M";
         }
-        
+
         $icmname = Mtr_icm::where('id',$student->icm)->first();
-      
+
         $icmname =  strtoupper(substr($icmname['icm_name'], 0, 3));
         $arrn_number = $icmname.date("Y").$gender.sprintf("%06d", $student->id);
         $student->arrn_number = $arrn_number;
@@ -321,7 +321,7 @@ class WebsiteController extends Controller
     function applicationacknowledgement(Request $request){
 
         App::setLocale($request->lang);
-        session()->put('locale', $request->lang);  
+        session()->put('locale', $request->lang);
 
         $Studentdetails = StudentParams::where('id',$request->id)->first();
         $result = (new PHPMailerController)->composeEmail($Studentdetails['id']);
@@ -332,7 +332,7 @@ class WebsiteController extends Controller
     function applicationreview(Request $request){
 
         App::setLocale($request->lang);
-        session()->put('locale', $request->lang);  
+        session()->put('locale', $request->lang);
 
         $Studentdetails = StudentParams::with('mtr_icm')->where('id',$request->id)->first();
         //dd($Studentdetails);
@@ -342,7 +342,7 @@ class WebsiteController extends Controller
     function applicationpdfold(Request $request){
 
         App::setLocale($request->lang);
-        session()->put('locale', $request->lang);  
+        session()->put('locale', $request->lang);
 
         $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
 
@@ -393,8 +393,8 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 70, 5, '1050/PE3/2017(1-6)   20.06.2018', 1, 1, "C" );
         $this->fpdf->Ln();
-        $this->fpdf->Image( 'https://coop.tsdatamine.com/'.$Studentdetails['UploadImg'], 160, 43, 28 );
-        
+        $this->fpdf->Image( 'http://127.0.0.1:8000/'.$Studentdetails['UploadImg'], 160, 43, 28 );
+
         $regDateTime = $Studentdetails['created_at'];
         $date       = date( "d-m-Y", strtotime($regDateTime) );
         $date1      = date( "h:i:s A" , strtotime($regDateTime));
@@ -465,7 +465,7 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['parent'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['religion'], 0, 1, "L" );
-        
+
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Address for Communication', 0, 0, "L" );
         $this->fpdf->Cell( 80, 10, 'Permanent Address', 0, 1, "L" );
