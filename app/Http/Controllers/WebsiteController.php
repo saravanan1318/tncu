@@ -393,7 +393,7 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 70, 5, '1050/PE3/2017(1-6)   20.06.2018', 1, 1, "C" );
         $this->fpdf->Ln();
-        $this->fpdf->Image( $Studentdetails['UploadImg'], 160, 43, 28 );
+        $this->fpdf->Image( '/'.$Studentdetails['UploadImg'], 160, 43, 28 );
         
         $regDateTime = $Studentdetails['created_at'];
         $date       = date( "d-m-Y", strtotime($regDateTime) );
@@ -500,8 +500,8 @@ class WebsiteController extends Controller
 
         $this->fpdf->AddPage();
 
-        $this->fpdf->Image( $Studentdetails['fcsign'], 100, 43, 28 );
-        $this->fpdf->Image( $Studentdetails['parentsign'], 160, 43, 28 );
+        $this->fpdf->Image(  '/'.$Studentdetails['fcsign'], 100, 43, 28 );
+        $this->fpdf->Image( '/'.$Studentdetails['parentsign'], 160, 43, 28 );
 
         $this->fpdf->Output();
         exit;
