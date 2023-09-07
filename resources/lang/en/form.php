@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'DIPLOMA IN COOPERATIVE MANAGEMENT',
+    'heading' => '2023 - 2024 DIPLOMA IN COOPERATIVE MANAGEMENT (REGULAR)',
     'personal' => 'Personal Details',
     'name' => 'Name',
     'gender' => 'Gender',
