@@ -7,7 +7,7 @@ return [
     'gvhead' => 'GOVERNMENT OF TAMILNADU',
     'hhome' => 'Home',
     'abt' => 'About Us',
-    'rgl' => 'Regionwise List of Cooperative Societies',
+    'rgl' => 'Regionwise List of ICM',
     'wpp' => 'Web Portal Policies',
     'yv' => 'Your Views',
     'journal' => 'Journal',
