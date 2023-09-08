@@ -31,7 +31,7 @@ class PHPMailerController extends Controller
             $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
            // dd($Studentdetails);
-           
+
             // Email server settings
             $mail->SMTPDebug = 0;
             $mail->isSMTP();
@@ -56,7 +56,7 @@ class PHPMailerController extends Controller
 
             $mail->isHTML(true);                // Set email content format to HTML
 
-           
+
 
             $message = file_get_contents('emailTemplates/RegistrationAcknowledgementNotificationLink.html', true);
             $message = str_replace("{IMG-LOGO1}", 'cid:logo1', $message);
@@ -73,17 +73,17 @@ class PHPMailerController extends Controller
             // $mail->AltBody = plain text version of email body;
 
             if( !$mail->send() ) {
-                echo "Email not sent.";
+//                echo "Email not sent.";
                // return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
             }
-            
+
             else {
-                echo "Email has been sent.";
+//                echo "Email has been sent.";
               //  return back()->with("success", "Email has been sent.");
             }
 
         } catch (Exception $e) {
-            echo 'Message could not be sent.';
+//            echo 'Message could not be sent.';
            //  return back()->with('error','Message could not be sent.');
         }
     }

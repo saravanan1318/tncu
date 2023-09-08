@@ -48,7 +48,19 @@ class WebsiteController extends Controller
         $Userexistcheck = User::where('email',$request->email)->get();
 
         if(count($Userexistcheck) > 0){
-            return redirect()->back()->withInput($request->input())->with('error', 'Email already exist');
+            return redirect()->back()->withInput($request->input())->with('error', 'Email already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
+            ->with('checkbox', $request->input('checkbox')) // Add checkbox value
+            ->with('file', $request->file('file'));
+        }
+        if(StudentParams::where('aadhar', $request->aadhar)->exists()){
+            return redirect()->back()->withInput($request->input())->with('error', 'Aadhar already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
+            ->with('checkbox', $request->input('checkbox')) // Add checkbox value
+            ->with('file', $request->file('file'));
+        }
+        if(StudentParams::where('challonno', $request->challonno)->Where('bankname', $request->bankname)->Where('paymentdistrict', $request->paymentdistrict)->exists()){
+            return redirect()->back()->withInput($request->input())->with('error', 'Challon already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
+            ->with('checkbox', $request->input('checkbox')) // Add checkbox value
+            ->with('file', $request->file('file'));;
         }
 
         $user = new User;
@@ -229,7 +241,7 @@ class WebsiteController extends Controller
         $student->arrn_number = 0;
         $student->fullname = $request->fullname;
         $student->gender = $request->gender;
-        $student->dob = $request->dob;
+        $student->dob = date("Y-m-d",strtotime($request->dob));
         $student->age = $request->age;
         $student->mobile1 = $request->mobile1;
         $student->mobile2 = $request->mobile2;
@@ -397,14 +409,14 @@ class WebsiteController extends Controller
         $this->fpdf->SetLineWidth( 0.1 );
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 50, 5, 'Course applied for', 1, 0, "L" );
-        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->SetFont( 'Arial', '', 9 );
         $this->fpdf->Cell( 70, 5, 'DIPLOMA IN COOPERATIVE MANAGEMENT', 1, 1, "C" );
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 50, 5, 'Advertisement No. and Date', 1, 0, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 70, 5, '1050/PE3/2017(1-6)   20.06.2018', 1, 1, "C" );
         $this->fpdf->Ln();
-        $this->fpdf->Image( $Studentdetails['UploadImg'], 160, 43, 28 );
+        $this->fpdf->Image( $Studentdetails['UploadImg'], 160, 55, 28 );
 
         $regDateTime = $Studentdetails['created_at'];
         $date       = date( "d-m-Y", strtotime($regDateTime) );
@@ -428,6 +440,13 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 70, 5, $ip_address, 1, 1, "C" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 50, 5, 'Name of ICM', 1, 0, "L" );
+
+        $value=Mtr_Icm::where('id', $Studentdetails['icm'])->value('icm_name');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 70, 5, $value, 1, 1, "C" );
 
         $this->fpdf->Ln();
         $this->fpdf->Ln();
@@ -488,7 +507,7 @@ class WebsiteController extends Controller
         $this->fpdf->Cell( 110, 10, 'Community', 0, 0, "L" );
         $this->fpdf->Cell( 80, 10, 'Differently Abled', 0, 1, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->Cell( 110, 5, $Studentdetails['religion'], 0, 0, "L" );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['community'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['isdifferentlyabled'], 0, 1, "L" );
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
@@ -511,8 +530,198 @@ class WebsiteController extends Controller
 
         $this->fpdf->AddPage();
 
-        $this->fpdf->Image( $Studentdetails['fcsign'], 100, 43, 28 );
-        $this->fpdf->Image( $Studentdetails['parentsign'], 160, 43, 28 );
+        $this->fpdf->Cell( 40, 5, 'Education Details', 0, 0, "L" );
+        $this->fpdf->Ln();
+        $this->fpdf->SetLineWidth( 0.1 );
+        $this->fpdf->Line( 10, $this->fpdf->GetY(), 200, $this->fpdf->GetY() );
+        $this->fpdf->Ln();
+
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Educational Qualification', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Name &Address of Institution', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, "SSLC", 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['slnameinst'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Medium of Instruction', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Year of passing', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['slmedium'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['slYOP'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Total Marks', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Marks Secured', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['asltotalmark'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['aslsecumark'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['slcertificateno'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['aslpercentage'], 0, 1, "L" );
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Educational Qualification', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Name &Address of Institution', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['hsordiploma'] , 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['hsnameinst'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Medium of Instruction', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Year of passing', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['hsmedium'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['hsYOP'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Total Marks', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Marks Secured', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['ahstotalmark'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['ahssecumark'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['hscertificateno'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['ahspercentage'], 0, 1, "L" );
+
+
+        if(!empty($Studentdetails['ugcertificateno']))
+        {
+            $this->fpdf->Ln();
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Educational Qualification', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Name &Address of Institution', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, "Degree (3 years)" , 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['ugnameinst'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Medium of Instruction', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Year of passing', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['ugmedium'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['ugYOP'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Total Marks', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Marks Secured', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['ugtotalmark'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['ugsecumark'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['ugcertificateno'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['ugpercentage'], 0, 1, "L" );
+        }
+        if(!empty($Studentdetails['bgcertificateno']))
+        {
+            $this->fpdf->Ln();
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Educational Qualification', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Name &Address of Institution', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, "Masters Degree" , 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['bgnameinst'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Medium of Instruction', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Year of passing', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['bgmedium'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['bgYOP'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Total Marks', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Marks Secured', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['bgtotalmark'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['bgsecumark'], 0, 1, "L" );
+
+            $this->fpdf->SetFont( 'Arial', 'B', 10 );
+            $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
+            $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+            $this->fpdf->SetFont( 'Arial', '', 10 );
+            $this->fpdf->Cell( 110, 5, $Studentdetails['bgcertificateno'], 0, 0, "L" );
+            $this->fpdf->Cell( 80, 5, $Studentdetails['bgpercentage'], 0, 1, "L" );
+        }
+
+
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, '', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, '', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 5, "Affirmation", 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, "", 0, 1, "L" );
+
+
+        $checkboxWidth = 5; // Width of the checkbox
+        $checkboxHeight = 5; // Height of the checkbox
+        $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
+        $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->MultiCell(0, 5, "The training station chief will approve the training station's law, rules and disciplinary restrictions on selected coaches training at the training station, and the attendance record and leave, I will attend monthly exams by the training station and regularly attend a parent / guardian at a parent inspection meeting periodically convened by the training station, and at a time when it is impossible to continue training for inevitable reasons, I agree that I will not request a refund of the paid training fee and remove myself from the exercise without prior notice of Evvita in the process of violating the training station's legal plans.", 0, 'L');
+        $checkboxWidth = 5; // Width of the checkbox
+        $checkboxHeight = 5; // Height of the checkbox
+        $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
+        $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->MultiCell(0, 5, " In any other company on the days I am practicing, I submit my fact that the work and the attendance register is not comparable and paid to the self-proclaimed (Self decaration) CM as proof of them.", 0, 'L');
+
+        $checkboxWidth = 5; // Width of the checkbox
+        $checkboxHeight = 5; // Height of the checkbox
+        $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
+        $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->MultiCell(0, 5, "I am also bound by the action taken by the administration at the point where the CM is aware of their attention that I submitted the wrong detail. And I promise not to continue through the court in this regard and the departmental case", 0, 'L');
+
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, '', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, '', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 5, "Parent / Protector Affirmation", 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, "", 0, 1, "L" );
+
+        $checkboxWidth = 5; // Width of the checkbox
+        $checkboxHeight = 5; // Height of the checkbox
+        $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
+        $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->MultiCell(0, 5, " I assure you that the son / daughter in care or who is in my defense thereby agree with the rules and order systems of the Cooperative Management Station. And I accept the whole of the above declarations.", 0, 'L');
+
+
+        $this->fpdf->SetXY(100, 250); // Adjust the X and Y coordinates as needed
+        $this->fpdf->Cell(28, 10, 'Student Signature', 0, 0, 'C');
+
+// Add heading for parent's signature
+//        $this->fpdf->SetXY(160, 290); // Adjust the X and Y coordinates as needed
+        $this->fpdf->Cell(90, 10, 'Parent\Guardian Signature', 0, 0, 'C');
+//        $this->fpdf->AddPage();
+        $this->fpdf->Image( $Studentdetails['fcsign'], 100, 260, 28 );
+        $this->fpdf->Image( $Studentdetails['parentsign'], 160, 260, 28 );
+        $this->fpdf->SetFont( 'Arial', 'B', 12 );
+        // Define the file path where you want to save the PDF
+        $filePath = 'uploads/applications/'.$Studentdetails["arrn_number"]."pdf"; // Replace with your desired file path and name
+
+// Output the PDF to the specified file path
+        $this->fpdf->Output($filePath, 'F');
+
+// Provide a response or perform any other actions as needed
 
         $this->fpdf->Output();
         exit;

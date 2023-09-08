@@ -629,8 +629,8 @@
                                         </select>
 
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" value="{{ old('slnameinst') }}" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slcertificateno" value="{{ old('slcertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" value="{{ old('slnameinst') }}" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" value="{{ old('slYOP') }}" min="1980" max="2023" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" value="{{ old('asltotalmark') }}" name="asltotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" value="{{ old('aslsecumark') }}" name="aslsecumark" required=""></td>
@@ -653,8 +653,8 @@
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hscertificateno" value="{{ old('hscertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" value="{{ old('ahstotalmark') }}" name="ahstotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" value="{{ old('ahssecumark') }}" name="ahssecumark" required=""></td>
@@ -670,8 +670,8 @@
                                             <option value="Tamil">{{__('form.tamil')}}</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst" value="{{ old('ugnameinst') }}"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugcertificateno" value="{{ old('ugcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst" value="{{ old('ugnameinst') }}"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" value="{{ old('ugYOP') }}" min="1980" max="2023"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" value="{{ old('ugtotalmark') }}" name="ugtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" value="{{ old('ugpercentage') }}" name="ugsecumark"></td>
@@ -688,8 +688,8 @@
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst" value="{{ old('bgnameinst') }}"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgcertificateno" value="{{ old('bgcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst" value="{{ old('bgnameinst') }}"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgYOP" value="{{ old('bgYOP') }}" min="1980" max="2023"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" value="{{ old('bgtotalmark') }}" name="bgtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" value="{{ old('bgsecumark') }}" name="bgsecumark"></td>

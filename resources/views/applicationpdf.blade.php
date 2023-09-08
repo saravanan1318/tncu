@@ -122,7 +122,7 @@
                 </div>
                 <div class=row>
                     <div class="col-sm-4 col-md-4 mb-4">
-                        <h4>Community</h4> {{$Studentdetails['religion']}}
+                        <h4>Community</h4> {{$Studentdetails['community']}}
                     </div>
                     <div class="col-sm-4 col-md-4 mb-4">
                         <h4>Differently Abled</h4> {{$Studentdetails['isdifferentlyabled']}}
@@ -150,11 +150,11 @@
                 <div class=row>
                     <div class="col-sm-6 col-md-4 mb-6">
                         <h4>Applicant Signature</h4><img src="{{$Studentdetails['fcsign']}}" style="height:200px;width:250px" />
-    
+
                     </div>
                     <div class="col-sm-6 col-md-4 mb-6">
                         <h4>Parent Signature</h4><img src="{{$Studentdetails['parentsign']}}" style="height:200px;width:250px" />
-    
+
                     </div>
                 </div>
             </div>
@@ -162,4 +162,4 @@
      </div>
 </body>
 
-    
+

@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <!-- /topbar -->
     </div>
     <div class="row">
@@ -53,6 +53,6 @@
 @include('partials.footer')
 
 @include('partials.scripts')
-      
+
 </body>
 </html>
