@@ -500,8 +500,8 @@ class WebsiteController extends Controller
 
         $this->fpdf->AddPage();
 
-        $this->fpdf->Image(  'https://coop.tsdatamine.com/'.$Studentdetails['fcsign'], 100, 43, 28 );
-        $this->fpdf->Image( 'https://coop.tsdatamine.com/'.$Studentdetails['parentsign'], 160, 43, 28 );
+        $this->fpdf->Image( $Studentdetails['fcsign'], 100, 43, 28 );
+        $this->fpdf->Image( $Studentdetails['parentsign'], 160, 43, 28 );
 
         $this->fpdf->Output();
         exit;

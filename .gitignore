@@ -7,6 +7,7 @@
 /tncu
 /tncuold
 .env
+.htaccess
 .gitignore
 coop_tncu.tar.gz
 coop.tar.gz
