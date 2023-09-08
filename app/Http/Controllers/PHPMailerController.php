@@ -45,7 +45,7 @@ class PHPMailerController extends Controller
             $mail->AddEmbeddedImage($logo2, 'logo2');
 
             $mail->setFrom('no-reply@tncu.com', 'Admin');
-            $mail->addAddress('saravanan13395@gmail.com');
+            $mail->addAddress($Studentdetails['email']);
 
             // if(isset($_FILES['emailAttachments'])) {
             //     for ($i=0; $i < count($_FILES['emailAttachments']['tmp_name']); $i++) {

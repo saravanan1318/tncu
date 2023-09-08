@@ -4,9 +4,9 @@
 // document.getElementById("DOB").setAttribute("value", today);
 $( function() {
 
-    let today = new Date(),
+    let today = new Date('2023-8-31');
     day = today.getDate(),
-    month = today.getMonth()+1, //January is 0
+    month = today.getMonth(), //January is 0
     year = today.getFullYear()-18;
     if(day<10){
         day='0'+day
@@ -17,7 +17,7 @@ $( function() {
     today = year+'-'+month+'-'+day;
 
     $("#DOB").datepicker({
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
         yearRange: '-99:-18',
@@ -39,6 +39,31 @@ function printDiv(){
     a.document.close();
     a.print();
 }
+
+$("#Communityfile,#iswidowfile,#isservicemanfile,#divorceefile,#isservicemanfile,#refugeefile,#athletefile,#tccertificatefile,#challonfile,#UploadImg,#fcsign,#parentsign,#slgrade,#hsgrade,#uggrade,#bggrade").on("change",function(){
+             
+    /* current this object refer to input element */
+    var $input = $(this);
+
+    /* collect list of files choosen */
+    var files = $input[0].files;
+
+    var fileSize = files[0].size;
+    console.log(fileSize);
+    /* 1024 = 1MB */
+   // var size = Math.round((fileSize / 1024));
+  
+    /* checking for less than or equals to 2MB file size */
+    if (fileSize <= 512017) {
+      //  alert("Valid file size");
+        /* file uploading code goes here... */
+    } else {
+        alert(
+          "Invalid file size, please select a file less than or equal to 500Kb size");
+          $input.val("");
+    }
+
+});
 
 $('#IsDifferentlyAbled').on('change', function() {
     if(this.value == "Yes"){
@@ -156,9 +181,11 @@ function setAge(d) {
     var Ag = moment().diff(d, 'years', true);
 
 
-    var asondate = new Date();
-    // var dob = new Date($("#DOB").val());
-    var selectedDOB = $('#DOB').val();
+    var asondate = new Date("August 01, 2023 00:00:00");
+
+    var dobtext =  $("#DOB").val().split('-');
+    var selectedDOB = dobtext[2]+'-'+dobtext[1]+'-'+dobtext[0];
+    console.log(selectedDOB);
 
     var dob = new Date(selectedDOB);
 

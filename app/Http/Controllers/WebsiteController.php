@@ -45,6 +45,12 @@ class WebsiteController extends Controller
 
     function store(Request $request){
 
+        $Userexistcheck = User::where('email',$request->email)->get();
+
+        if(count($Userexistcheck) > 0){
+            return redirect()->back()->withInput($request->input())->with('error', 'Email already exist');
+        }
+
         $user = new User;
         $user->name = $request->fullname;
         $user->phone = $request->mobile1;
@@ -230,6 +236,7 @@ class WebsiteController extends Controller
         $student->aadhar = $request->aadhar;
         $student->email = $request->email;
         $student->parent = $request->parent;
+        $student->nationality = $request->nationality;
         $student->religion = $request->religion;
         $student->otherreligion = $request->otherreligion;
         $student->plotno = $request->plotno;
@@ -263,6 +270,7 @@ class WebsiteController extends Controller
         $student->slmedium = $request->slmedium;
         $student->slYOP = $request->slYOP;
         $student->slnameinst = $request->slnameinst;
+        $student->slcertificateno = $request->slcertificateno;
         $student->asltotalmark = $request->asltotalmark;
         $student->aslsecumark = $request->aslsecumark;
         $student->aslpercentage = $request->aslpercentage;
@@ -270,6 +278,7 @@ class WebsiteController extends Controller
         $student->hsordiploma = $request->hsordiploma;
         $student->hsmedium = $request->hsmedium;
         $student->hsnameinst = $request->hsnameinst;
+        $student->hscertificateno = $request->hscertificateno;
         $student->hsYOP = $request->hsYOP;
         $student->ahstotalmark = $request->ahstotalmark;
         $student->ahssecumark = $request->ahssecumark;
@@ -277,6 +286,7 @@ class WebsiteController extends Controller
         $student->hsgrade = $hsgradefilename;
         $student->ugmedium = $request->ugmedium;
         $student->ugnameinst = $request->ugnameinst;
+        $student->ugcertificateno = $request->ugcertificateno;
         $student->ugYOP = $request->ugYOP;
         $student->ugtotalmark = $request->ugtotalmark;
         $student->ugsecumark = $request->ugsecumark;
@@ -284,6 +294,7 @@ class WebsiteController extends Controller
         $student->uggrade = $uggradefilename;
         $student->bgmedium = $request->bgmedium;
         $student->bgnameinst = $request->bgnameinst;
+        $student->bgcertificateno = $request->bgcertificateno;
         $student->bgYOP = $request->bgYOP;
         $student->bgtotalmark = $request->bgtotalmark;
         $student->bgsecumark = $request->bgsecumark;

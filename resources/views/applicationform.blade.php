@@ -9,12 +9,17 @@
                     {{ session('status') }}
                 </div>
             @endif
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-1 col-md-1 mb-4">
-        </div>
-       <div class="col-sm-10 col-md-10 mb-4">
+        {{-- <div class="col-sm-1 col-md-1 mb-4">
+        </div> --}}
+       <div class="col-sm-12 col-md-12 mb-4">
         <form action="{{url('store-applicationform')}}" id="regform" enctype="multipart/form-data" method="post" novalidate="novalidate">
             @csrf
             <fieldset>
@@ -35,7 +40,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Name field is required." id="Name" maxlength="50" name="fullname" placeholder="Candidate name" type="text" value="" style="text-transform: uppercase;" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Name field is required." id="Name" maxlength="50" name="fullname"  placeholder="Candidate name" type="text" value="{{ old('fullname') }}" style="text-transform: uppercase;" required="">
                                 </div>
                             </div>
                         </div>
@@ -45,7 +50,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select class="form-control" data-val="true" data-val-required="The Gender field is required." id="Gender" name="gender" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The Gender field is required." id="Gender" name="gender" value="{{ old('gender') }}" required="">
                                         <option value="">- {{__('form.select')}}' -</option>
                                         <option value="Male">{{__('form.male')}}</option>
                                         <option value="Female">{{__('form.female')}}</option>
@@ -60,7 +65,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input  type="text" class="form-control" id="DOB" name="dob" placeholder="DD-MM-YYYY" readonly>
+                                        <input  type="text" class="form-control" id="DOB" name="dob" value="{{ old('dob') }}" placeholder="DD-MM-YYYY" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +76,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" min='18' placeholder="Age" type="text" readonly="" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" min='18' placeholder="Age" value="{{ old('age') }}" type="text" readonly="" required="">
                                 </div>
                             </div>
                         </div>
@@ -81,7 +86,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Mobilenumber field is required." id="Mobile1" maxlength="10" minlength="10" name="mobile1" placeholder="Mobile" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" min="10" value="" onkeyup="validateLength(this)" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Mobilenumber field is required." id="Mobile1" maxlength="10" minlength="10" name="mobile1" placeholder="Mobile" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" min="10" value="{{ old('mobile1') }}" onkeyup="validateLength(this)" required="">
 
                                 </div>
                             </div>
@@ -92,7 +97,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="Mobile2" maxlength="10" name="mobile2" placeholder="Alternate mobile number" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="">
+                                    <input autocomplete="off" class="form-control" id="Mobile2" maxlength="10" name="mobile2" placeholder="Alternate mobile number" type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="{{ old('mobile2') }}">
                                 </div>
                             </div>
 
@@ -103,7 +108,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="AadharNumber" maxlength="12" data-val="true" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="" required="">
+                                    <input autocomplete="off" class="form-control" id="AadharNumber" minlength="12" maxlength="12" data-val="true" data-val-required="The AadharNumber field is required." name="aadhar" placeholder=" Aadhar Number" type="text" onkeypress="return check(event,value)" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkLength(12,this)" value="{{ old('aadhar') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -113,7 +118,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="Email" data-val="true" data-val-required="The Email field is required." name="email" placeholder=" Email Id" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" id="Email" data-val="true" data-val-required="The Email field is required." name="email" placeholder=" Email Id" type="text" value="{{ old('email') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -123,7 +128,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="Parent" data-val="true" data-val-required="The Email field is required." name="parent" placeholder=" Parent / Guardian" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" id="Parent" data-val="true" data-val-required="The Email field is required." name="parent" placeholder=" Parent / Guardian" type="text" value="{{ old('parent') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -133,7 +138,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="255" data-val-required="The Nationality field is required." id="Nationality" maxlength="255" name="Nationality" placeholder="Nationality" type="text" value=""  required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="255" data-val-required="The Nationality field is required." id="nationality" maxlength="255" name="nationality" placeholder="Nationality" type="text" value="{{ old('nationality') }}"  required="">
                                 </div>
                             </div>
                         </div>
@@ -147,7 +152,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select class="form-control" data-val="true" data-val-required="The Religion field is required." id="Religion" name="religion" onchange="otherregion()" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The Religion field is required." id="Religion" name="religion" onchange="otherregion()" value="{{ old('religion') }}" required="">
                                         <option value="">- {{__('form.select')}}-</option>
                                         <option value="Christian">{{__('form.christian')}}</option>
                                         <option value="Hindu">{{__('form.hindu')}}</option>
@@ -166,7 +171,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" id="otherreligion" maxlength="20" name="otherreligion" placeholder="Enter Religion" type="text" value="" >
+                                    <input autocomplete="off" class="form-control" id="otherreligion" maxlength="20" name="otherreligion" placeholder="Enter Religion" type="text" value="{{ old('otherreligion') }}" >
                                 </div>
                             </div>
                         </div>
@@ -186,7 +191,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="plotno" maxlength="50" name="plotno" placeholder="Door/ Flat/Plot No" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="plotno" maxlength="50" name="plotno" placeholder="Door/ Flat/Plot No" type="text" value="{{ old('plotno') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -196,7 +201,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="streetname" maxlength="50" name="streetname" placeholder="Street/ Road Name" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="streetname" maxlength="50" name="streetname" placeholder="Street/ Road Name" type="text" value="{{ old('streetname') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -206,7 +211,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="city" maxlength="50" name="city" placeholder="Town/ City" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="city" maxlength="50" name="city" placeholder="Town/ City" type="text" value="" required="{{ old('city') }}">
                                 </div>
                             </div>
                         </div>
@@ -216,7 +221,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The District field is required." id="district" maxlength="50" name="district" placeholder="District" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The District field is required." id="district" maxlength="50" name="district" placeholder="District" type="text" value="{{ old('district') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -226,7 +231,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The State field is required." id="state" maxlength="50" name="state" placeholder="State" type="text" value="" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The State field is required." id="state" maxlength="50" name="state" placeholder="State" type="text" value="{{ old('state') }}" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -236,7 +241,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="pincode" maxlength="50" name="pincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="pincode" maxlength="50" name="pincode" placeholder="Pincode" type="text" value="{{ old('pincode') }}" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -265,7 +270,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="pplotno" maxlength="50" name="pplotno" placeholder="Door/ Flat/Plot No" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Door / Flat / Plot field is required." id="pplotno" maxlength="50" name="pplotno" placeholder="Door/ Flat/Plot No" type="text" value="{{ old('pplotno') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -275,7 +280,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="pstreetname" maxlength="50" name="pstreetname" placeholder="Street/ Road Name" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="Street / Road field is required." id="pstreetname" maxlength="50" name="pstreetname" placeholder="Street/ Road Name" type="text" value="{{ old('pstreetname') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -285,7 +290,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="pcity" maxlength="50" name="pcity" placeholder="Avenue /Block /Sector" type="text" value="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="City field is required." id="pcity" maxlength="50" name="pcity" placeholder="Avenue /Block /Sector" type="text" value="{{ old('pcity') }}" required="">
                                 </div>
                             </div>
                         </div>
@@ -295,7 +300,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The District field is required." id="pdistrict" maxlength="50" name="pdistrict" placeholder="District" type="text" value="" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The District field is required." id="pdistrict" maxlength="50" name="pdistrict" placeholder="District" type="text" value="{{ old('pdistrict') }}" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -305,7 +310,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The State field is required." id="pstate" maxlength="50" name="pstate" placeholder="State" type="text" value="" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The State field is required." id="pstate" maxlength="50" name="pstate" placeholder="State" type="text" value="{{ old('pstate') }}" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -315,7 +320,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="ppincode" maxlength="50" name="ppincode" placeholder="Pincode" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true"  maxlength="6" data-val-required="The Pincode field is required." id="ppincode" maxlength="50" name="ppincode" placeholder="Pincode" type="text" value="{{ old('ppincode') }}" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required="">
                                 </div>
                             </div>
                         </div>
@@ -330,7 +335,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select class="form-control" data-val="true" data-val-required="The Community field is required." id="community" name="community" onchange="cmamount()" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The Community field is required." id="community" name="community" value="{{ old('community') }}" required="">
                                         <option value="0">- {{__('form.select')}} -</option>
                                         <option value="BC - Backward Class"> {{__('form.bc')}}</option>
                                         <option value="BC(M) - Backward Class Muslims"> {{__('form.bcm')}}</option>
@@ -367,7 +372,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <input id="Communityfile" name="Communityfile" type="file" value=""  required="">
+                                    <input id="Communityfile" name="Communityfile" type="file" value="{{ old('Communityfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -384,14 +389,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled"  required="">
+                                    <select class="form-control" id="IsDifferentlyAbled" data-val="true" data-val-required="Differently Abled Category field is required." name="isdifferentlyabled" value="{{ old('isdifferentlyabled') }}"  required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value=""  required="">
+                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="{{ old('IsDifferentlyAbledfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -443,14 +448,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="iswidow" name="iswidow" required="">
+                                    <select class="form-control valid" id="iswidow" name="iswidow" value="{{ old('iswidow') }}" required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value=""  required="">
+                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value="{{ old('iswidowfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -466,7 +471,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="isserviceman" name="isserviceman"  required="">
+                                    <select class="form-control valid" id="isserviceman" name="isserviceman" value="{{ old('isserviceman') }}"  required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
@@ -485,7 +490,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="selectedserviceman" name="selectedserviceman"  required="">
+                                    <select class="form-control valid" id="selectedserviceman" name="selectedserviceman" value="{{ old('selectedserviceman') }}" required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="Self">Self</option>
                                         <option value="Wife">{{__('form.wife')}}</option>
@@ -494,7 +499,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value=""  required="">
+                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value="{{ old('isservicemanfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -510,14 +515,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="divorcee" name="divorcee" required="">
+                                    <select class="form-control valid" id="divorcee" name="divorcee" value="{{ old('divorcee') }}" required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value=""  required="">
+                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value="{{ old('divorceefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -533,14 +538,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="refugee" name="refugee" required="">
+                                    <select class="form-control valid" id="refugee" name="refugee" value="{{ old('refugee') }}" required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value=""  required="">
+                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value="{{ old('refugeefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -556,14 +561,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-control valid" id="athlete" name="athlete" required="">
+                                    <select class="form-control valid" id="athlete" name="athlete" value="{{ old('athlete') }}" required="">
                                         <option value="">-{{__('form.select')}}-</option>
                                         <option value="No">{{__('form.no')}}</option>
                                         <option value="Yes">{{__('form.yes')}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value=""  required="">
+                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value="{{ old('athletefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -580,7 +585,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        <input id="tccertificatefile" name="tccertificatefile" type="file" value=""  required="">
+                                        <input id="tccertificatefile" name="tccertificatefile" type="file" value="{{ old('tccertificatefile') }}"  required="">
                                     </div>
                                 </div>
                             </div>
@@ -603,7 +608,8 @@
                                     font-weight: bold;">
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.edu')}}
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.mi')}}</td></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.mi')}}</td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;">Certificate No.</td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.inst')}}</td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.year')}}</td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.tm')}}</td>
@@ -623,12 +629,13 @@
                                         </select>
 
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" min="1980" max="2023" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" name="asltotalmark" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" name="aslsecumark" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" name="aslpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="slgrade" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" value="{{ old('slnameinst') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slcertificateno" value="{{ old('slcertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" value="{{ old('slYOP') }}" min="1980" max="2023" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" value="{{ old('asltotalmark') }}" name="asltotalmark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" value="{{ old('aslsecumark') }}" name="aslsecumark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" value="{{ old('aslpercentage') }}" name="aslpercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="slgrade" id="slgrade" value="{{ old('slgrade') }}" required=""></td>
                                 </tr>
 
                                 <tr>
@@ -646,12 +653,13 @@
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" min="1980" max="2023" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" name="ahstotalmark" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" name="ahssecumark" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" name="ahspercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="hsgrade" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hscertificateno" value="{{ old('hscertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" value="{{ old('ahstotalmark') }}" name="ahstotalmark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" value="{{ old('ahssecumark') }}" name="ahssecumark" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" value="{{ old('ahspercentage') }}" name="ahspercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="hsgrade" id="hsgrade"  value="{{ old('hsgrade') }}" required=""></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.degree')}}
@@ -662,12 +670,13 @@
                                             <option value="Tamil">{{__('form.tamil')}}</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" min="1980" max="2023"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" name="ugtotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" name="ugsecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" name="ugpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="uggrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst" value="{{ old('ugnameinst') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugcertificateno" value="{{ old('ugcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" value="{{ old('ugYOP') }}" min="1980" max="2023"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" value="{{ old('ugtotalmark') }}" name="ugtotalmark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" value="{{ old('ugpercentage') }}" name="ugsecumark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" value="{{ old('ugpercentage') }}" name="ugpercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="uggrade" id="uggrade" value="{{ old('uggrade') }}"></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.graduation')}}
@@ -679,12 +688,13 @@
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgYOP" min="1980" max="2023"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" name="bgtotalmark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" name="bgsecumark"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" name="bgpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="bggrade"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst" value="{{ old('bgnameinst') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgcertificateno" value="{{ old('bgcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgYOP" value="{{ old('bgYOP') }}" min="1980" max="2023"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" value="{{ old('bgtotalmark') }}" name="bgtotalmark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" value="{{ old('bgsecumark') }}" name="bgsecumark"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" value="{{ old('bgpercentage') }}" name="bgpercentage" readonly></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="bggrade" id="bggrade" value="{{ old('bggrade') }}"></td>
                                 </tr>
                             </tbody>
                             </table>
@@ -701,7 +711,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <select class="form-control" data-val="true" data-val-required="The icm field is required." id="icm" name="icm" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The icm field is required." id="icm" name="icm" value="{{ old('icm') }}" required="">
                                         @foreach ($icmlists as $icmlist)
                                             <option value="{{ $icmlist->id }}" >{{ $icmlist->icm_name }}</option>
                                         @endforeach
@@ -773,7 +783,7 @@
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" value="{{ old('paymenttype') }}" required="">
                                         <option value="">- {{__('form.select')}}' -</option>
                                         <option value="online">online</option>
                                         <option value="offline">offline</option>
@@ -787,17 +797,18 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label>Challan No.</label>
-                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challan No"  required="">
+                                    <input class="form-control" id="challonno" name="challonno" type="text" placeholder="Challan No"  value="{{ old('challonno') }}" required="">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Bank Name</label>
-                                    <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name"  required="">
+                                    <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name" value="{{ old('bankname') }}"  required="">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Branch Name</label>
-                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name"  required="">
+                                    <input class="form-control" id="paymentdistrict" name="paymentdistrict" type="text"  placeholder="Branch Name" value="{{ old('paymentdistrict') }}"  required="">
                                 </div>
                                 <div class="col-md-3">
+                                    <label>Upload Challon</label>
                                     <input id="challonfile" name="challonfile" type="file" value="" required="">
                                 </div>
                             </div>
@@ -878,7 +889,7 @@
                 </fieldset>
             </form>
        </div>
-       <div class="col-sm-1 col-md-1 mb-4"></div>
+       {{-- <div class="col-sm-1 col-md-1 mb-4"></div> --}}
     </div>
  </div>
 <script>
