@@ -11,6 +11,7 @@ use Hash;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
+use Illuminate\Support\Facades\Http;
 
 class WebsiteController extends Controller
 {
@@ -44,6 +45,19 @@ class WebsiteController extends Controller
     }
 
     function store(Request $request){
+
+
+        $mobilenumber=$request->mobile1;
+        $TEMPLATE_ID="1207167688869177485";
+        $SMSAPIKEY="PbzU+eaaXGe606WNGrXhECyr8bUsw6Xk1KlabTdhcS0=";
+        $SMSCLIENTID="1fd5daa3-fb27-489f-9172-01d0beb8b75c";
+
+
+
+//        $mobilenumber=$request->mobile1;
+//        $mobilenumber= env('TEMPLATE_ID');
+//        print_r($templateId = env('TEMPLATE_ID'));
+//        return 'https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATEID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID");
 
         $Userexistcheck = User::where('email',$request->email)->get();
 
@@ -336,6 +350,25 @@ class WebsiteController extends Controller
         $student->arrn_number = $arrn_number;
         $student->update();
 
+        $mobilenumber=$request->mobile1;
+
+
+
+//        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
+        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
+        if ($response->successful()) {
+            $data = $response->json(); // Convert response to JSON
+            $user->smsSend=1;
+            $user->update();
+//            print_r($data);
+//            return $data;
+        } else {
+            // Handle the error
+            $user->smsSend=0;
+            $user->update();
+//            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
+        }
+
         return redirect('application-acknowledgement/'.$student->id)->with('status', 'Application submitted successfully');
 
     }
@@ -561,7 +594,7 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
-        $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+        $this->fpdf->Cell( 80, 10, 'Percentage', 0, 1, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['slcertificateno'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['aslpercentage'], 0, 1, "L" );
@@ -589,7 +622,7 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
-        $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+        $this->fpdf->Cell( 80, 10, 'Percentage', 0, 1, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['hscertificateno'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['ahspercentage'], 0, 1, "L" );
@@ -621,7 +654,7 @@ class WebsiteController extends Controller
 
             $this->fpdf->SetFont( 'Arial', 'B', 10 );
             $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
-            $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+            $this->fpdf->Cell( 80, 10, 'Percentage', 0, 1, "L" );
             $this->fpdf->SetFont( 'Arial', '', 10 );
             $this->fpdf->Cell( 110, 5, $Studentdetails['ugcertificateno'], 0, 0, "L" );
             $this->fpdf->Cell( 80, 5, $Studentdetails['ugpercentage'], 0, 1, "L" );
@@ -652,7 +685,7 @@ class WebsiteController extends Controller
 
             $this->fpdf->SetFont( 'Arial', 'B', 10 );
             $this->fpdf->Cell( 110, 10, 'Certificate.No', 0, 0, "L" );
-            $this->fpdf->Cell( 80, 10, 'Percentag', 0, 1, "L" );
+            $this->fpdf->Cell( 80, 10, 'Percentage', 0, 1, "L" );
             $this->fpdf->SetFont( 'Arial', '', 10 );
             $this->fpdf->Cell( 110, 5, $Studentdetails['bgcertificateno'], 0, 0, "L" );
             $this->fpdf->Cell( 80, 5, $Studentdetails['bgpercentage'], 0, 1, "L" );
@@ -723,7 +756,16 @@ class WebsiteController extends Controller
 
 // Provide a response or perform any other actions as needed
 
-        $this->fpdf->Output();
+//        $this->fpdf->Output();
+        $this->fpdf->Output($filePath, 'F');
+
+        // Set the appropriate headers for file download
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+
+        // Provide the file as a download response
+        return response()->download($filePath, 'application.pdf', $headers);
         exit;
     }
 

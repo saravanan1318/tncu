@@ -10,7 +10,7 @@
            <h2> Full Name: {{$Studentdetails->fullname}}</h2>
            <h2> Email: {{$Studentdetails->email}}</h2>
            <h2> ARN No: {{$Studentdetails->arrn_number}}</h2>
-           <a class="btn btn-success" href="/applicationpdf/{{$Studentdetails->id}}" target="_blank"> Download Application </a>
+           <a class="btn btn-success" href="/applicationpdf/{{$Studentdetails->id}}" > Download Application </a>
         </div>
         <div class="col-md-2">
 
