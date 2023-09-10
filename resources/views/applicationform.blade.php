@@ -622,16 +622,16 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.sslc')}}<span style="color:red;">*</span>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:100px; border:solid 1px #ffffff;" name="slmedium">
+                                        <select style="width:100px; border:solid 1px #ffffff;" id="slmedium" name="slmedium">
                                             <option value="">--{{__('form.choose')}}--</option>
                                             <option value="Tamil">{{__('form.tamil')}}</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
 
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slcertificateno" value="{{ old('slcertificateno') }}" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="slnameinst" value="{{ old('slnameinst') }}" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="slYOP" value="{{ old('slYOP') }}" min="1980" max="2023" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="slcertificateno" name="slcertificateno" value="{{ old('slcertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="slnameinst" name="slnameinst" value="{{ old('slnameinst') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="slYOP" name="slYOP" value="{{ old('slYOP') }}" min="1980" max="2023" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" value="{{ old('asltotalmark') }}" name="asltotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" value="{{ old('aslsecumark') }}" name="aslsecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" value="{{ old('aslpercentage') }}" name="aslpercentage" readonly></td>
@@ -640,22 +640,22 @@
 
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:120px; border:solid 1px #ffffff;" name="hsordiploma" required="">
+                                        <select style="width:120px; border:solid 1px #ffffff;" id="hsordiploma" name="hsordiploma" required="">
                                             <option value="">--{{__('form.choose')}}<span style="color:red;">*</span>--</option>
                                             <option value="{{__('form.hsc')}}">{{__('form.hsc')}}</option>
                                             <option value="Diploma(3 Years)">Diploma (3 Years)</option>
                                         </select>
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:100px; border:solid 1px #ffffff;" name="hsmedium" required="">
+                                        <select style="width:100px; border:solid 1px #ffffff;" id="hsmedium" name="hsmedium" required="">
                                             <option value="">--{{__('form.choose')}}--</option>
                                             <option value="Tamil">{{__('form.tamil')}}l</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hscertificateno" value="{{ old('hscertificateno') }}" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="hscertificateno" name="hscertificateno" value="{{ old('hscertificateno') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="hsnameinst" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="hsnameinst" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" value="{{ old('ahstotalmark') }}" name="ahstotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" value="{{ old('ahssecumark') }}" name="ahssecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" value="{{ old('ahspercentage') }}" name="ahspercentage" readonly></td>
@@ -665,14 +665,14 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.degree')}}
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:100px; border:solid 1px #ffffff;" name="ugmedium">
+                                        <select style="width:100px; border:solid 1px #ffffff;" id="ugmedium" name="ugmedium">
                                             <option value="">--{{__('form.choose')}}--</option>
                                             <option value="Tamil">{{__('form.tamil')}}</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugcertificateno" value="{{ old('ugcertificateno') }}"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="ugnameinst" value="{{ old('ugnameinst') }}"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="ugYOP" value="{{ old('ugYOP') }}" min="1980" max="2023"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="ugcertificateno" name="ugcertificateno" value="{{ old('ugcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="ugnameinst" name="ugnameinst" value="{{ old('ugnameinst') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugYOP" name="ugYOP" value="{{ old('ugYOP') }}" min="1980" max="2023"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" value="{{ old('ugtotalmark') }}" name="ugtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" value="{{ old('ugpercentage') }}" name="ugsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" value="{{ old('ugpercentage') }}" name="ugpercentage" readonly></td>
@@ -682,15 +682,15 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.graduation')}}
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">
-                                        <select style="width:100px; border:solid 1px #ffffff;" name="bgmedium">
+                                        <select style="width:100px; border:solid 1px #ffffff;" id="bgmedium" name="bgmedium">
                                             <option value="">--{{__('form.choose')}}--</option>
                                             <option value="Tamil">{{__('form.tamil')}}</option>
                                             <option value="English">{{__('form.english')}}</option>
                                         </select>
                                     </td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgcertificateno" value="{{ old('bgcertificateno') }}"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" name="bgnameinst" value="{{ old('bgnameinst') }}"></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" name="bgYOP" value="{{ old('bgYOP') }}" min="1980" max="2023"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="bgcertificateno" name="bgcertificateno" value="{{ old('bgcertificateno') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="bgnameinst" name="bgnameinst" value="{{ old('bgnameinst') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgYOP" name="bgYOP" value="{{ old('bgYOP') }}" min="1980" max="2023"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" value="{{ old('bgtotalmark') }}" name="bgtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" value="{{ old('bgsecumark') }}" name="bgsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" value="{{ old('bgpercentage') }}" name="bgpercentage" readonly></td>
@@ -712,6 +712,7 @@
                                 </div>
                                 <div class="col-md-10">
                                     <select class="form-control" data-val="true" data-val-required="The icm field is required." id="icm" name="icm" value="{{ old('icm') }}" required="">
+                                        <option value="">- {{__('form.select')}}' -</option>
                                         @foreach ($icmlists as $icmlist)
                                             <option value="{{ $icmlist->id }}" >{{ $icmlist->icm_name }}</option>
                                         @endforeach
@@ -874,11 +875,30 @@
                     </div>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-sm-4">
+
                         </div>
                         <div class="col-sm-4">
                             <p style="text-align: center;">
                                 <!--<button type="button" id="btnPreview" class="btnStyle">Preview</button> -->
-                                <input type="submit" name="btnPayment" id="btnPayment" value="Submit Application" class="btnStyle btn btn-primary">
+                                <button name="Preview" id="Preview" value="Submit Application" class="btn btn-primary">
+                                    Preview
+                                </button>
+                                <div class="modal fade" id="largeModal" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Form preview</h5>
+                                        </div>
+                                        <div class="modal-body" id="forminputs">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" onclick="modalclose()">Edit</button>
+                                          <input type="button" name="btnPayment" id="btnPayment" class="btnStyle btn btn-primary" value="Submit Application">
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div><!-- End Large Modal-->
                                 <!--                <input type="button" name="btnPayment" id="btnPayment" value="Make Payment" class="btnStyle">-->
                             </p>
                         </div>
@@ -893,8 +913,10 @@
     </div>
  </div>
 <script>
-function isdifferentlyabled(value){
-    console.log(value);
-}
+    
+    function modalclose(){
+        $('#largeModal').modal('hide');   
+    }
+  
 </script>
 @endsection

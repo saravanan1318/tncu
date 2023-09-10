@@ -27,9 +27,19 @@ class IcmController extends Controller
         if(Auth::user()->role == 1){
             $studentDatas = StudentParams::paginate(8);
         }else{
-            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->paginate(8);
+            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',0)->paginate(8);
         }
       
         return view("icm.applicationlist", compact('studentDatas'));
+    }
+    function selectedapplicationlist(){
+
+        if(Auth::user()->role == 1){
+            $studentDatas = StudentParams::paginate(8);
+        }else{
+            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',1)->paginate(8);
+        }
+      
+        return view("icm.selectedapplicationlist", compact('studentDatas'));
     }
 }

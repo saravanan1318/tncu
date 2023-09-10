@@ -2652,27 +2652,45 @@ $(document).ready(function (e) {
 
     });
 
+    $("#regform").validate({
+        focusCleanup: true,
+        onfocusout: function(element) {
+            // "eager" validation
+            this.element(element);
+        }
+    });
+    
+    $("#Preview").click(function (e) {
+       // $('#regform').valid();
+        if($('#regform').valid()){
+            e.preventDefault();
+            forminputsappend();
+        }       
+    });
 
     $("#btnPayment").click(function (e) {
-
-        console.log("Clicked");
-
-
+        $('#regform').submit();
     });
+    
+    function forminputsappend(){
 
-    $("#regform").validate({
-    focusCleanup: true,
-    onfocusout: function(element) {
-        // "eager" validation
-        this.element(element);
-    },
-    submitHandler: function(form) {
-        form.submit();
+        $("#forminputs").html("");
+        var html = '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Name: </span>'+$("#Name").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Gender: </span>'+$("#Gender option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">DOB : </span>'+$("#DOB").val()+'</div> <div class="col-md-3"> <span style="font-weight: 900">Age : </span>'+$("#Age").val()+'</div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Mobile No: </span>'+$("#Mobile1").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Alternate Mobile: </span>'+$("#Mobile2").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Aadhar No.: </span>'+$("#AadharNumber").val()+'</div> <div class="col-md-3"> <span style="font-weight: 900">Email ID: </span>'+$("#Email").val()+'</div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Parent / Guardian : </span>'+$("#Parent").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Nationality : </span>'+$("#nationality").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Religion : </span>'+$("#Religion option:selected").text()+'</div> <div class="col-md-3"> <span style="font-weight: 900">Other religion: </span>'+$("#otherreligion").val()+'</div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Door no: </span>'+$("#plotno").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Street name: </span>'+$("#streetname").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">City : </span>'+$("#city").val()+'</div> <div class="col-md-3"> <span style="font-weight: 900">District : </span>'+$("#district").val()+'</div> </div>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">State: </span>'+$("#state").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Pincode: </span>'+$("#pincode").val()+'</div></div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Door No.: </span>'+$("#pplotno").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Street Name: </span>'+$("#pstreetname").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">City : </span>'+$("#pcity").val()+'</div> <div class="col-md-3"> <span style="font-weight: 900">District: </span>'+$("#pdistrict").val()+'</div> </div>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">State : </span>'+$("#pstate").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Pincode : </span>'+$("#ppincode").val()+'</div></div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Community : </span>'+$("#community option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Is disabled: </span>'+$("#IsDifferentlyAbled option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Widow : </span>'+$("#iswidow option:selected").text()+'</div> <div class="col-md-3"> <span style="font-weight: 900">Ex-Serviceman : </span>'+$("#isserviceman option:selected").text()+'</div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Divorcee : </span>'+$("#divorcee option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Is refugee: </span>'+$("#refugee option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Is Athlete : </span>'+$("#athlete option:selected").text()+'</div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-12"> <table class="table table-responsive"> <tbody><tr> <td >Education </td> <td>Medium</td> <td>Certificate No.</td> <td>Institution </td> <td>Year od passing</td> <td> Total Mark </td> <td> Secured Mark </td> <td> Percentage </td> </tr> <tr> <td>SSLC</td> <td>'+$("#slmedium option:selected").text()+'</td> <td>'+$("#slcertificateno").val()+'</td> <td>'+$("#slnameinst").val()+'</td> <td>'+$("#slYOP").val()+'</td> <td>'+$("#asltotalmark").val()+'</td> <td>'+$("#aslsecumark").val()+'</td> <td>'+$("#aslpercentage").val()+'</td> </tr> <tr> <td>'+$("#hsordiploma option:selected").text()+'</td> <td>'+$("#hsmedium option:selected").text()+'</td> <td>'+$("#hscertificateno").val()+'</td> <td>'+$("#hsnameinst").val()+'</td> <td>'+$("#hsYOP").val()+'</td> <td>'+$("#ahstotalmark").val()+'</td> <td>'+$("#ahssecumark").val()+'</td> <td>'+$("#ahspercentage").val()+'</td> </tr> <tr> <td>Degree </td> <td>'+$("#ugmedium").val()+'</td> <td>'+$("#ugcertificateno").val()+'</td> <td>'+$("#ugnameinst").val()+'</td> <td>'+$("#ugYOP").val()+'</td> <td>'+$("#ugtotalmark").val()+'</td> <td>'+$("#ugsecumark").val()+'</td> <td>'+$("#ugpercentage").val()+'</td> </tr> <tr> <td>Post Graduation </td> <td>'+$("#bgmedium").val()+'</td> <td>'+$("#bgcertificateno").val()+'</td> <td>'+$("#bgnameinst").val()+'</td> <td>'+$("#bgYOP").val()+'</td> <td>'+$("#bgtotalmark").val()+'</td> <td>'+$("#bgsecumark").val()+'</td> <td>'+$("#bgpercentage").val()+'</td> </tr> </tbody> </table> </div> </div> <hr>';
+        html += '<div class="row"> <div class="col-md-3">  <span style="font-weight: 900">Payment Type : </span>'+$("#paymenttype option:selected").text()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Challan No.: </span>'+$("#challonno").val()+'</div> <div class="col-md-3">  <span style="font-weight: 900">Bank Name : </span>'+$("#bankname").val()+'</div> <div class="col-md-3"> <span style="font-weight: 900">Branch Name: </span>'+$("#paymentdistrict").val()+'</div> </div> <hr>';
+        $("#forminputs").html(html);
+        $('#largeModal').modal('show');
     }
-    });
 
     $.validator.addMethod("maxDate", function(value, element) {
-
 
         let today = new Date(),
         day = today.getDate(),
@@ -2692,33 +2710,6 @@ $(document).ready(function (e) {
         return false;
     }, "Selected date is not eligible");
 
-
-
-    // $("#regform").validate(
-    //     {
-    //         // rules, options, etc.,
-    //         onfocusout: function(element) {
-    //             // "eager" validation
-    //             this.element(element);
-    //         }
-    //     }
-    // )
-
-
-
-
-    // $("#btnPayment").click(function(e){
-    //
-    //    alert("button clicned");
-    //     $("#regform").submit();
-    // });
-    //
-    // $("#regform").submit(function(e){
-    //     e.preventDefault();
-    //     alert("Not submitting");
-    // })
-    //
-    //
 });
 
 

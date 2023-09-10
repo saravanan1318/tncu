@@ -34,6 +34,7 @@ Route::get('logout', [LoginFormController::class, 'logout']);
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);
+    Route::get('/icm/selectedapplicationlist', [IcmController::class, 'selectedapplicationlist']);
 
 });
 

@@ -83,7 +83,7 @@ return [
     'tamil' => 'Tamil',
     'english' => 'English',
     'hsc' => 'HSC (+2)',
-    'degree' => 'Degree (3Years)',
+    'degree' => 'Degree',
     'graduation' => 'Post Gradguate Degree',
     'icm' => 'Choose ICM',
     'declaration' => 'Declaration',
