@@ -369,7 +369,7 @@ class WebsiteController extends Controller
 //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
         }
 
-        return redirect('application-acknowledgement/'.$student->id)->with('status', 'Application submitted successfully');
+        return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
 
     }
 
@@ -379,7 +379,9 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
 
-        $Studentdetails = StudentParams::where('id',$request->id)->first();
+        $id = base64_decode($request->id);
+
+        $Studentdetails = StudentParams::where('id',$id)->first();
         $result = (new PHPMailerController)->composeEmail($Studentdetails['id']);
 
         return view("applicationacknowledgement",compact('Studentdetails'));
@@ -390,42 +392,18 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
 
-        $Studentdetails = StudentParams::with('mtr_icm')->where('id',$request->id)->first();
+        $id = base64_decode($request->id);
+
+        $Studentdetails = StudentParams::with('mtr_icm')->where('id',$id)->first();
         //dd($Studentdetails);
         return view("applicationreview",compact('Studentdetails'));
     }
-
-    function applicationpdfold(Request $request){
-
-        App::setLocale($request->lang);
-        session()->put('locale', $request->lang);
-
-        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
-
-        $pdf = PDF::loadView('applicationpdf', compact('Studentdetails'));
-
-        return $pdf->download('sample.pdf');
-        //dd($Studentdetails);
-       // return view("applicationpdf",compact('Studentdetails'));
-        // $pdf = PDF::loadView('applicationpdf', $Studentdetails);
-        // return $pdf->stream('resume.pdf');
-
-    }
-    function applicationpdfold2(Request $request){
-
-        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
-
-        //return view("applicationpdf",compact('Studentdetails'));
-
-        $pdf = PDF::loadView('applicationpdf', compact('Studentdetails'));
-
-        return $pdf->download('sample.pdf');
-
-    }
-
+    
     function applicationpdf(Request $request){
 
-        $Studentdetails = StudentParams::where('id',$request->id)->first()->toArray();
+        $id = base64_decode($request->id);
+
+        $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
         $this->fpdf->AddPage();
         $this->fpdf->SetFont( 'Helvetica', 'B', 14 );
@@ -749,7 +727,7 @@ class WebsiteController extends Controller
         $this->fpdf->Image( $Studentdetails['parentsign'], 160, 260, 28 );
         $this->fpdf->SetFont( 'Arial', 'B', 12 );
         // Define the file path where you want to save the PDF
-        $filePath = 'uploads/applications/'.$Studentdetails["arrn_number"]."pdf"; // Replace with your desired file path and name
+        $filePath = 'uploads/applications/'.$Studentdetails["arrn_number"].".pdf"; // Replace with your desired file path and name
 
 // Output the PDF to the specified file path
         $this->fpdf->Output($filePath, 'F');
@@ -757,7 +735,7 @@ class WebsiteController extends Controller
 // Provide a response or perform any other actions as needed
 
 //        $this->fpdf->Output();
-        $this->fpdf->Output($filePath, 'F');
+        // $this->fpdf->Output($filePath, 'F');
 
         // Set the appropriate headers for file download
         $headers = [
@@ -765,7 +743,7 @@ class WebsiteController extends Controller
         ];
 
         // Provide the file as a download response
-        return response()->download($filePath, 'application.pdf', $headers);
+        return response()->download($filePath, $Studentdetails["arrn_number"].".pdf", $headers);
         exit;
     }
 

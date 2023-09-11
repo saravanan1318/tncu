@@ -35,11 +35,19 @@
          <li class="nav-item">
            <a href="{{url('/icm/applicationlist')}}" class="nav-link">
              <i class="nav-icon fas fa-ellipsis-h"></i>
-             <p>Applications
+             <p>Pending Applications
                {{-- <span class="right badge badge-danger">5</span> --}}
              </p>
            </a>
          </li>
+         <li class="nav-item">
+          <a href="{{url('/icm/selectedapplicationlist')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Selected Applications
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
          <li class="nav-item">
            <a href="{{url('logout')}}" class="nav-link">
              <i class="nav-icon fas fa-file"></i>
