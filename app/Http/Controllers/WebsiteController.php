@@ -406,8 +406,8 @@ class WebsiteController extends Controller
     
     function applicationpdf(Request $request){
 
-        //$id = base64_decode($request->id);
-        $id = $request->id;
+        $id = base64_decode($request->id);
+       // $id = $request->id;
 
         $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
