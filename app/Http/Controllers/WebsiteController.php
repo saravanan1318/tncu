@@ -353,23 +353,26 @@ class WebsiteController extends Controller
         $mobilenumber=$request->mobile1;
 
 
+        $user->smsSend=0;
+        $user->email=$arrn_number;
+        $user->update();
 
         //        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
-        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
-        if ($response->successful()) {
-            $data = $response->json(); // Convert response to JSON
-            $user->smsSend=1;
-            $user->email=$arrn_number;
-            $user->update();
-        //            print_r($data);
-        //            return $data;
-        } else {
-            // Handle the error
-            $user->smsSend=0;
-            $user->email=$arrn_number;
-            $user->update();
-        //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
-        }
+        // $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
+        // if ($response->successful()) {
+        //     $data = $response->json(); // Convert response to JSON
+        //     $user->smsSend=1;
+        //     $user->email=$arrn_number;
+        //     $user->update();
+        // //            print_r($data);
+        // //            return $data;
+        // } else {
+        //     // Handle the error
+        //     $user->smsSend=0;
+        //     $user->email=$arrn_number;
+        //     $user->update();
+        // //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
+        // }
 
         return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
 
