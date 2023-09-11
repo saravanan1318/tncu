@@ -81,7 +81,7 @@ class WebsiteController extends Controller
         $user->name = $request->fullname;
         $user->phone = $request->mobile1;
         $user->state = $request->state;
-        $user->email = $request->email;
+        $user->email = "NA";
         $user->password = Hash::make($request->mobile1);
         $user->role = 3;
         $user->icm_id = $request->icm;
@@ -359,12 +359,14 @@ class WebsiteController extends Controller
         if ($response->successful()) {
             $data = $response->json(); // Convert response to JSON
             $user->smsSend=1;
+            $user->email=$arrn_number;
             $user->update();
         //            print_r($data);
         //            return $data;
         } else {
             // Handle the error
             $user->smsSend=0;
+            $user->email=$arrn_number;
             $user->update();
         //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
         }
@@ -527,7 +529,7 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['plotno'].','.$Studentdetails['streetname'].','.$Studentdetails['city'].','.$Studentdetails['district'].','.$Studentdetails['state'].','.$Studentdetails['pincode'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['pplotno'].','.$Studentdetails['pstreetname'].','.$Studentdetails['pcity'].','.$Studentdetails['pdistrict'].','.$Studentdetails['pstate'].','.$Studentdetails['ppincode'], 0, 1, "L" );
-        
+
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Community', 0, 0, "L" );
         $this->fpdf->Cell( 80, 10, 'Differently Abled', 0, 1, "L" );
