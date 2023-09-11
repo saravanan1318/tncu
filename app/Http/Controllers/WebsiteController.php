@@ -66,7 +66,7 @@ class WebsiteController extends Controller
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
         }
-        if(StudentParams::where('aadhar', $request->aadhar)->where('icm_id',$request->icm)->exists()){
+        if(StudentParams::where('aadhar', $request->aadhar)->where('icm',$request->icm)->exists()){
             return redirect()->back()->withInput($request->input())->with('error', 'Aadhar already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
