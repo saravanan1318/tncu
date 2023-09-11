@@ -59,14 +59,14 @@ class WebsiteController extends Controller
         //        print_r($templateId = env('TEMPLATE_ID'));
         //        return 'https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATEID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID");
 
-        $Userexistcheck = User::where('email',$request->email)->get();
+        $Userexistcheck = User::where('email',$request->email)->where('icm_id',$request->icm)->get();
 
         if(count($Userexistcheck) > 0){
             return redirect()->back()->withInput($request->input())->with('error', 'Email already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
         }
-        if(StudentParams::where('aadhar', $request->aadhar)->exists()){
+        if(StudentParams::where('aadhar', $request->aadhar)->where('icm',$request->icm)->exists()){
             return redirect()->back()->withInput($request->input())->with('error', 'Aadhar already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
