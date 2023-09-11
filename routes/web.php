@@ -23,6 +23,7 @@ Route::get('applicationreview/{id}', [WebsiteController::class, 'applicationrevi
 Route::get('applicationpdf/{id}', [WebsiteController::class, 'applicationpdf']);
 Route::post('store-applicationform', [WebsiteController::class, 'store']) ;
 Route::get('application-acknowledgement/{id}', [WebsiteController::class, 'applicationacknowledgement']);
+Route::post('checkicmeligible', [WebsiteController::class, 'checkicmeligible']);
 
 /**AUTH */
 //Route::get('loginform', [ 'as' => 'loginform', 'uses' => 'IcmController@index']);

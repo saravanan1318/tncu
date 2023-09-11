@@ -54,10 +54,10 @@ class WebsiteController extends Controller
 
 
 
-//        $mobilenumber=$request->mobile1;
-//        $mobilenumber= env('TEMPLATE_ID');
-//        print_r($templateId = env('TEMPLATE_ID'));
-//        return 'https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATEID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID");
+        //        $mobilenumber=$request->mobile1;
+        //        $mobilenumber= env('TEMPLATE_ID');
+        //        print_r($templateId = env('TEMPLATE_ID'));
+        //        return 'https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATEID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID");
 
         $Userexistcheck = User::where('email',$request->email)->get();
 
@@ -354,19 +354,19 @@ class WebsiteController extends Controller
 
 
 
-//        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
+        //        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
         $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
         if ($response->successful()) {
             $data = $response->json(); // Convert response to JSON
             $user->smsSend=1;
             $user->update();
-//            print_r($data);
-//            return $data;
+        //            print_r($data);
+        //            return $data;
         } else {
             // Handle the error
             $user->smsSend=0;
             $user->update();
-//            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
+        //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
         }
 
         return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
@@ -401,7 +401,8 @@ class WebsiteController extends Controller
     
     function applicationpdf(Request $request){
 
-        $id = base64_decode($request->id);
+        //$id = base64_decode($request->id);
+        $id = $request->id;
 
         $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
@@ -502,10 +503,23 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Parent / Guardian', 0, 0, "L" );
-        $this->fpdf->Cell( 80, 10, 'Religion', 0, 1, "L" );
+        $this->fpdf->Cell( 80, 10, 'Nationality', 0, 1, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['parent'], 0, 0, "L" );
-        $this->fpdf->Cell( 80, 5, $Studentdetails['religion'], 0, 1, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['nationality'], 0, 1, "L" );
+
+        $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        $this->fpdf->Cell( 110, 10, 'Religion', 0, 0, "L" );
+        $this->fpdf->Cell( 80, 10, '', 0, 1, "L" );
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['religion'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, "", 0, 1, "L" );
+
+        // $this->fpdf->SetFont( 'Arial', 'B', 10 );
+        // $this->fpdf->Cell( 110, 10, 'Religion', 0, 0, "L" );
+        // $this->fpdf->Ln();
+        // $this->fpdf->SetFont( 'Arial', '', 10 );
+        // $this->fpdf->Cell( 110, 5, $Studentdetails['religion'], 0, 0, "L" );
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Address for Communication', 0, 0, "L" );
@@ -513,7 +527,7 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 110, 5, $Studentdetails['plotno'].','.$Studentdetails['streetname'].','.$Studentdetails['city'].','.$Studentdetails['district'].','.$Studentdetails['state'].','.$Studentdetails['pincode'], 0, 0, "L" );
         $this->fpdf->Cell( 80, 5, $Studentdetails['pplotno'].','.$Studentdetails['pstreetname'].','.$Studentdetails['pcity'].','.$Studentdetails['pdistrict'].','.$Studentdetails['pstate'].','.$Studentdetails['ppincode'], 0, 1, "L" );
-
+        
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Community', 0, 0, "L" );
         $this->fpdf->Cell( 80, 10, 'Differently Abled', 0, 1, "L" );
@@ -537,6 +551,8 @@ class WebsiteController extends Controller
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Athlete (National/State/District level)', 0, 0, "L" );
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Arial', '', 10 );
         $this->fpdf->Cell( 80, 5, $Studentdetails['athlete'], 0, 1, "L" );
 
         $this->fpdf->AddPage();
@@ -719,25 +735,25 @@ class WebsiteController extends Controller
         $this->fpdf->SetXY(100, 250); // Adjust the X and Y coordinates as needed
         $this->fpdf->Cell(28, 10, 'Student Signature', 0, 0, 'C');
 
-// Add heading for parent's signature
-//        $this->fpdf->SetXY(160, 290); // Adjust the X and Y coordinates as needed
+        // Add heading for parent's signature
+        //        $this->fpdf->SetXY(160, 290); // Adjust the X and Y coordinates as needed
         $this->fpdf->Cell(90, 10, 'Parent\Guardian Signature', 0, 0, 'C');
-//        $this->fpdf->AddPage();
+        //        $this->fpdf->AddPage();
         $this->fpdf->Image( $Studentdetails['fcsign'], 100, 260, 28 );
         $this->fpdf->Image( $Studentdetails['parentsign'], 160, 260, 28 );
         $this->fpdf->SetFont( 'Arial', 'B', 12 );
         // Define the file path where you want to save the PDF
         $filePath = 'uploads/applications/'.$Studentdetails["arrn_number"].".pdf"; // Replace with your desired file path and name
 
-// Output the PDF to the specified file path
+        // Output the PDF to the specified file path
         $this->fpdf->Output($filePath, 'F');
 
-// Provide a response or perform any other actions as needed
+        // Provide a response or perform any other actions as needed
 
-//        $this->fpdf->Output();
-        // $this->fpdf->Output($filePath, 'F');
+        //$this->fpdf->Output();
+         $this->fpdf->Output($filePath, 'F');
 
-        // Set the appropriate headers for file download
+        //Set the appropriate headers for file download
         $headers = [
             'Content-Type' => 'application/pdf',
         ];
@@ -745,6 +761,54 @@ class WebsiteController extends Controller
         // Provide the file as a download response
         return response()->download($filePath, $Studentdetails["arrn_number"].".pdf", $headers);
         exit;
+    }
+
+
+    function checkicmeligible(Request $request){
+
+      //  dd($request);
+        $icmid = $request->icm;
+        $email = $request->email;
+        $aadhar = $request->aadhar;
+        $mobile1 = $request->mobile1;
+
+        $studentemail = StudentParams::where('icm', $icmid)->where('email',$email)->count();
+        $studentaadhar = StudentParams::where('icm', $icmid)->where('aadhar',$aadhar)->count();
+        $studentmobile1 = StudentParams::where('icm', $icmid)->where('mobile1',$mobile1)->count();
+
+        $studenmsg = "";
+
+        if($studentemail > 0){
+            $studenmsg = "Email";
+        }
+
+        if($studentaadhar > 0){
+
+            if($studenmsg == ""){
+                $studenmsg = "Adhaar";
+            }else{
+                $studenmsg = $studenmsg.", Adhaar";
+            }
+           
+        }
+
+        if($studentmobile1 > 0){
+
+            if($studenmsg == ""){
+                $studenmsg = "Mobile no";
+            }else{
+                $studenmsg = $studenmsg.", Mobile no";
+            }
+           
+        }
+
+        
+        if(!empty($studenmsg)){
+            $studenmsg = $studenmsg." already exist for this ICM";
+        }
+
+        return response()->json(['status' => 200, 'message' => $studenmsg, 'studentemail' => $studentemail, 'studentaadhar' => $studentaadhar, 'studentmobile1' => $studentmobile1]);
+
     }
 
 }

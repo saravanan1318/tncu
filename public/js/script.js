@@ -127,6 +127,51 @@ $('#athlete').on('change', function() {
     }
 });
 
+$('#icm').on('change', function() {
+    
+    var icm = $("#icm").val();
+    var email = $("#Email").val();
+    var aadhar = $("#AadharNumber").val();
+    var mobile1 = $("#Mobile1").val();
+    var csrftoken = $("#csrftoken").val();
+
+    $.ajax({
+        type:'POST',
+        url:'/checkicmeligible',
+        data: {
+            icm: icm,
+            email: email,
+            aadhar: aadhar,
+            mobile1: mobile1,
+            _token: csrftoken,
+        },
+        success:function(data) {
+            console.log(data);
+
+            if(data.studentaadhar > 0){
+                $("#AadharNumber").val("");
+                $("#AadharNumber").focus();
+            }
+            if(data.studentemail > 0){
+                $("#Email").val("");
+                $("#Email").focus();
+            }
+            if(data.studentmobile1 > 0){
+                $("#Mobile1").val("");
+                $("#Mobile1").focus();
+            }
+
+            if(data.message != ""){
+                alert(data.message);
+                $("#icm").val("");
+            }
+        }
+    });
+
+});
+
+
+
 $('#asltotalmark,#aslsecumark,#aslpercentage').on('blur', function() {
    var asltotalmark = parseInt($("#asltotalmark").val());
    var aslsecumark = parseInt($("#aslsecumark").val());
