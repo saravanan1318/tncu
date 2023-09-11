@@ -525,8 +525,8 @@ class WebsiteController extends Controller
         $this->fpdf->Cell( 110, 10, 'Address for Communication', 0, 0, "L" );
         $this->fpdf->Cell( 80, 10, 'Permanent Address', 0, 1, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->MultiCell( 90, 5, $Studentdetails['plotno'].','.$Studentdetails['streetname'].','.$Studentdetails['city'].','.$Studentdetails['district'].','.$Studentdetails['state'].','.$Studentdetails['pincode'], 0, "L" );
-        $this->fpdf->MultiCell( 80, 5, $Studentdetails['pplotno'].','.$Studentdetails['pstreetname'].','.$Studentdetails['pcity'].','.$Studentdetails['pdistrict'].','.$Studentdetails['pstate'].','.$Studentdetails['ppincode'],0, "L" );
+        $this->fpdf->Cell( 110, 5, $Studentdetails['plotno'].','.$Studentdetails['streetname'].','.$Studentdetails['city'].','.$Studentdetails['district'].','.$Studentdetails['state'].','.$Studentdetails['pincode'], 0, 0, "L" );
+        $this->fpdf->Cell( 80, 5, $Studentdetails['pplotno'].','.$Studentdetails['pstreetname'].','.$Studentdetails['pcity'].','.$Studentdetails['pdistrict'].','.$Studentdetails['pstate'].','.$Studentdetails['ppincode'], 0, 1, "L" );
         
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 110, 10, 'Community', 0, 0, "L" );
