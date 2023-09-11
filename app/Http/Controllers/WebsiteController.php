@@ -81,7 +81,7 @@ class WebsiteController extends Controller
         $user->name = $request->fullname;
         $user->phone = $request->mobile1;
         $user->state = $request->state;
-        $user->email = "NA";
+        $user->email = $request->icm."-".$request->email;
         $user->password = Hash::make($request->mobile1);
         $user->role = 3;
         $user->icm_id = $request->icm;
