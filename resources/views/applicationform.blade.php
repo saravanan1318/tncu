@@ -22,6 +22,7 @@
        <div class="col-sm-12 col-md-12 mb-4">
         <form action="{{url('store-applicationform')}}" id="regform" enctype="multipart/form-data" method="post" novalidate="novalidate">
             @csrf
+            <input type="hidden" id="csrftoken" value="{{csrf_token()}}">
             <fieldset>
                 <legend style="text-align: center;padding:10px;background-color:#194565;color:#fff">{{ __('form.heading') }}</legend>
 

@@ -36,7 +36,7 @@
                     <div class="display" style="">
                         <div class="number">
                             <h3 class="font-green-sharp">
-                                <span id="ToltalSMSSent" data-counter="counterup">5</span>
+                                <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['allapplication']}}</span>
                             </h3>
                             <small>Total Application</small>
                         </div>
@@ -65,9 +65,9 @@
                     <div class="display" style="">
                         <div class="number">
                             <h3 class="font-green-sharp">
-                                <span id="ToltalSMSSent" data-counter="counterup">5</span>
+                                <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['selectedapplication']}}</span>
                             </h3>
-                            <small>Approved Application</small>
+                            <small>Selected Application</small>
                         </div>
                         <div class="icon">
                             <i class="icon-envelope"></i>
@@ -94,7 +94,7 @@
                     <div class="display" style="">
                         <div class="number">
                             <h3 class="font-green-sharp">
-                                <span id="ToltalSMSSent" data-counter="counterup">5</span>
+                                <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['pendingapplication']}}</span>
                             </h3>
                             <small>Pending Application</small>
                         </div>
