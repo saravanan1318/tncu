@@ -816,4 +816,30 @@ class WebsiteController extends Controller
 
     }
 
+
+    public function smstest(){
+
+        $mobilenumber=9344678370;
+        $TEMPLATE_ID="1207167688869177485";
+        $SMSAPIKEY="PbzU+eaaXGe606WNGrXhECyr8bUsw6Xk1KlabTdhcS0=";
+        $SMSCLIENTID="1fd5daa3-fb27-489f-9172-01d0beb8b75c";
+
+        //$response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
+        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
+        if ($response->successful()) {
+            $data = $response->json(); // Convert response to JSON
+            $user->smsSend=1;
+            $user->email=$arrn_number;
+            $user->update();
+        //            print_r($data);
+        //            return $data;
+        } else {
+            // Handle the error
+            $user->smsSend=0;
+            $user->email=$arrn_number;
+            $user->update();
+        //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
+        }
+    }
+
 }

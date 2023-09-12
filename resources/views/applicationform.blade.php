@@ -373,7 +373,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <input id="Communityfile" name="Communityfile" type="file" value="{{ old('Communityfile') }}"  required="">
+                                    <input id="Communityfile" name="Communityfile" type="file" accept=".png, .jpg, .jpeg" value="{{ old('Communityfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -397,7 +397,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" style="display: none" type="file" value="{{ old('IsDifferentlyAbledfile') }}"  required="">
+                                    <input id="IsDifferentlyAbledfile" name="IsDifferentlyAbledfile" accept=".png, .jpg, .jpeg" style="display: none" type="file" value="{{ old('IsDifferentlyAbledfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -456,7 +456,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="iswidowfile" name="iswidowfile" type="file" style="display: none" value="{{ old('iswidowfile') }}"  required="">
+                                    <input id="iswidowfile" name="iswidowfile" type="file" accept=".png, .jpg, .jpeg" style="display: none" value="{{ old('iswidowfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -500,7 +500,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="isservicemanfile" name="isservicemanfile" type="file" value="{{ old('isservicemanfile') }}"  required="">
+                                    <input id="isservicemanfile" name="isservicemanfile" type="file" accept=".png, .jpg, .jpeg" value="{{ old('isservicemanfile') }}"  required="">
 
                                 </div>
                             </div>
@@ -523,7 +523,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="divorceefile" name="divorceefile" type="file" style="display: none" value="{{ old('divorceefile') }}"  required="">
+                                    <input id="divorceefile" name="divorceefile" type="file" accept=".png, .jpg, .jpeg" style="display: none" value="{{ old('divorceefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -546,7 +546,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="refugeefile" name="refugeefile" type="file" style="display: none" value="{{ old('refugeefile') }}"  required="">
+                                    <input id="refugeefile" name="refugeefile" type="file" accept=".png, .jpg, .jpeg" style="display: none" value="{{ old('refugeefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -569,7 +569,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="athletefile" name="athletefile" type="file" style="display: none" value="{{ old('athletefile') }}"  required="">
+                                    <input id="athletefile" name="athletefile" type="file" accept=".png, .jpg, .jpeg" style="display: none" value="{{ old('athletefile') }}"  required="">
 
                                 </div>
                             </div>
@@ -586,7 +586,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="editor-label">
-                                        <input id="tccertificatefile" name="tccertificatefile" type="file" value="{{ old('tccertificatefile') }}"  required="">
+                                        <input id="tccertificatefile" name="tccertificatefile" type="file" accept=".png, .jpg, .jpeg" value="{{ old('tccertificatefile') }}"  required="">
                                     </div>
                                 </div>
                             </div>
@@ -636,7 +636,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="asltotalmark" value="{{ old('asltotalmark') }}" name="asltotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslsecumark" value="{{ old('aslsecumark') }}" name="aslsecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="aslpercentage" value="{{ old('aslpercentage') }}" name="aslpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="slgrade" id="slgrade" value="{{ old('slgrade') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" accept=".png, .jpg, .jpeg" style="width:200px; border:solid 1px #ffffff;" name="slgrade" id="slgrade" value="{{ old('slgrade') }}" required=""></td>
                                 </tr>
 
                                 <tr>
@@ -660,7 +660,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" value="{{ old('ahstotalmark') }}" name="ahstotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" value="{{ old('ahssecumark') }}" name="ahssecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" value="{{ old('ahspercentage') }}" name="ahspercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="hsgrade" id="hsgrade"  value="{{ old('hsgrade') }}" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file"  accept=".png, .jpg, .jpeg" style="width:200px; border:solid 1px #ffffff;" name="hsgrade" id="hsgrade"  value="{{ old('hsgrade') }}" required=""></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.degree')}}
@@ -677,7 +677,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugtotalmark" value="{{ old('ugtotalmark') }}" name="ugtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugsecumark" value="{{ old('ugpercentage') }}" name="ugsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ugpercentage" value="{{ old('ugpercentage') }}" name="ugpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="uggrade" id="uggrade" value="{{ old('uggrade') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" accept=".png, .jpg, .jpeg" style="width:200px; border:solid 1px #ffffff;" name="uggrade" id="uggrade" value="{{ old('uggrade') }}"></td>
                                 </tr>
                                 <tr>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;">{{__('form.graduation')}}
@@ -695,7 +695,7 @@
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgtotalmark" value="{{ old('bgtotalmark') }}" name="bgtotalmark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgsecumark" value="{{ old('bgsecumark') }}" name="bgsecumark"></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="bgpercentage" value="{{ old('bgpercentage') }}" name="bgpercentage" readonly></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" style="width:200px; border:solid 1px #ffffff;" name="bggrade" id="bggrade" value="{{ old('bggrade') }}"></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="file" accept=".png, .jpg, .jpeg" style="width:200px; border:solid 1px #ffffff;" name="bggrade" id="bggrade" value="{{ old('bggrade') }}"></td>
                                 </tr>
                             </tbody>
                             </table>
@@ -811,7 +811,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>Upload Challon</label>
-                                    <input id="challonfile" name="challonfile" type="file" value="" required="">
+                                    <input id="challonfile" name="challonfile" type="file" accept=".png, .jpg, .jpeg" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -834,7 +834,7 @@
 
 
                                     <div class="col-sm-12">
-                                        <input type="file" onchange="readURL1(this);" id="UploadImg" name="UploadImg" required="">
+                                        <input type="file" accept=".png, .jpg, .jpeg" onchange="readURL1(this);" id="UploadImg" name="UploadImg" required="">
                                         <font color="red"><i> {{__('form.less')}}</i></font> <br>
                                         <img id="image1" src="{{asset('images/maleIcon.png')}}" alt="your image" style="margin-top: 10px;width:150px ">
                                     </div>
@@ -852,7 +852,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
-                                    <input id="fcsign" name="fcsign" type="file" value="" onchange="readUR2(this);" required=""><br>
+                                    <input id="fcsign" name="fcsign" type="file" accept=".png, .jpg, .jpeg" value="" onchange="readUR2(this);" required=""><br>
                                     <font color="red"><i>{{__('form.lessthan')}}</i></font> <br>
                                     <img id="image2" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
@@ -867,7 +867,7 @@
                                 </div>
 
                                 <div class="col-sm-12">
-                                    <input id="parentsign" name="parentsign" type="file" value="" onchange="readUR3(this);" required=""><br>
+                                    <input id="parentsign" name="parentsign" type="file" accept=".png, .jpg, .jpeg" value="" onchange="readUR3(this);" required=""><br>
                                     <font color="red"><i> {{__('form.lessthan')}}</i></font> <br>
                                     <img id="image3" src="{{asset('images/signicon.png')}}" alt="your image" style="margin-top: 30px;width:130px ">
                                 </div>
@@ -918,6 +918,7 @@
     function modalclose(){
         $('#largeModal').modal('hide');   
     }
+  
   
 </script>
 @endsection

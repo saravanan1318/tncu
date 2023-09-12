@@ -44,6 +44,7 @@ $("#Communityfile,#iswidowfile,#isservicemanfile,#divorceefile,#isservicemanfile
              
     /* current this object refer to input element */
     var $input = $(this);
+    var id = $(this).attr("id");
 
     /* collect list of files choosen */
     var files = $input[0].files;
@@ -57,6 +58,7 @@ $("#Communityfile,#iswidowfile,#isservicemanfile,#divorceefile,#isservicemanfile
     if (fileSize <= 512017) {
       //  alert("Valid file size");
         /* file uploading code goes here... */
+        fileValidation(id);
     } else {
         alert(
           "Invalid file size, please select a file less than or equal to 500Kb size");
@@ -64,6 +66,25 @@ $("#Communityfile,#iswidowfile,#isservicemanfile,#divorceefile,#isservicemanfile
     }
 
 });
+
+function fileValidation(id) {
+
+    var fileInput =
+        document.getElementById(id);
+        
+    var filePath = fileInput.value;
+    
+    // Allowing file type
+    var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png)$/i;
+        
+    if (!allowedExtensions.exec(filePath)) {
+        alert('Invalid file type');
+        fileInput.value = '';
+        return false;
+    }
+
+}
 
 $('#IsDifferentlyAbled').on('change', function() {
     if(this.value == "Yes"){
