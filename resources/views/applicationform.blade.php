@@ -656,7 +656,7 @@
                                     </td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="hscertificateno" name="hscertificateno" value="{{ old('hscertificateno') }}" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="text" style="width:150px; border:solid 1px #ffffff;" id="hsnameinst" name="hsnameinst" value="{{ old('hsnameinst') }}" required=""></td>
-                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="hsnameinst" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
+                                    <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="hsYOP" name="hsYOP" value="{{ old('hsYOP') }}" min="1980" max="2023" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahstotalmark" value="{{ old('ahstotalmark') }}" name="ahstotalmark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahssecumark" value="{{ old('ahssecumark') }}" name="ahssecumark" required=""></td>
                                     <td style=" border:1px solid #b0b0b0; padding:3px;"><input type="number" style="width:100px; border:solid 1px #ffffff;" id="ahspercentage" value="{{ old('ahspercentage') }}" name="ahspercentage" readonly></td>
@@ -785,10 +785,11 @@
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" value="{{ old('paymenttype') }}" required="">
+                                    <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" required="">
                                         <option value="">- {{__('form.select')}}' -</option>
                                         <option value="online">online</option>
                                         <option value="offline">offline</option>
+                                        <option value="qrpayment">QR Payment</option>
                                     </select>
                                 </div>
                             </div>
@@ -803,7 +804,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>Bank Name</label>
-                                    <input class="form-control" id="bankname" name="bankname" type="text"  placehadd older="Bank Name" value="{{ old('bankname') }}"  required="">
+                                    <input class="form-control" id="bankname" name="bankname" type="text"  placeholder="Bank Name" value="{{ old('bankname') }}"  required="">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Branch Name</label>
@@ -812,6 +813,27 @@
                                 <div class="col-md-3">
                                     <label>Upload Challon</label>
                                     <input id="challonfile" name="challonfile" type="file" accept=".png, .jpg, .jpeg" value="" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;display: none;" id="qrdiv" >
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img id="qrcode" src="{{asset('images/qrcode.jpeg')}}" alt="qrcode" style="margin-top: 10px;width:150px ">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>UPI ID.</label>
+                                    <input class="form-control" id="upiid" name="upiid" type="text" placeholder="xyz123@okicici"  value="{{ old('upiid') }}" required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Transaction No.</label>
+                                    <input class="form-control" id="transno" name="transno" type="text"  placeholder="Transaction No." value="{{ old('transno') }}"  required="">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Payment Screenshot</label>
+                                    <input id="qrpaymentscreenshotfile" name="qrpaymentscreenshotfile" type="file" accept=".png, .jpg, .jpeg" value="" required="">
                                 </div>
                             </div>
                         </div>
@@ -888,7 +910,7 @@
                                     <div class="modal-dialog modal-lg">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title">Form preview</h5>
+                                          <h5 class="modal-title" style="text-align: center">APPLICATION FORM FOR DIPLOMA IN COOPERATIVE MANAGEMENT <br> Tamil Nadu Cooperative Union</h5>
                                         </div>
                                         <div class="modal-body" id="forminputs">
 
