@@ -71,7 +71,7 @@ class WebsiteController extends Controller
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
         }
-        if(StudentParams::where('challonno', $request->challonno)->Where('bankname', $request->bankname)->Where('paymentdistrict', $request->paymentdistrict)->exists()){
+        if(StudentParams::where('challonno', $request->challonno)->Where('bankname', $request->bankname)->Where('challonno','!=',NULL)->Where('paymentdistrict', $request->paymentdistrict)->exists()){
             return redirect()->back()->withInput($request->input())->with('error', 'Challon already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));;
@@ -250,6 +250,16 @@ class WebsiteController extends Controller
             $challonfilename = $destinationPath4.'/'.$challonfilename;
         }
 
+        $qrpaymentscreenshotfilename = "NA";
+        if($request->file('qrpaymentscreenshotfile')) {
+            $subdirectory = "/qrpaymentscreenshot";
+            $qrpaymentscreenshotfile = $request->file('qrpaymentscreenshotfile');
+            $qrpaymentscreenshotfilename = time().'_'.$user->id.'_'.$qrpaymentscreenshotfile->getClientOriginalName();
+            $destinationPath4 = $commonpath.$subdirectory;
+            $qrpaymentscreenshotfile->move($destinationPath4,$qrpaymentscreenshotfilename);
+            $qrpaymentscreenshotfilename = $destinationPath4.'/'.$qrpaymentscreenshotfilename;
+        }
+
         $student = new StudentParams;
         $student->user_id = $user->id;
         $student->arrn_number = 0;
@@ -332,6 +342,9 @@ class WebsiteController extends Controller
         $student->bankname = $request->bankname;
         $student->paymentdistrict = $request->paymentdistrict;
         $student->challonfile = $challonfilename;
+        $student->upiid =  $request->upiid;
+        $student->transno =  $request->transno;
+        $student->qrpaymentscreenshotfile = $qrpaymentscreenshotfilename;
         $student->UploadImg = $UploadImgfilename;
         $student->fcsign = $fcsignfilename;
         $student->parentsign = $parentsignfilename;
