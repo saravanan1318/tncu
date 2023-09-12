@@ -21,10 +21,19 @@ class IcmController extends Controller
     }
     function dashboard(){
 
-        $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
-        $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
-        $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
+        if(Auth::user()->role == 1){
 
+            $allapplication = StudentParams::count();
+            $pendingapplication = StudentParams::where('status', 0)->count();
+            $selectedapplication = StudentParams::where('status', 1)->count();
+            
+        }else{
+
+            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
+            $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
+            $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
+        }
+      
         $data[] = [
            "allapplication" =>  $allapplication,
            "pendingapplication" =>  $pendingapplication,
