@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+ul,
+li {
+    list-style: none;
+}
+.wrapper {
+    width: 1000px;
+    margin: auto;
+}
+/**/
+.list-wrpaaer {
+    position: relative;
+    overflow: hidden;
+}
+ul[class^="list-"] {
+    height: 100%;
+    overflow: hidden;
+}
+.list-aggregate > li {
+    padding: 10px 0;
+    border-bottom: solid 1px transparent;
+    -webkit-transition: ease-in-out background-color 0.15s 0.05s;
+    -o-transition: ease-in-out background-color 0.15s 0.05s;
+    transition: ease-in-out background-color 0.15s 0.05s;
+}
+.list-aggregate > li > a {
+    width: 85%;
+    height: 25px;
+    line-height: 25px;
+    display: block;
+    text-align: center;
+    margin: 7px auto;
+    font-size: 17px;
+    overflow: hidden;
+/*    font-family: "Microsoft Yahei";*/
+}
+.list-aggregate > li > p {
+    height: 35px;
+    line-height: 18px;
+/*    overflow: hidden;*/
+    font-size: 13px;
+}

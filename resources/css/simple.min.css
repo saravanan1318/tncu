@@ -1,0 +1,9 @@
+.list-aggregate li { border-bottom-color: #e5e5e5 }
+
+.list-aggregate li a { color: darkred }
+
+.list-aggregate li a:hover { color: #fff }
+
+.list-aggregate li p { color: #fff; padding:0 10px; }
+
+.list-aggregate li:hover { background-color: #028482 }
