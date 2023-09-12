@@ -46,7 +46,7 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
 
-        $icmlists = Mtr_Icm::orderBy("icm_name", "asc")->all();
+        $icmlists = Mtr_Icm::orderBy("icm_name", "asc")->get();
         return view("applicationform",compact('icmlists'));
     }
     
