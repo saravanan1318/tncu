@@ -175,8 +175,9 @@
                 <h6>
                    <center style="background-color: #028482; padding: 8px; color: #fff; font-weight: 700;"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;IMPORTANT LINKS</center>
                 </h6>
-                <a class="nav-link" href="./doc/DCMProspectus-2023.pdf"><i class="fa fa-link" aria-hidden="true"></i>How To Apply</a>
-                <a class="nav-link" href="/doc/Allicm2023.pdf"><i class="fa fa-link" aria-hidden="true"></i>Help To Contact</a>
+                <a class="nav-link" href="./doc/DCM Prospects 2023-24-NEW.pdf"><i class="fa fa-link" aria-hidden="true"></i> How To Apply</a>
+                <a class="nav-link" href="/doc/ALL ICM ADDRESS 2023.pdf"><i class="fa fa-link" aria-hidden="true"></i> Help To Contact</a>
+                <a class="nav-link" href="/doc/Advertisement.pdf"><i class="fa fa-link" aria-hidden="true"></i> Advertisement</a>
               <!--  <a class="nav-link" href="#"><i class="fa fa-link" aria-hidden="true"></i>FAQ</a> -->
 
 

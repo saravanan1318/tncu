@@ -28,6 +28,12 @@ class WebsiteController extends Controller
         return view("home");
     }
 
+    function aboutus(Request $request){
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);
+        return view("aboutus");
+    }
+
     function notification(Request $request){
 
         App::setLocale($request->lang);
@@ -43,21 +49,9 @@ class WebsiteController extends Controller
         $icmlists = Mtr_Icm::all();
         return view("applicationform",compact('icmlists'));
     }
+    
 
     function store(Request $request){
-
-
-        $mobilenumber=$request->mobile1;
-        $TEMPLATE_ID="1207167688869177485";
-        $SMSAPIKEY="PbzU+eaaXGe606WNGrXhECyr8bUsw6Xk1KlabTdhcS0=";
-        $SMSCLIENTID="1fd5daa3-fb27-489f-9172-01d0beb8b75c";
-
-
-
-        //        $mobilenumber=$request->mobile1;
-        //        $mobilenumber= env('TEMPLATE_ID');
-        //        print_r($templateId = env('TEMPLATE_ID'));
-        //        return 'https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATEID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID");
 
         $Userexistcheck = User::where('email',$request->email)->where('icm_id',$request->icm)->get();
 
@@ -364,30 +358,37 @@ class WebsiteController extends Controller
         $student->update();
 
         $mobilenumber=$request->mobile1;
-
-
-        $user->smsSend=0;
         $user->email=$arrn_number;
         $user->update();
 
-        //        $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
-        // $response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
-        // if ($response->successful()) {
-        //     $data = $response->json(); // Convert response to JSON
-        //     $user->smsSend=1;
-        //     $user->email=$arrn_number;
-        //     $user->update();
-        // //            print_r($data);
-        // //            return $data;
-        // } else {
-        //     // Handle the error
-        //     $user->smsSend=0;
-        //     $user->email=$arrn_number;
-        //     $user->update();
-        // //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
-        // }
+        $TEMPLATE_ID = __('smstemplate.application_templateid');
+        $SMSAPIKEY = env("SMSAPIKEY");
+        $SMSCLIENTID = env("SMSCLIENTID");
 
-        return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
+        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
+        //message
+        $message = __('smstemplate.application_message');
+        $message = str_replace("{var1}",$arrn_number,$message);
+        $message = str_replace("{var2}",$downloadlink,$message);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+       return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
 
     }
 
@@ -401,6 +402,36 @@ class WebsiteController extends Controller
 
         $Studentdetails = StudentParams::where('id',$id)->first();
         $result = (new PHPMailerController)->composeEmail($Studentdetails['id']);
+
+        $arrn_number =  $Studentdetails['arrn_number'];
+        $mobilenumber =  $Studentdetails['mobile1'];
+        $TEMPLATE_ID = __('smstemplate.application_templateid');
+        $SMSAPIKEY = env("SMSAPIKEY");
+        $SMSCLIENTID = env("SMSCLIENTID");
+
+        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
+        //message
+        $message = __('smstemplate.application_message');
+        $message = str_replace("{var1}",$arrn_number,$message);
+        $message = str_replace("{var2}",$downloadlink,$message);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
 
         return view("applicationacknowledgement",compact('Studentdetails'));
     }
@@ -719,20 +750,28 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
         $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->MultiCell(0, 5, "The training station chief will approve the training station's law, rules and disciplinary restrictions on selected coaches training at the training station, and the attendance record and leave, I will attend monthly exams by the training station and regularly attend a parent / guardian at a parent inspection meeting periodically convened by the training station, and at a time when it is impossible to continue training for inevitable reasons, I agree that I will not request a refund of the paid training fee and remove myself from the exercise without prior notice of Evvita in the process of violating the training station's legal plans.", 0, 'L');
+        $this->fpdf->MultiCell(0, 5, "If I am selected  as  a trainee by your institute of cooperative management, I hereby abide the laws, rules and discipline of the training centre and regularly participate in the classes and examination by maintaining regular attendance and avoiding leaves. Also participate in monthly parents meeting regarding monthly attendance and training. If unable to continue the training due to unavoidable reasons, I agree that I will not demand to refund the tuition fees paid. Also I will attend the classroom examinations without fail. In case of violating legal conditions of the training institute, I agree to be removed from the training without any prior notice.", 0, 'L');
         $checkboxWidth = 5; // Width of the checkbox
         $checkboxHeight = 5; // Height of the checkbox
         $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
         $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->MultiCell(0, 5, " In any other company on the days I am practicing, I submit my fact that the work and the attendance register is not comparable and paid to the self-proclaimed (Self decaration) CM as proof of them.", 0, 'L');
+        $this->fpdf->MultiCell(0, 5, "I submit my self-declaration to the principal with evidence that I am not working in any other company and getting salary by signing in attendance register during my training days.", 0, 'L');
 
         $checkboxWidth = 5; // Width of the checkbox
         $checkboxHeight = 5; // Height of the checkbox
         $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
         $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->MultiCell(0, 5, "I am also bound by the action taken by the administration at the point where the CM is aware of their attention that I submitted the wrong detail. And I promise not to continue through the court in this regard and the departmental case", 0, 'L');
+        $this->fpdf->MultiCell(0, 5, "I am bound to take any action if it comes to the notice of the principal that if I have submitted wrong information and I give an undertaking that I will not pursue any court of departmental case in this regard", 0, 'L');
+
+
+        $checkboxWidth = 5; // Width of the checkbox
+        $checkboxHeight = 5; // Height of the checkbox
+        $this->fpdf->SetFont('ZapfDingbats', '', 12); // Use ZapfDingbats font for the checkmark
+        $this->fpdf->Cell($checkboxWidth, $checkboxHeight, '4', 0, 0, 'C');
+        $this->fpdf->SetFont( 'Arial', '', 10 );
+        $this->fpdf->MultiCell(0, 5, "I hereby abide the rules and regulations and also legal conditions for the aforesaid declarations", 0, 'L');
 
 
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
@@ -830,29 +869,10 @@ class WebsiteController extends Controller
     }
 
 
-    public function smstest(){
+    public function sendsms($mobilenumber,$arrn_number){
+        
+        
 
-        $mobilenumber=9344678370;
-        $TEMPLATE_ID="1207167688869177485";
-        $SMSAPIKEY="PbzU+eaaXGe606WNGrXhECyr8bUsw6Xk1KlabTdhcS0=";
-        $SMSCLIENTID="1fd5daa3-fb27-489f-9172-01d0beb8b75c";
-
-        //$response = Http::get('https://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.env("TEMPLATE_ID").'&ApiKey='.env("SMSAPIKEY").'&ClientId='.env("SMSCLIENTID")); // Replace with your API endpoint URL
-        $response = Http::get('http://sms.dial4sms.com/api/v2/SendSMS?SenderId=DALSMS&Message=Hi this is a Test msg from Dial4sms.&MobileNumbers='.$mobilenumber.'&TemplateId='.$TEMPLATE_ID.'&ApiKey='.$SMSAPIKEY.'&ClientId='.$SMSCLIENTID); // Replace with your API endpoint URL
-        if ($response->successful()) {
-            $data = $response->json(); // Convert response to JSON
-            $user->smsSend=1;
-            $user->email=$arrn_number;
-            $user->update();
-        //            print_r($data);
-        //            return $data;
-        } else {
-            // Handle the error
-            $user->smsSend=0;
-            $user->email=$arrn_number;
-            $user->update();
-        //            return response()->json(['error' => 'Failed to fetch data from the API'], 500);
-        }
     }
 
 }

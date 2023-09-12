@@ -8,7 +8,7 @@ return [
     'hhome' => 'Home',
     'abt' => 'About Us',
     'rgl' => 'Regionwise List of ICM',
-    'wpp' => 'Web Portal Policies',
+    'wpp' => 'Advertisement',
     'yv' => 'Your Views',
     'journal' => 'Journal',
 ];

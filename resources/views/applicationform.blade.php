@@ -364,7 +364,7 @@
                         </div> --}}
                     </div>
                     <div class="clearfix"></div>
-                    <div class="row"  style="margin-top: 10px">
+                    <div class="row" id="communitydiv" style="margin-top: 10px">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">

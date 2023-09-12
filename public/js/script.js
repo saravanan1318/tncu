@@ -94,6 +94,13 @@ $('#IsDifferentlyAbled').on('change', function() {
     }
 });
 
+$('#community').on('change', function() {
+    if(this.value == "OC / Others"){
+        $("#communitydiv").hide();
+    }else{
+        $("#communitydiv").show();
+    }
+});
 
 $('#iswidow').on('change', function() {
     if(this.value == "Yes"){

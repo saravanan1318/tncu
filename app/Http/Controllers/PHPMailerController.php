@@ -38,8 +38,8 @@ class PHPMailerController extends Controller
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';             //  smtp host
             $mail->SMTPAuth = true;
-            $mail->Username = 'saravanan13395@gmail.com';   //  sender username
-            $mail->Password = 'kwhlzjxmgiiidstg';       // sender password
+            $mail->Username = 'noreply@tncuicm.com';   //  sender username
+            $mail->Password = 'wtiwzzhaskaousvf';       // sender password
             $mail->SMTPSecure = 'tls';                  // encryption - ssl/tls
             $mail->Port = 587;                          // port - 587/465
             $mail->AddEmbeddedImage($logo1, 'logo1');

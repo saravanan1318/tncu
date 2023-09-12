@@ -25,19 +25,13 @@
                 <a class="nav-link" href="/"> {{__('header.hhome')}} <span class="sr-only">(current)</span></a>
              </li>
              <li class="nav-item dropdown">
-                <a class="nav-link" href="#"> {{__('header.abt')}}</a>
+                <a class="nav-link" href="/about-us"> {{__('header.abt')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="#"> {{__('header.rgl')}}</a>
+                <a class="nav-link" href="/doc/ALL%20ICM%20ADDRESS%202023.pdf"> {{__('header.rgl')}}</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="https://tncu.tn.gov.in/portalpolicies.pdf"> {{__('header.wpp')}}</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="#"> {{__('header.yv')}}</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="#"> {{__('header.journal')}}</a>
+                <a class="nav-link" href="/doc/Advertisement.pdf"> {{__('header.wpp')}}</a>
              </li>
           </ul>
           </li>
