@@ -82,21 +82,21 @@
                         <td>{{ $studentData->age }}</td>
                         <td>{{ $studentData->aadhar }}</td>
                         <td>{{ $markssecured }}</td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="Communityfile" data-href="/{{$studentData->Communityfile}}" >{{$studentData->community}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="isdifferentlyabledfile" data-href="/{{$studentData->isdifferentlyabledfile}}" >{{$studentData->isdifferentlyabled}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="iswidowfile" data-href="/{{$studentData->iswidowfile}}" >{{$studentData->iswidow}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile" data-href="/{{$studentData->divorceefile}}" >{{$studentData->isserviceman}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile" data-href="/{{$studentData->divorceefile}}" >{{$studentData->divorcee}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="refugeefile" data-href="/{{$studentData->refugeefile}}" >{{$studentData->refugee}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="athletefile" data-href="/{{$studentData->athletefile}}" >{{$studentData->athlete}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="tccertificatefile" data-href="/{{$studentData->tccertificatefile}}" >view</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="challonfile" data-href="/{{$studentData->challonfile}}" >{{ $studentData->challonno }}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="Communityfile{{ $studentData->id }}" data-href="/{{$studentData->Communityfile}}" >{{$studentData->community}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="isdifferentlyabledfile{{ $studentData->id }}" data-href="/{{$studentData->isdifferentlyabledfile}}" >{{$studentData->isdifferentlyabled}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="iswidowfile{{ $studentData->id }}" data-href="/{{$studentData->iswidowfile}}" >{{$studentData->iswidow}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile{{ $studentData->id }}" data-href="/{{$studentData->divorceefile}}" >{{$studentData->isserviceman}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile{{ $studentData->id }}" data-href="/{{$studentData->divorceefile}}" >{{$studentData->divorcee}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="refugeefile{{ $studentData->id }}" data-href="/{{$studentData->refugeefile}}" >{{$studentData->refugee}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="athletefile{{ $studentData->id }}" data-href="/{{$studentData->athletefile}}" >{{$studentData->athlete}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="tccertificatefile{{ $studentData->id }}" data-href="/{{$studentData->tccertificatefile}}" >view</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="challonfile{{ $studentData->id }}" data-href="/{{$studentData->challonfile}}" >{{ $studentData->challonno }}</a></td>
                         <td>{{ $studentData->bankname }}</td>
                         <td>{{ $studentData->paymentdistrict }}</td>
                         <td>{{ $studentData->upiid }}</td>
                         <td>{{ $studentData->transno }}</td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="qrpaymentscreenshotfile" data-href="/{{$studentData->qrpaymentscreenshotfile}}" >{{ $studentData->qrpaymentscreenshotfile}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="UploadImg" data-href="/{{$studentData->UploadImg}}" >view</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="qrpaymentscreenshotfile{{ $studentData->id }}" data-href="/{{$studentData->qrpaymentscreenshotfile}}" >{{ $studentData->qrpaymentscreenshotfile}}</a></td>
+                        <td><a href="#" onclick="modalopen(this.id)" id="UploadImg{{ $studentData->id }}" data-href="/{{$studentData->UploadImg}}" >view</a></td>
                         <td><a href='/uploads/applications/{{$studentData->arrn_number}}.pdf'>view</a></td>
                         <td>{{ $status }}</td>
                     </tr>

@@ -7,7 +7,7 @@ $( function() {
     let today = new Date('2023-8-31');
     day = today.getDate(),
     month = today.getMonth(), //January is 0
-    year = today.getFullYear()-18;
+    year = today.getFullYear()-17;
     if(day<10){
         day='0'+day
     }
@@ -20,7 +20,7 @@ $( function() {
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,
-        yearRange: '-99:-18',
+        yearRange: '-99:-17',
         maxDate: new Date(today),
         onSelect: function(dateText) {
             console.log("Selected date: " + dateText + "; input's current value: " + this.value);
