@@ -77,7 +77,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" min='18' placeholder="Age" value="{{ old('age') }}" type="text" readonly="" required="">
+                                    <input autocomplete="off" class="form-control" data-val="true" data-val-required="The age field is required." id="Age"  name="age" min='17' placeholder="Age" value="{{ old('age') }}" type="text" readonly="" required="">
                                 </div>
                             </div>
                         </div>
