@@ -46,7 +46,7 @@ class IcmController extends Controller
     function applicationlist(){
 
         if(Auth::user()->role == 1){
-            $studentDatas = StudentParams::all();
+            $studentDatas = StudentParams::where('status',0)->get();
         }else{
             $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',0)->get();
         }
@@ -56,9 +56,9 @@ class IcmController extends Controller
     function selectedapplicationlist(){
 
         if(Auth::user()->role == 1){
-            $studentDatas = StudentParams::paginate(8);
+            $studentDatas = StudentParams::where('status',1)->get();
         }else{
-            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',1)->paginate(8);
+            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',1)->get();
         }
       
         return view("icm.selectedapplicationlist", compact('studentDatas'));

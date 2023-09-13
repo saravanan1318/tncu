@@ -28,6 +28,7 @@
                 <thead>
                     <tr class="table-success">
                         <th scope="col">#</th>
+                        <th scope="col">ICM Name</th>
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
                         <th scope="col">Age</th>
@@ -77,6 +78,7 @@
                     ?>
                     <tr>
                         <th scope="row">{{ $studentData->id }}</th>
+                        <td>{{ $studentData->mtr_icm->icm_name }}</td>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
                         <td>{{ $studentData->age }}</td>
