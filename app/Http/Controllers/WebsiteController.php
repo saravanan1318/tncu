@@ -451,7 +451,7 @@ class WebsiteController extends Controller
         $this->fpdf->SetFont( 'Arial', 'B', 10 );
         $this->fpdf->Cell( 50, 5, 'Advertisement No. and Date', 1, 0, "L" );
         $this->fpdf->SetFont( 'Arial', '', 10 );
-        $this->fpdf->Cell( 70, 5, '1050/PE3/2017(1-6)   20.06.2018', 1, 1, "C" );
+        $this->fpdf->Cell( 70, 5, '1370/2023 D2 / 13.09.2023', 1, 1, "C" );
         $this->fpdf->Ln();
         $this->fpdf->Image( $Studentdetails['UploadImg'], 160, 55, 28 );
 
