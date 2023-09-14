@@ -28,7 +28,7 @@
       <div class="container-fluid">
         <div class="row p-4">
             <div class="bg-gradient-white col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                <a href="/icm/icmwiselist" class="dashboard-stat2 bordered">
+                <a href="/icm/icmapplicationlist/{{Auth::user()->icm_id}}" class="dashboard-stat2 bordered">
                     <div class="loading" style="z-index: 100; position: absolute; min-height: 100%; margin-top: 6px; left: 40%; top: 34%; display: none;">
                         <i class="fa fa-spinner fa-spin fa-fw" style="font-size:50px; color:#ec9a9a;"></i>
                     </div>
@@ -38,7 +38,7 @@
                             <h3 class="font-green-sharp">
                                 <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['allapplication']}}</span>
                             </h3>
-                            <small>Total ICM Applications received</small>
+                            <small>Total Application</small>
                         </div>
                         <div class="icon">
                             <i class="icon-envelope"></i>
@@ -96,7 +96,7 @@
                             <h3 class="font-green-sharp">
                                 <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['pendingapplication']}}</span>
                             </h3>
-                            <small>Pending Applications</small>
+                            <small>Pending Application</small>
                         </div>
                         <div class="icon">
                             <i class="icon-envelope"></i>
@@ -116,35 +116,6 @@
             </div>
 
         </div>
-        <div class="content">
-            <div class="container-fluid">
-              <div class="row table-responsive">
-                  <table id="applicationlist" class="table table-responsive table-bordered mb-5">
-                      <thead>
-                          <tr class="table-success">
-                              <th scope="col">#</th>
-                              <th scope="col">ICM Name</th>
-                              <th scope="col">No of application</th>
-                              <th scope="col">Action</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <?php  
-                            $count = 1;
-                          ?>
-                          @foreach($studentDatas as $studentData)
-                          <tr>
-                              <th scope="row">{{ $count++ }}</th>
-                              <td>{{ $studentData->icm_name}}</td>
-                              <td>{{ $studentData->Noofapps }}</td>
-                              <td><a href='/icm/icmapplicationlist/{{$studentData->id}}'>view</a></td>
-                          </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-                  {{-- Pagination --}}
-                  {{-- {!! $studentDatas->links() !!} --}}
-              </div>
               <!-- /.row -->
             </div>
             <!-- /.container-fluid -->

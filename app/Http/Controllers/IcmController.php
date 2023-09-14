@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StudentParams;
+use DB;
 
 class IcmController extends Controller
 {
@@ -34,15 +35,53 @@ class IcmController extends Controller
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
         }
       
+        $studentDatas = DB::table('mtr_icm')
+        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+        ->get();
+
         $data[] = [
            "allapplication" =>  $allapplication,
            "pendingapplication" =>  $pendingapplication,
            "selectedapplication" =>  $selectedapplication
         ];
 
-        return view("icm.dashboard",compact('data'));
+        return view("icm.dashboard",compact('data','studentDatas'));
 
     }
+
+    function icmdashboard(){
+
+        if(Auth::user()->role == 1){
+
+            $allapplication = StudentParams::count();
+            $pendingapplication = StudentParams::where('status', 0)->count();
+            $selectedapplication = StudentParams::where('status', 1)->count();
+            
+        }else{
+
+            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
+            $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
+            $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
+        }
+      
+        $studentDatas = DB::table('mtr_icm')
+        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+        ->get();
+
+        $data[] = [
+           "allapplication" =>  $allapplication,
+           "pendingapplication" =>  $pendingapplication,
+           "selectedapplication" =>  $selectedapplication
+        ];
+
+        return view("icm.icmdashboard",compact('data','studentDatas'));
+
+    }
+
     function applicationlist(){
 
         if(Auth::user()->role == 1){
@@ -62,5 +101,25 @@ class IcmController extends Controller
         }
       
         return view("icm.selectedapplicationlist", compact('studentDatas'));
+    }
+
+    function icmwiselist(){
+
+
+        $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+      
+        return view("icm.icmwiselist", compact('studentDatas'));
+    }
+
+    function icmapplicationlist(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->get();
+      
+        return view("icm.icmapplicationlist", compact('studentDatas'));
+
     }
 }

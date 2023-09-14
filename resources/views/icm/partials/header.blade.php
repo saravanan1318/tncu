@@ -45,7 +45,7 @@
          <li class="nav-item">
            <a href="{{url('/icm/applicationlist')}}" class="nav-link">
              <i class="nav-icon fas fa-ellipsis-h"></i>
-             <p>Pending Applications
+             <p>Applications
                {{-- <span class="right badge badge-danger">5</span> --}}
              </p>
            </a>

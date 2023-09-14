@@ -66,7 +66,7 @@ class PHPMailerController extends Controller
             $message = str_replace("{CANDIDATE-NAME}", ucfirst($Studentdetails['fullname']), $message);
             $message = str_replace("{REGISTERED-NO}", $Studentdetails['arrn_number'], $message);
             $message = str_replace("{REGISTERED-DATE}", $Studentdetails['created_at'], $message);
-            $message = str_replace("{APPLICATION-URL}", env('SELF_URI').'/uploads/applications/'.$Studentdetails['arrn_number'].'.pdf', $message);
+            $message = str_replace("{APPLICATION-URL}", 'https://tncuicm.com/uploads/applications/'.$Studentdetails['arrn_number'].'.pdf', $message);
 
             $mail->Subject = "TNCU APPLICATION- ".$Studentdetails['arrn_number'];
 

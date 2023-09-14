@@ -36,9 +36,11 @@ Route::get('logout', [LoginFormController::class, 'logout']);
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
+    Route::get('/icm/icmdashboard', [IcmController::class, 'icmdashboard']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);
     Route::get('/icm/selectedapplicationlist', [IcmController::class, 'selectedapplicationlist']);
-
+    Route::get('/icm/icmwiselist', [IcmController::class, 'icmwiselist']);
+    Route::get('/icm/icmapplicationlist/{icm_id}', [IcmController::class, 'icmapplicationlist']);
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);
