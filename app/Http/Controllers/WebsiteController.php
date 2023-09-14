@@ -24,8 +24,12 @@ class WebsiteController extends Controller
         $this->fpdf = new Fpdf;
     }
 
-    function index(){
+    function index(Request $request){
+
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);
         return view("home");
+        
     }
 
     function aboutus(Request $request){

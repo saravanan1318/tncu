@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <div class="row ">
         <!-- topbar -->
-        <div class="d-none d-md-block d-lg-block d-xl-block w-100 topbar">
+        <div class="d-md-block d-lg-block d-xl-block w-100 topbar">
             <div class="col-md-11 mx-auto h-100">
                 <div class="d-inline-block w-100">
                     <div class="d-inline float-right">

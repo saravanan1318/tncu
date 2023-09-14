@@ -10,7 +10,7 @@
           <span class="d-block">{{ __('header.tnhead') }}</span>
           <span class="d-block"> {{__('header.gvhead')}}</span>
        </div>
-       <img class="d-none d-md-inline-block float-right mr-5" alt="Tanhoda Logo"  src="{{asset('images/tncu-logo.png')}}" width="92">
+       <img class="d-none d-md-inline-block float-right mr-5" alt="Logo"  src="{{asset('images/tncu-logo.png')}}" width="92">
     </div>
     <!-- navbar -->
     <nav class="navbar navbar-expand-xl navbar-light bg-green main-navbar" data-blast="bgColor" >
@@ -32,7 +32,7 @@
              </li>
              <li class="nav-item">
                 <a class="nav-link" href="/doc/Advertisement.pdf"> {{__('header.wpp')}}</a>
-             </li>
+                         </li>
           </ul>
           </li>
           </ul>
