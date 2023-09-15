@@ -33,6 +33,11 @@ Route::get('login', [LoginFormController::class, 'index']);
 Route::post('checklogin', [LoginFormController::class, 'checklogin']);
 Route::get('logout', [LoginFormController::class, 'logout']);
 
+use App\Http\Controllers\UrlShortenerController;
+
+Route::get('/{code}', [UrlShortenerController::class, 'redirect'])->name('redirect');
+
+
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);

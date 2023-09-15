@@ -8,6 +8,7 @@ use App\Models\StudentParams;
 use App\Models\Mtr_Icm;
 use App;
 use Hash;
+use Illuminate\Support\Facades\Log;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -29,7 +30,7 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
         return view("home");
-        
+
     }
 
     function aboutus(Request $request){
@@ -53,7 +54,7 @@ class WebsiteController extends Controller
         $icmlists = Mtr_Icm::orderBy("icm_name", "asc")->get();
         return view("applicationform",compact('icmlists'));
     }
-    
+
 
     function store(Request $request){
 
@@ -373,7 +374,7 @@ class WebsiteController extends Controller
     function applicationacknowledgement(Request $request){
 
         date_default_timezone_set("Asia/Kolkata");
-        
+
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
 
@@ -388,12 +389,16 @@ class WebsiteController extends Controller
         $SMSAPIKEY = env("SMSAPIKEY");
         $SMSCLIENTID = env("SMSCLIENTID");
 
-        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
+//        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
+        $hash=md5($arrn_number);
+        $hash=substr($hash, 0, 5);
+//        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
+        $siteURL="https://tncuicm.com/";
+        $downloadlink = $siteURL.$hash;
         //message
         $message = __('smstemplate.application_message');
         $message = str_replace("{var1}",$arrn_number,$message);
         $message = str_replace("{var2}",$downloadlink,$message);
-
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -408,6 +413,7 @@ class WebsiteController extends Controller
         ));
 
         $response = curl_exec($curl);
+        Log::info($response);
 
         curl_close($curl);
 
@@ -427,7 +433,7 @@ class WebsiteController extends Controller
         //dd($Studentdetails);
         return view("applicationreview",compact('Studentdetails'));
     }
-    
+
     function applicationpdf(Request $request){
 
         $id = base64_decode($request->id);
@@ -1185,7 +1191,7 @@ class WebsiteController extends Controller
             }else{
                 $studenmsg = $studenmsg.", Adhaar";
             }
-           
+
         }
 
         if($studentmobile1 > 0){
@@ -1195,10 +1201,10 @@ class WebsiteController extends Controller
             }else{
                 $studenmsg = $studenmsg.", Mobile no";
             }
-           
+
         }
 
-        
+
         if(!empty($studenmsg)){
             $studenmsg = $studenmsg." already exist for this ICM";
         }
@@ -1209,8 +1215,8 @@ class WebsiteController extends Controller
 
 
     public function sendsms($mobilenumber,$arrn_number){
-        
-        
+
+
 
     }
 
