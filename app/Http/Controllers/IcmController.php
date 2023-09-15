@@ -103,6 +103,27 @@ class IcmController extends Controller
         return view("icm.selectedapplicationlist", compact('studentDatas'));
     }
 
+    function duplicateapplicationlist(){
+
+        $studentDatas = DB::select("SELECT student_params.*,mtr_icm.icm_name FROM student_params
+        LEFT JOIN mtr_icm ON student_params.icm = mtr_icm.id
+        WHERE aadhar IN (SELECT aadhar AS noofapps 
+        FROM student_params  
+        GROUP BY aadhar  
+        HAVING COUNT(aadhar) > 1)
+        UNION ALL
+        SELECT student_params.*,mtr_icm.icm_name FROM student_params
+        LEFT JOIN mtr_icm  ON student_params.icm = mtr_icm.id
+        WHERE email IN (SELECT email AS noofapps 
+        FROM student_params  
+        GROUP BY email  
+        HAVING COUNT(email) > 1) ORDER BY id ASC");
+
+        //$studentDatas = StudentParams::where('status',1)->get();
+      
+        return view("icm.duplicateapplicationlist", compact('studentDatas'));
+    }
+
     function icmwiselist(){
 
 

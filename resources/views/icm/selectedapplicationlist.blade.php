@@ -34,6 +34,7 @@
                         <th scope="col">Age</th>
                         <th scope="col">Aadhaar No</th>
                         <th scope="col">Marks secured</th>
+                        <th scope="col">Mark sheet files</th>
                         <th scope="col">Community</th>
                         <th scope="col">Is disabled</th>
                         <th scope="col">Widow</th>
@@ -87,6 +88,12 @@
                         <td>{{ $studentData->age }}</td>
                         <td>{{ $studentData->aadhar }}</td>
                         <td>{{ $markssecured }}</td>
+                        <td>
+                          <a href="#" onclick="modalopen(this.id)" id="slgrade{{ $studentData->id }}" data-href="/{{$studentData->slgrade}}" >10th</a>
+                          <a href="#" onclick="modalopen(this.id)" id="hsgrade{{ $studentData->id }}" data-href="/{{$studentData->hsgrade}}" >12th/Diploma</a>
+                          <a href="#" onclick="modalopen(this.id)" id="uggrade{{ $studentData->id }}" data-href="/{{$studentData->uggrade}}" >UG</a>
+                          <a href="#" onclick="modalopen(this.id)" id="bggrade{{ $studentData->id }}" data-href="/{{$studentData->bggrade}}" >PG</a>
+                        </td>
                         <td><a href="#" onclick="modalopen(this.id)" id="Communityfile{{ $studentData->id }}" data-href="/{{$studentData->Communityfile}}" >{{$studentData->community}}</a></td>
                         <td><a href="#" onclick="modalopen(this.id)" id="isdifferentlyabledfile{{ $studentData->id }}" data-href="/{{$studentData->isdifferentlyabledfile}}" >{{$studentData->isdifferentlyabled}}</a></td>
                         <td><a href="#" onclick="modalopen(this.id)" id="iswidowfile{{ $studentData->id }}" data-href="/{{$studentData->iswidowfile}}" >{{$studentData->iswidow}}</a></td>
