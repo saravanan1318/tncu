@@ -2,6 +2,11 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    @if (Session::has('success'))
+        <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div>
+    @endif
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -52,14 +57,15 @@
                         <th scope="col">Profile Photo</th>
                         <th scope="col">Application</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php  
+                    <?php
                       $count = 1;
                     ?>
                     @foreach($studentDatas as $studentData)
-                    <?php  
+                    <?php
                     $markssecured = "";
                     if(!empty($studentData->aslsecumark)){
                       $markssecured .=  "SSLC -".$studentData->aslsecumark;
@@ -111,6 +117,7 @@
                         <td><a href="#" onclick="modalopen(this.id)" id="UploadImg{{ $studentData->id }}" data-href="/{{$studentData->UploadImg}}" >view</a></td>
                         <td><a href='/uploads/applications/{{$studentData->arrn_number}}.pdf'>view</a></td>
                         <td>SUCCESS</td>
+                        <td><a class="btn btn-sm btn-info text-white" href="/icm/applicationregenerate?id={{$studentData->id}}">Regenerate</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -144,7 +151,7 @@
       $('#basicModal').modal('show');
     }
     function modalclose(){
-        $('#basicModal').modal('hide');   
+        $('#basicModal').modal('hide');
     }
   </script>
   @endsection

@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/icmwiselist', [IcmController::class, 'icmwiselist']);
     Route::get('/icm/duplicateapplicationlist', [IcmController::class, 'duplicateapplicationlist']);
     Route::get('/icm/icmapplicationlist/{icm_id}', [IcmController::class, 'icmapplicationlist']);
+    Route::get('/icm/applicationregenerate', [WebsiteController::class, 'applicationregenerate']);
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);

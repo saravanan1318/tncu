@@ -9,6 +9,7 @@ use App\Models\Mtr_Icm;
 use App;
 use Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -70,11 +71,17 @@ class WebsiteController extends Controller
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));
         }
+        if(StudentParams::where('transno', $request->transno)->exists()){
+            return redirect()->back()->withInput($request->input())->with('error', 'This transaction no already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
+            ->with('checkbox', $request->input('checkbox')) // Add checkbox value
+            ->with('file', $request->file('file'));
+        }
         if(StudentParams::where('challonno', $request->challonno)->Where('bankname', $request->bankname)->Where('challonno','!=',NULL)->Where('paymentdistrict', $request->paymentdistrict)->exists()){
             return redirect()->back()->withInput($request->input())->with('error', 'Challon already exist')->with('selectBox', $request->input('selectBox')) // Add select box value
             ->with('checkbox', $request->input('checkbox')) // Add checkbox value
             ->with('file', $request->file('file'));;
         }
+
 
         $user = new User;
         $user->name = $request->fullname;
@@ -386,8 +393,11 @@ class WebsiteController extends Controller
         $arrn_number =  $Studentdetails['arrn_number'];
         $mobilenumber =  $Studentdetails['mobile1'];
         $TEMPLATE_ID = __('smstemplate.application_templateid');
+        $TEMPLATE_ID = __('1107169417102681517');
         $SMSAPIKEY = env("SMSAPIKEY");
-        $SMSCLIENTID = env("SMSCLIENTID");
+        $SMSAPIKEY = "jUdpsmb5V7WIR8zdirW+By1lzoxHFgunMlUwJsjz70g=";
+        //$SMSCLIENTID = env("SMSCLIENTID");
+        $SMSCLIENTID = "1c590c3e-ac8b-495a-a355-d184b432a9e8";
 
 //        $downloadlink = env('SELF_URI').'/uploads/applications/'.$arrn_number.'.pdf';
         $hash=md5($arrn_number);
@@ -401,6 +411,7 @@ class WebsiteController extends Controller
         $message = str_replace("{var2}",$downloadlink,$message);
         $curl = curl_init();
 
+        Log::info("http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID)");
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
         CURLOPT_RETURNTRANSFER => true,
@@ -413,6 +424,7 @@ class WebsiteController extends Controller
         ));
 
         $response = curl_exec($curl);
+        Log::info("**response**");
         Log::info($response);
 
         curl_close($curl);
@@ -801,6 +813,50 @@ class WebsiteController extends Controller
     }
 
 
+    function applicationregenerate(Request $request){
+
+        date_default_timezone_set("Asia/Kolkata");
+        $id = ($request->id);
+
+        $Studentdetails = StudentParams::where('id',$id)->first();
+        $result = (new PHPMailerController)->composeEmail($Studentdetails['id']);
+
+        $arrn_number =  $Studentdetails['arrn_number'];
+        $mobilenumber =  $Studentdetails['mobile1'];
+        $TEMPLATE_ID = __('smstemplate.application_templateid');
+        $TEMPLATE_ID = __('1107169417102681517');
+        $SMSAPIKEY = "jUdpsmb5V7WIR8zdirW+By1lzoxHFgunMlUwJsjz70g=";
+        $SMSCLIENTID = "1c590c3e-ac8b-495a-a355-d184b432a9e8";
+        $hash=md5($arrn_number);
+        $hash=substr($hash, 0, 5);
+        $siteURL="https://tncuicm.com/";
+        $downloadlink = $siteURL.$hash;
+        //message
+        $message = __('smstemplate.application_message');
+        $message = str_replace("{var1}",$arrn_number,$message);
+        $message = str_replace("{var2}",$downloadlink,$message);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $this->applicationpdfonpage($id);
+
+        Session::flash('success', 'Your application regenerated successfully.');
+        return back();
+    }
     function applicationpdfonpage($id){
 
        // $id = $request->id;
