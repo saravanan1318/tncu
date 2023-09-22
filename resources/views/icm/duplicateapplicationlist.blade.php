@@ -52,14 +52,15 @@
                         <th scope="col">Profile Photo</th>
                         <th scope="col">Application</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php  
+                    <?php
                       $count = 1;
                     ?>
                     @foreach($studentDatas as $studentData)
-                    <?php  
+                    <?php
                     $markssecured = "";
                     if(!empty($studentData->aslsecumark)){
                       $markssecured .=  "SSLC -".$studentData->aslsecumark;
@@ -81,7 +82,7 @@
 
                     ?>
                     <tr>
-                        <th scope="row">{{ $count++ }}</th>
+                        <th scope="row" >{{ $count++ }}</th>
                         <td>{{ $studentData->icm_name }}</td>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
@@ -111,6 +112,12 @@
                         <td><a href="#" onclick="modalopen(this.id)" id="UploadImg{{ $studentData->id }}" data-href="/{{$studentData->UploadImg}}" >view</a></td>
                         <td><a href='/uploads/applications/{{$studentData->arrn_number}}.pdf'>view</a></td>
                         <td>SUCCESS</td>
+                        <td><select class="form-control actionbutton" data-id="{{$studentData->id}}">
+
+                                <option value="">Please select option</option>
+                                <option value="1">Move to Application list</option>
+                                <option value="0" {{$studentData->duplicateaccept==0?"selected":""}}>Rejected</option>
+                            </select></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -144,7 +151,7 @@
       $('#basicModal').modal('show');
     }
     function modalclose(){
-        $('#basicModal').modal('hide');   
+        $('#basicModal').modal('hide');
     }
   </script>
   @endsection

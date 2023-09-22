@@ -29,13 +29,11 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row table-responsive">
-            <div class=""><button class="btn btn-info p-2 applyactionbutton">apply</button></div>
-            <br>
+{{--            <button class="btn btn-info p-2 applyactionbutton">apply</button>--}}
             <table id="applicationlist" class="table table-responsive table-bordered mb-5">
                 <thead>
                     <tr class="table-success">
                         <th scope="col">#</th>
-                        <th>checkbox</th>
                         <th scope="col">ICM Name</th>
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
@@ -44,23 +42,14 @@
                         <th scope="col">Marks secured</th>
                         <th scope="col">Mark sheet files</th>
                         <th scope="col">Community</th>
-                        <th scope="col">Is disabled</th>
-                        <th scope="col">Widow</th>
-                        <th scope="col">Ex-Serviceman</th>
-                        <th scope="col">Divorcee</th>
-                        <th scope="col">Refugee</th>
-                        <th scope="col">Athlete</th>
-                        <th scope="col">TC</th>
                         <th scope="col">Challon No</th>
                         <th scope="col">Bank Name</th>
                         <th scope="col">Payment District</th>
                         <th scope="col">UPI ID</th>
                         <th scope="col">UPI Transaction No.</th>
                         <th scope="col">Payment Transaction screenshot</th>
-                        <th scope="col">Profile Photo</th>
-                        <th scope="col">Application</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th>Address</th>
+                        <th>contact Number</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +80,6 @@
                     ?>
                     <tr>
                         <th scope="row">{{ $count++ }}</th>
-<td><input type="checkbox" class="checkbox" value="{{ $studentData->id }}"></td>
 {{--                        <td>{{ $studentData->mtr_icm->icm_name }}</td>--}}
                         <td>{{ $studentData->icm_name }}</td>
                         <td>{{ $studentData->arrn_number }}</td>
@@ -106,23 +94,14 @@
                           <a href="#" onclick="modalopen(this.id)" id="bggrade{{ $studentData->id }}" data-href="/{{$studentData->bggrade}}" >PG</a>
                         </td>
                         <td><a href="#" onclick="modalopen(this.id)" id="Communityfile{{ $studentData->id }}" data-href="/{{$studentData->Communityfile}}" >{{$studentData->community}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="isdifferentlyabledfile{{ $studentData->id }}" data-href="/{{$studentData->isdifferentlyabledfile}}" >{{$studentData->isdifferentlyabled}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="iswidowfile{{ $studentData->id }}" data-href="/{{$studentData->iswidowfile}}" >{{$studentData->iswidow}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile{{ $studentData->id }}" data-href="/{{$studentData->divorceefile}}" >{{$studentData->isserviceman}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="divorceefile{{ $studentData->id }}" data-href="/{{$studentData->divorceefile}}" >{{$studentData->divorcee}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="refugeefile{{ $studentData->id }}" data-href="/{{$studentData->refugeefile}}" >{{$studentData->refugee}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="athletefile{{ $studentData->id }}" data-href="/{{$studentData->athletefile}}" >{{$studentData->athlete}}</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="tccertificatefile{{ $studentData->id }}" data-href="/{{$studentData->tccertificatefile}}" >view</a></td>
                         <td><a href="#" onclick="modalopen(this.id)" id="challonfile{{ $studentData->id }}" data-href="/{{$studentData->challonfile}}" >{{ $studentData->challonno }}</a></td>
                         <td>{{ $studentData->bankname }}</td>
                         <td>{{ $studentData->paymentdistrict }}</td>
                         <td>{{ $studentData->upiid }}</td>
                         <td>{{ $studentData->transno }}</td>
                         <td><a href="#" onclick="modalopen(this.id)" id="qrpaymentscreenshotfile{{ $studentData->id }}" data-href="/{{$studentData->qrpaymentscreenshotfile}}" >view</a></td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="UploadImg{{ $studentData->id }}" data-href="/{{$studentData->UploadImg}}" >view</a></td>
-                        <td><a href='/uploads/applications/{{$studentData->arrn_number}}.pdf'>view</a></td>
-                        <td>SUCCESS</td>
-                        <td><a class="btn btn-sm btn-info text-white" href="/icm/applicationregenerate?id={{$studentData->id}}">Regenerate</a></td>
+                        <td>{{$studentData->plotno}},{{$studentData->streetname}},{{$studentData->city}},{{$studentData->district}},{{$studentData->state}},{{$studentData->pincode}}</td>
+                        <td>{{$studentData->mobile1}}/{{$studentData->mobile2}}</td>
                     </tr>
                     @endforeach
                 </tbody>

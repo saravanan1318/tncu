@@ -18,7 +18,7 @@ use App\Http\Controllers\PHPMailerController;
 
 Route::get('/', [WebsiteController::class, 'index']);
 Route::get('/notification', [WebsiteController::class, 'notification']);
-Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
+//Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
 Route::get('applicationreview/{id}', [WebsiteController::class, 'applicationreview']);
 Route::get('applicationpdf/{id}', [WebsiteController::class, 'applicationpdf']);
 Route::post('store-applicationform', [WebsiteController::class, 'store']) ;
@@ -43,11 +43,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
     Route::get('/icm/icmdashboard', [IcmController::class, 'icmdashboard']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);
+    Route::get('/icm/printedformat', [IcmController::class, 'printapplicationlist']);
     Route::get('/icm/selectedapplicationlist', [IcmController::class, 'selectedapplicationlist']);
     Route::get('/icm/icmwiselist', [IcmController::class, 'icmwiselist']);
     Route::get('/icm/duplicateapplicationlist', [IcmController::class, 'duplicateapplicationlist']);
     Route::get('/icm/icmapplicationlist/{icm_id}', [IcmController::class, 'icmapplicationlist']);
     Route::get('/icm/applicationregenerate', [WebsiteController::class, 'applicationregenerate']);
+    Route::get('/icm/duplicateaccept', [IcmController::class, 'duplicateaccept']);
+    Route::get('/icm/selectedlist', [IcmController::class, 'selectedlist']);
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);

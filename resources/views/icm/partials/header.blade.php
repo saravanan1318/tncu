@@ -8,7 +8,7 @@
     </li>
   </ul>
 </nav>
-<!-- /.navbar --> 
+<!-- /.navbar -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
    <a href="#" class="brand-link">
@@ -37,7 +37,7 @@
              <i class="nav-icon fas fa-th"></i>
              <p>
                Dashboard
-              
+
              </p>
            </a>
          </li>
@@ -50,6 +50,14 @@
              </p>
            </a>
          </li>
+           <li class="nav-item">
+               <a href="{{url('/icm/printedformat')}}" class="nav-link">
+                   <i class="nav-icon fas fa-ellipsis-h"></i>
+                   <p>Applications Print Format
+                       {{-- <span class="right badge badge-danger">5</span> --}}
+                   </p>
+               </a>
+           </li>
          <li class="nav-item">
           <a href="{{url('/icm/selectedapplicationlist')}}" class="nav-link">
             <i class="nav-icon fas fa-ellipsis-h"></i>
