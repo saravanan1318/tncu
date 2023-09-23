@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StudentParams;
+use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
 
 class IcmController extends Controller
@@ -18,6 +19,14 @@ class IcmController extends Controller
     // }
 
     //
+    protected $fpdf;
+
+    public function __construct()
+    {
+        $this->fpdf = new Fpdf;
+    }
+
+
     function index(){
         return view("icm.login");
     }
@@ -271,4 +280,156 @@ ORDER BY sp.aadhar,sp.transno ASC;
         // Optionally, you can return a response
         return response()->json(['message' => 'Status updated successfully']);
     }
+
+    function  printerversionmale(Request $request){
+
+        $studentDatas = DB::table('mtr_icm')
+        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        ->where('student_params.gender','=','Male')
+        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+        ->get();
+        return view("icm.printerversionmale",compact('studentDatas'));
+
+    }
+
+    function  printerversionfemale(Request $request){
+
+        $studentDatas = DB::table('mtr_icm')
+        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        ->where('student_params.gender','=','Female')
+        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+        ->get();
+        return view("icm.printerversionfemale",compact('studentDatas'));
+    }
+
+    function  printerversionmalelist(Request $request){
+
+        $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender','Male')->get();
+        return view("icm.printerversionmalelist",compact('studentDatas'));
+
+    }
+
+    function  printerversionfemalelist(Request $request){
+
+        $studentDatas = StudentParams::where('status',0)->get();
+        return view("icm.printerversionfemalelist",compact('studentDatas'));
+    }
+
+    function printerapplicationlistpdf(Request $request){
+
+        $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+
+        $this->fpdf->AddPage('L');
+        $this->fpdf->SetFont( 'Helvetica', 'B', 14 );
+        $this->fpdf->Cell( 0, 10, 'APPLICATION FORM FOR DIPLOMA IN COOPERATIVE MANAGEMENT ', 0, 1, "C" );
+        $this->fpdf->Cell( 0, 10, 'Tamil Nadu Cooperative Union', 0, 1, "C" );
+
+        $this->fpdf->Cell( 0, 10, $studentDatas[0]->mtr_icm->icm_name, 0, 1, "C" );
+        $this->fpdf->SetFont( 'Helvetica', 'B', 8 );
+        
+        $this->fpdf->Cell(8,7,'Sl No',1,0,'C');
+        $this->fpdf->Cell(30,7,'ARN Number',1,0,'C');
+        $this->fpdf->Cell(38,7,'Full name',1,0,'C');
+        $this->fpdf->Cell(18,7,'Mobile No',1,0,'C');
+        $this->fpdf->Cell(8,7,'Age',1,0,'C');
+        $this->fpdf->Cell(20,7,'Aadhaar No',1,0,'C');
+        $this->fpdf->Cell(30,7,'10th & 12th/Diploma',1,0,'C');
+        $this->fpdf->Cell(25,7,'TC',1,0,'C');
+        $this->fpdf->Cell(25,7,'Community',1,0,'C');
+        $this->fpdf->Cell(38,7,'UPI No. / Challon No',1,0,'C');
+        $this->fpdf->Cell(38,7,'Selected/Not Selected',1,0,'C');
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Helvetica', 'B', 7 );
+        $this->fpdf->Cell(8,7,'',1,0,'C');
+        $this->fpdf->Cell(30,7,'',1,0,'C');
+        $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Cell(18,7,'',1,0,'C');
+        $this->fpdf->Cell(8,7,'',1,0,'C');
+        $this->fpdf->Cell(20,7,'',1,0,'C');
+        $this->fpdf->Cell(30,7,'Yes / No',1,0,'C');
+       // $this->fpdf->Cell(25,7,'Verified / Not verified',1,0,'C');
+        $this->fpdf->Cell(25,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(25,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Helvetica', 'B', 8 );
+        $count = 1;
+        foreach($studentDatas as $studentData){
+
+            // $markssecuredone = "";
+            // $markssecuredtwo = "";
+            // if(!empty($studentData->aslsecumark)){
+            //   $markssecuredone =  $studentData->aslsecumark;
+            // }
+            // if(!empty($studentData->ahssecumark)){
+            //   $markssecuredtwo =  $studentData->ahssecumark;
+            // }
+
+           // $address = $studentData->plotno.",".$studentData->streetname.",".$studentData->city.",".$studentData->district.",".$studentData->state.",".$studentData->pincode;
+
+            $this->fpdf->Cell(8,7,$count++,1);
+            $this->fpdf->Cell(30,7,$studentData->arrn_number,1,0,'C');
+            $this->fpdf->Cell(38,7,$studentData->fullname,1);
+            $this->fpdf->Cell(18,7,$studentData->mobile1,1);
+            $this->fpdf->Cell(8,7,$studentData->age,1,0,'C');
+            $this->fpdf->Cell(20,7,$studentData->aadhar,1,0,'C');
+            $this->fpdf->Cell(30,7,'',1);
+           // $this->fpdf->Cell(25,7,$markssecuredone,1);
+           // $this->fpdf->Cell(25,7,$markssecuredtwo,1);
+            $this->fpdf->Cell(25,7,'',1);
+            $this->fpdf->Cell(25,7,'',1);
+            $this->fpdf->Cell(38,7,$studentData->transno." / ".$studentData->challonno ,1);
+            $this->fpdf->Cell(38,7,'',1,0);
+            $this->fpdf->Ln();
+        }
+
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
+        $this->fpdf->Cell(38,7,'Institute Manager :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'Principal :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'Committee Members :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'1. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'2. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'3. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'4. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'5. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'6. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'7. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'8. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'9. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'10. :',0,0);
+
+        // Define the file path where you want to save the PDF
+        $filePath = 'uploads/applications/'.$studentDatas[0]->mtr_icm->icm_name.".pdf"; // Replace with your desired file path and name
+
+        // Output the PDF to the specified file path
+        $this->fpdf->Output($filePath, 'F');
+        //Set the appropriate headers for file download
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+
+        // Provide the file as a download response
+        return response()->download($filePath, $studentDatas[0]->mtr_icm->icm_name.".pdf", $headers);
+        exit;
+    }
+
+
 }
