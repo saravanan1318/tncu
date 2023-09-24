@@ -463,8 +463,14 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->Ln();
         $this->fpdf->SetFont( 'Helvetica', 'B', 8 );
         $count = 1;
+        $offset = 11;
+        
         foreach($studentDatas as $studentData){
 
+            if( $count ==  $offset){
+                $this->fpdf->AddPage('L');
+                $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
+            }
             $trn = "";
 
             if(!is_null($studentData->challonno) && !is_null($studentData->transno)){
@@ -477,32 +483,73 @@ ORDER BY sp.aadhar,sp.transno ASC;
                 $trn = $studentData->transno;
             }
 
-            $this->fpdf->Cell(8,12,$count++,1);
-            $this->fpdf->Cell(30,12,$studentData->arrn_number,1,0,'C');
-            $this->fpdf->Cell(38,12,$studentData->fullname,1);
-            $this->fpdf->Cell(18,12,$studentData->mobile1,1);
-            $this->fpdf->Cell(8,12,$studentData->age,1,0,'C');
-            $this->fpdf->Cell(20,12,$studentData->aadhar,1,0,'C');
-            $this->fpdf->Cell(15,12,'',1);
-            $this->fpdf->Cell(15,12,'',1);
-            $this->fpdf->Cell(15,12,'',1);
-            $this->fpdf->Cell(15,12,'',1);
-            $this->fpdf->Cell(15,12,'',1);
-            $this->fpdf->Cell(20,12,'',1);
-            $this->fpdf->Cell(38,12, $trn ,1);
-            $this->fpdf->Cell(30,12,'',1,0);
+            $this->fpdf->Cell(8,7,$count++,1);
+            $this->fpdf->Cell(30,7,$studentData->arrn_number,1,0,'C');
+            $this->fpdf->Cell(38,7,$studentData->fullname,1);
+            $this->fpdf->Cell(18,7,$studentData->mobile1,1);
+            $this->fpdf->Cell(8,7,$studentData->age,1,0,'C');
+            $this->fpdf->Cell(20,7,$studentData->aadhar,1,0,'C');
+            $this->fpdf->Cell(15,7,'',1);
+            $this->fpdf->Cell(15,7,'',1);
+            $this->fpdf->Cell(15,7,'',1);
+            $this->fpdf->Cell(15,7,'',1);
+            $this->fpdf->Cell(15,7,'',1);
+            $this->fpdf->Cell(20,7,'',1);
+            $this->fpdf->Cell(38,7, $trn ,1);
+            $this->fpdf->Cell(30,7,'',1,0);
             $this->fpdf->Ln();
+
+            if( $count ==  $offset){
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'ICM Manager Name:',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'Signature :',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'Principal Name:',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'Signature :',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(38,7,'Submitted for Selection committee aproval:',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(45,7,'Committee Mem Name:',0,0);
+                $this->fpdf->Cell(38,7,'1. :',0,0);
+                $this->fpdf->Cell(38,7,'2. :',0,0);
+                $this->fpdf->Cell(38,7,'3. :',0,0);
+                $this->fpdf->Cell(38,7,'4. :',0,0);
+                $this->fpdf->Cell(38,7,'5. :',0,0);
+                $this->fpdf->Cell(38,7,'6. :',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(38,7,'Signature :',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'Chairman Name:',0,0);
+                $this->fpdf->Ln();
+                $this->fpdf->Cell(100,5,'Signature :',0,0);
+                $this->fpdf->Ln();
+                if($offset == 10){
+                    $offset = $offset+5;
+                }else{
+                    $offset = $offset+17;
+                }
+                
+            }
             
         }
 
-        $this->fpdf->AddPage('L');
-        $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
+        
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'ICM Manager Name:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Principal Name:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'Note:',0,0);
         $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'1. Verified all orginal certificate of candidate:',0,0);
         $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'2. Tc,Community,10th,12th,Degree,PG Marksheet orginal are verified :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'Submitted for Selection committee aproval:',0,0);
         $this->fpdf->Ln();
@@ -514,8 +561,14 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->Cell(38,7,'5. :',0,0);
         $this->fpdf->Cell(38,7,'6. :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Chairman Name:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Ln();
+       
         $this->fpdf->Ln();
         $this->fpdf->Ln();
         $this->fpdf->Ln();
