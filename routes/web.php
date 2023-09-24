@@ -53,7 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/selectedlist', [IcmController::class, 'selectedlist']);
     Route::get('/icm/printerversion/male', [IcmController::class, 'printerversionmale']);
     Route::get('/icm/printerversion/female', [IcmController::class, 'printerversionfemale']);
-    Route::get('/icm/printerversion/address', [IcmController::class, 'printerversionfemalelist']);
+    Route::get('/icm/printerversion/address/{gender}', [IcmController::class, 'contacticmlist']);
+    Route::get('/icm/printerversion/address/{icm_id}/{gender}', [IcmController::class, 'contacticmapplicationlist']);
     Route::get('/icm/printerapplicationlistpdf/{icm_id}/{gender}', [IcmController::class, 'printerapplicationlistpdf']);
 });
 

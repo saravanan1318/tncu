@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\StudentParams;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
+use PDF;
 
 class IcmController extends Controller
 {
@@ -37,19 +38,25 @@ class IcmController extends Controller
             $allapplication = StudentParams::count();
             $pendingapplication = StudentParams::where('status', 0)->count();
             $selectedapplication = StudentParams::where('status', 1)->count();
-
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
         }else{
 
             $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
             $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.icm',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
         }
 
-        $studentDatas = DB::table('mtr_icm')
-        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-        ->get();
+        
 
         $data[] = [
            "allapplication" =>  $allapplication,
@@ -283,38 +290,116 @@ ORDER BY sp.aadhar,sp.transno ASC;
 
     function  printerversionmale(Request $request){
 
-        $studentDatas = DB::table('mtr_icm')
-        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-        ->where('student_params.gender','=','Male')
-        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-        ->get();
+
+        if(Auth::user()->role == 1){
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Male')
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }else{
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Male')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }
+       
         return view("icm.printerversionmale",compact('studentDatas'));
 
     }
 
     function  printerversionfemale(Request $request){
 
-        $studentDatas = DB::table('mtr_icm')
-        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-        ->where('student_params.gender','=','Female')
-        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-        ->get();
+        if(Auth::user()->role == 1){
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Female')
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }else{
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Female')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }
+
         return view("icm.printerversionfemale",compact('studentDatas'));
     }
 
-    function  printerversionmalelist(Request $request){
+    function  contacticmlist(Request $request){
 
-        $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender','Male')->get();
-        return view("icm.printerversionmalelist",compact('studentDatas'));
+
+        $gender = $request->gender;
+
+        if(Auth::user()->role == 1){
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=',$gender)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }else{
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=',$gender)
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }
+
+        return view("icm.contacticmlist",compact('studentDatas','gender'));
 
     }
 
-    function  printerversionfemalelist(Request $request){
+    function  contacticmapplicationlist(Request $request){
 
-        $studentDatas = StudentParams::where('status',0)->get();
-        return view("icm.printerversionfemalelist",compact('studentDatas'));
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+
+
+        $html = '<!DOCTYPE html> <html> <head> <style> table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; font-size: 8px; } td { border: 1px solid #dddddd; text-align: left; padding: 20px; } tr:nth-child(even) { background-color: #dddddd; } h3,h4,.slno{ text-align: center; } th{ background-color: black; color: #fff; text-align: center; border: 1px solid #dddddd; padding: 20px; font-size: 10px !important;} </style> </head> <body> <h3>CONTACT DETAILS OF DIPLOMA IN COOPERATIVE MANAGEMENT 2023-24</h3> <h4>Tamil Nadu Cooperative Union</h4> <h4>'.$studentDatas[0]->mtr_icm->icm_name.'</h4> <table> <tr> <th style="width:5%" class="slno">SlNo</th> <th style="width:15%">ARN Number</th> <th style="width:20%">Full name</th> <th style="width:10%">MobileNo</th><th style="width:50%">Address</th> </tr> <tbody>';
+        
+        $count = 1;
+        foreach($studentDatas as $studentData){
+            $address = $studentData->plotno.", ".$studentData->streetname.", ".$studentData->city.", ".$studentData->district.", ".$studentData->state.", ".$studentData->pincode;
+
+            $html .= '<tr>
+            <td style="width:5%" class="slno">'.$count++.'</td>
+            <td style="width:15%" class="slno">'.$studentData->arrn_number.'</td>
+            <td style="width:20%" class="slno">'.$studentData->fullname.'</td>
+            <td style="width:10%" class="slno">'.$studentData->mobile1.'</td>
+            <td style="width:50%" class="slno">'.$address.'</td>
+          </tr>';
+        }
+
+        $html .= '</tbody></table></body></html>';
+        
+        PDF::SetTitle('Hello World');
+        PDF::AddPage();
+        PDF::writeHTML($html, true, false, true, false, '');
+
+        PDF::Output('hello_world.pdf');
+        
     }
 
     function printerapplicationlistpdf(Request $request){
@@ -322,7 +407,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender',$request->gender)->get();
 
         $this->fpdf->AddPage('L');
-        $this->fpdf->SetFont( 'Helvetica', 'B', 14 );
+        $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
         $this->fpdf->Cell( 0, 10, 'APPLICATION FORM FOR DIPLOMA IN COOPERATIVE MANAGEMENT ', 0, 1, "C" );
         $this->fpdf->Cell( 0, 10, 'Tamil Nadu Cooperative Union', 0, 1, "C" );
 
@@ -335,11 +420,14 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->Cell(18,7,'Mobile No',1,0,'C');
         $this->fpdf->Cell(8,7,'Age',1,0,'C');
         $this->fpdf->Cell(20,7,'Aadhaar No',1,0,'C');
-        $this->fpdf->Cell(30,7,'10th & 12th/Diploma',1,0,'C');
-        $this->fpdf->Cell(25,7,'TC',1,0,'C');
-        $this->fpdf->Cell(25,7,'Community',1,0,'C');
+        $this->fpdf->Cell(15,7,'10th',1,0,'C');
+        $this->fpdf->Cell(15,7,'12th/Dip',1,0,'C');
+        $this->fpdf->Cell(15,7,'Degree',1,0,'C');
+        $this->fpdf->Cell(15,7,'PG',1,0,'C');
+        $this->fpdf->Cell(15,7,'TC',1,0,'C');
+        $this->fpdf->Cell(20,7,'Community',1,0,'C');
         $this->fpdf->Cell(38,7,'UPI No. / Challon No',1,0,'C');
-        $this->fpdf->Cell(38,7,'Selected/Not Selected',1,0,'C');
+        $this->fpdf->Cell(30,7,'Selected/Not Selected',1,0,'C');
         $this->fpdf->Ln();
         $this->fpdf->SetFont( 'Helvetica', 'B', 7 );
         $this->fpdf->Cell(8,7,'',1,0,'C');
@@ -348,76 +436,94 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->Cell(18,7,'',1,0,'C');
         $this->fpdf->Cell(8,7,'',1,0,'C');
         $this->fpdf->Cell(20,7,'',1,0,'C');
-        $this->fpdf->Cell(30,7,'Yes / No',1,0,'C');
-       // $this->fpdf->Cell(25,7,'Verified / Not verified',1,0,'C');
-        $this->fpdf->Cell(25,7,'Yes / No',1,0,'C');
-        $this->fpdf->Cell(25,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(15,7,'Org Verfied',1,0,'C');
+        $this->fpdf->Cell(15,7,'Org Verfied',1,0,'C');
+        $this->fpdf->Cell(15,7,'Org Verfied',1,0,'C');
+        $this->fpdf->Cell(15,7,'Org Verified',1,0,'C');
+        $this->fpdf->Cell(15,7,'Org Verified',1,0,'C');
+        $this->fpdf->Cell(20,7,'Org Verified',1,0,'C');
         $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Cell(30,7,'',1,0,'C');
+        $this->fpdf->Ln();
+        $this->fpdf->SetFont( 'Helvetica', 'B', 7 );
+        $this->fpdf->Cell(8,7,'',1,0,'C');
+        $this->fpdf->Cell(30,7,'',1,0,'C');
         $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Cell(18,7,'',1,0,'C');
+        $this->fpdf->Cell(8,7,'',1,0,'C');
+        $this->fpdf->Cell(20,7,'',1,0,'C');
+        $this->fpdf->Cell(15,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(15,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(15,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(15,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(15,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(20,7,'Yes / No',1,0,'C');
+        $this->fpdf->Cell(38,7,'',1,0,'C');
+        $this->fpdf->Cell(30,7,'',1,0,'C');
         $this->fpdf->Ln();
         $this->fpdf->SetFont( 'Helvetica', 'B', 8 );
         $count = 1;
         foreach($studentDatas as $studentData){
 
-            // $markssecuredone = "";
-            // $markssecuredtwo = "";
-            // if(!empty($studentData->aslsecumark)){
-            //   $markssecuredone =  $studentData->aslsecumark;
-            // }
-            // if(!empty($studentData->ahssecumark)){
-            //   $markssecuredtwo =  $studentData->ahssecumark;
-            // }
+            $trn = "";
 
-           // $address = $studentData->plotno.",".$studentData->streetname.",".$studentData->city.",".$studentData->district.",".$studentData->state.",".$studentData->pincode;
+            if(!is_null($studentData->challonno) && !is_null($studentData->transno)){
+                $trn = $studentData->transno." / ".$studentData->challonno;
+            }else if(!is_null($studentData->challonno) && is_null($studentData->transno)){
+                $trn = $studentData->challonno;
+            }else if(is_null($studentData->challonno) && !is_null($studentData->transno)){
+                $trn = $studentData->transno;
+            }else{
+                $trn = $studentData->transno;
+            }
 
-            $this->fpdf->Cell(8,7,$count++,1);
-            $this->fpdf->Cell(30,7,$studentData->arrn_number,1,0,'C');
-            $this->fpdf->Cell(38,7,$studentData->fullname,1);
-            $this->fpdf->Cell(18,7,$studentData->mobile1,1);
-            $this->fpdf->Cell(8,7,$studentData->age,1,0,'C');
-            $this->fpdf->Cell(20,7,$studentData->aadhar,1,0,'C');
-            $this->fpdf->Cell(30,7,'',1);
-           // $this->fpdf->Cell(25,7,$markssecuredone,1);
-           // $this->fpdf->Cell(25,7,$markssecuredtwo,1);
-            $this->fpdf->Cell(25,7,'',1);
-            $this->fpdf->Cell(25,7,'',1);
-            $this->fpdf->Cell(38,7,$studentData->transno." / ".$studentData->challonno ,1);
-            $this->fpdf->Cell(38,7,'',1,0);
+            $this->fpdf->Cell(8,12,$count++,1);
+            $this->fpdf->Cell(30,12,$studentData->arrn_number,1,0,'C');
+            $this->fpdf->Cell(38,12,$studentData->fullname,1);
+            $this->fpdf->Cell(18,12,$studentData->mobile1,1);
+            $this->fpdf->Cell(8,12,$studentData->age,1,0,'C');
+            $this->fpdf->Cell(20,12,$studentData->aadhar,1,0,'C');
+            $this->fpdf->Cell(15,12,'',1);
+            $this->fpdf->Cell(15,12,'',1);
+            $this->fpdf->Cell(15,12,'',1);
+            $this->fpdf->Cell(15,12,'',1);
+            $this->fpdf->Cell(15,12,'',1);
+            $this->fpdf->Cell(20,12,'',1);
+            $this->fpdf->Cell(38,12, $trn ,1);
+            $this->fpdf->Cell(30,12,'',1,0);
             $this->fpdf->Ln();
+            
         }
 
-        $this->fpdf->Ln();
+        $this->fpdf->AddPage('L');
         $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
-        $this->fpdf->Cell(38,7,'Institute Manager :',0,0);
+        $this->fpdf->Cell(38,7,'Note:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'1. Verified all orginal certificate of candidate:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'2. Tc,Community,10th,12th,Degree,PG Marksheet orginal are verified :',0,0);
         $this->fpdf->Ln();
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'Principal :',0,0);
+        $this->fpdf->Cell(38,7,'Submitted for Selection committee aproval:',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'Committee Members :',0,0);
-        $this->fpdf->Ln();
+        $this->fpdf->Cell(45,7,'Committee Mem Name:',0,0);
         $this->fpdf->Cell(38,7,'1. :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'2. :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'3. :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'4. :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'5. :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'6. :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'7. :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'8. :',0,0);
+        $this->fpdf->Cell(38,7,'Signature :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'9. :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'10. :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Ln();
+       
 
         // Define the file path where you want to save the PDF
-        $filePath = 'uploads/applications/'.$studentDatas[0]->mtr_icm->icm_name.".pdf"; // Replace with your desired file path and name
+        $filePath = 'uploads/applications/'.$studentDatas[0]->mtr_icm->icm_name."-".$request->gender.".pdf"; // Replace with your desired file path and name
 
         // Output the PDF to the specified file path
         $this->fpdf->Output($filePath, 'F');
@@ -427,7 +533,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
         ];
 
         // Provide the file as a download response
-        return response()->download($filePath, $studentDatas[0]->mtr_icm->icm_name.".pdf", $headers);
+        return response()->download($filePath, $studentDatas[0]->mtr_icm->icm_name."-".$request->gender.".pdf", $headers);
         exit;
     }
 

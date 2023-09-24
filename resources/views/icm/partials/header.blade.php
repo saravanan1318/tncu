@@ -77,34 +77,43 @@
               </p>
             </a>
           </li>
-          <li class="nav-header">Printer Version</li>
-          <li class="nav-item">
-            <a href="{{url('/icm/printerversion/male')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Male
-                {{-- <span class="right badge badge-danger">5</span> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{url('/icm/printerversion/female')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Female
-                {{-- <span class="right badge badge-danger">5</span> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{url('/icm/printerversion/address')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Address
-                {{-- <span class="right badge badge-danger">5</span> --}}
-              </p>
-            </a>
-          </li>
           <?php
          }
         ?>
+        <li class="nav-header">Printer Version</li>
+        <li class="nav-item">
+          <a href="{{url('/icm/printerversion/male')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Male
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('/icm/printerversion/female')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Female
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-header">Contact details</li>
+        <li class="nav-item">
+          <a href="{{url('/icm/printerversion/address/Male')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Male
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('/icm/printerversion/address/Female')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Female
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
         <li class="nav-item">
            <a href="{{url('logout')}}" class="nav-link">
              <i class="nav-icon fas fa-file"></i>
