@@ -41,6 +41,7 @@ class IcmController extends Controller
             $studentDatas = DB::table('mtr_icm')
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
         }else{
@@ -52,6 +53,7 @@ class IcmController extends Controller
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.icm',Auth::user()->icm_id)
+            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
         }
@@ -86,6 +88,7 @@ class IcmController extends Controller
         $studentDatas = DB::table('mtr_icm')
         ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
         ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        ->where('student_params.status',0)
         ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
         ->get();
 
@@ -103,36 +106,6 @@ class IcmController extends Controller
 
         if(Auth::user()->role == 1){
             $studentDatas = StudentParams::where('status',0)->get();
-            $query="WITH DuplicateAadhar AS (
-    SELECT aadhar
-    FROM student_params
-    GROUP BY aadhar
-    HAVING COUNT(aadhar) = 1
-),
-DuplicateEmail AS (
-    SELECT email
-    FROM student_params
-    GROUP BY email
-    HAVING COUNT(email) = 1
-),
-DuplicateTransno AS (
-    SELECT transno
-    FROM student_params
-    GROUP BY transno
-    HAVING COUNT(transno) = 1
-)
-SELECT sp.*, mtr_icm.icm_name
-FROM student_params sp
-LEFT JOIN mtr_icm ON sp.icm = mtr_icm.id
-WHERE  sp.status = 0
-AND (sp.aadhar IN (SELECT aadhar FROM DuplicateAadhar)
-   and sp.email IN (SELECT email FROM DuplicateEmail)
-   and sp.transno IN (SELECT transno FROM DuplicateTransno)
-   OR sp.duplicateaccept =1)
-ORDER BY sp.id ASC;
-";
-            $studentDatas = DB::select($query);
-//            $studentDatas = DB::select("select * from allapplication")->get();
         }else{
             $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',0)->get();
         }
@@ -143,36 +116,6 @@ ORDER BY sp.id ASC;
 
         if(Auth::user()->role == 1){
             $studentDatas = StudentParams::where('status',0)->get();
-            $query="WITH DuplicateAadhar AS (
-    SELECT aadhar
-    FROM student_params
-    GROUP BY aadhar
-    HAVING COUNT(aadhar) = 1
-),
-DuplicateEmail AS (
-    SELECT email
-    FROM student_params
-    GROUP BY email
-    HAVING COUNT(email) = 1
-),
-DuplicateTransno AS (
-    SELECT transno
-    FROM student_params
-    GROUP BY transno
-    HAVING COUNT(transno) = 1
-)
-SELECT sp.*, mtr_icm.icm_name
-FROM student_params sp
-LEFT JOIN mtr_icm ON sp.icm = mtr_icm.id
-WHERE  sp.status = 0
-AND (sp.aadhar IN (SELECT aadhar FROM DuplicateAadhar)
-   and sp.email IN (SELECT email FROM DuplicateEmail)
-   and sp.transno IN (SELECT transno FROM DuplicateTransno)
-   OR sp.duplicateaccept =1)
-ORDER BY sp.id ASC;
-";
-            $studentDatas = DB::select($query);
-//            $studentDatas = DB::select("select * from allapplication")->get();
         }else{
             $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',0)->get();
         }
@@ -192,55 +135,7 @@ ORDER BY sp.id ASC;
 
     function duplicateapplicationlist(){
 
-        /*$studentDatas = DB::select("SELECT student_params.*,mtr_icm.icm_name FROM student_params
-        LEFT JOIN mtr_icm ON student_params.icm = mtr_icm.id
-        WHERE aadhar IN (SELECT aadhar AS noofapps
-        FROM student_params
-        GROUP BY aadhar
-        HAVING COUNT(aadhar) > 1)
-        UNION ALL
-        SELECT student_params.*,mtr_icm.icm_name FROM student_params
-        LEFT JOIN mtr_icm  ON student_params.icm = mtr_icm.id
-        WHERE email IN (SELECT email AS noofapps
-        FROM student_params
-        GROUP BY email
-        HAVING COUNT(email) > 1) ORDER BY id ASC");*/
-        $query = "
-   WITH DuplicateAadhar AS (
-    SELECT aadhar
-    FROM student_params
-    GROUP BY aadhar
-    HAVING COUNT(aadhar) > 1
-),
-DuplicateEmail AS (
-    SELECT email
-    FROM student_params
-    GROUP BY email
-    HAVING COUNT(email) > 1
-),
-DuplicateTransno AS (
-    SELECT transno
-    FROM student_params
-    GROUP BY transno
-    HAVING COUNT(transno) > 1
-)
-SELECT sp.*, mtr_icm.icm_name
-FROM student_params sp
-LEFT JOIN mtr_icm ON sp.icm = mtr_icm.id
-WHERE (sp.aadhar IN (SELECT aadhar FROM DuplicateAadhar)
-   or sp.email IN (SELECT email FROM DuplicateEmail)
-   or sp.transno IN (SELECT transno FROM DuplicateTransno)
-   OR sp.aadhar IS null
-   OR sp.email IS null
-   OR sp.transno IS NULL)
-    AND (sp.duplicateaccept IS NULL ||  sp.duplicateaccept<>1)
-ORDER BY sp.aadhar,sp.transno ASC;
-
-";
-
-        $studentDatas = DB::select($query);
-
-        //$studentDatas = StudentParams::where('status',1)->get();
+        $studentDatas = StudentParams::where('status',2)->get();
 
         return view("icm.duplicateapplicationlist", compact('studentDatas'));
     }
@@ -259,7 +154,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
 
     function icmapplicationlist(Request $request){
 
-        $studentDatas = StudentParams::where('icm', $request->icm_id)->get();
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('status',0)->get();
 
         return view("icm.icmapplicationlist", compact('studentDatas'));
 
@@ -297,6 +192,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Male')
+            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
 
@@ -306,6 +202,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Male')
+            ->where('student_params.status',0)
             ->where('student_params.icm','=',Auth::user()->icm_id)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
@@ -324,6 +221,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Female')
+            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
 
@@ -333,6 +231,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Female')
+            ->where('student_params.status',0)
             ->where('student_params.icm','=',Auth::user()->icm_id)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
@@ -340,6 +239,24 @@ ORDER BY sp.aadhar,sp.transno ASC;
         }
 
         return view("icm.printerversionfemale",compact('studentDatas'));
+    }
+
+    function  printerversionmalelist(Request $request){
+
+
+        $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+
+       
+        return view("icm.printerversionmalelist",compact('studentDatas'));
+
+    }
+
+    function  printerversionfemalelist(Request $request){
+
+        $studentDatas = StudentParams::where('status',0)->where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+
+
+        return view("icm.printerversionfemalelist",compact('studentDatas'));
     }
 
     function  contacticmlist(Request $request){
@@ -353,6 +270,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=',$gender)
+            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
 
@@ -362,6 +280,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=',$gender)
+            ->where('student_params.status',0)
             ->where('student_params.icm','=',Auth::user()->icm_id)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
@@ -374,7 +293,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
 
     function  contacticmapplicationlist(Request $request){
 
-        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->where('status',0)->get();
 
 
         $html = '<!DOCTYPE html> <html> <head> <style> table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; font-size: 8px; } td { border: 1px solid #dddddd; text-align: left; padding: 20px; } tr:nth-child(even) { background-color: #dddddd; } h3,h4,.slno{ text-align: center; } th{ background-color: black; color: #fff; text-align: center; border: 1px solid #dddddd; padding: 20px; font-size: 10px !important;} </style> </head> <body> <h3>CONTACT DETAILS OF DIPLOMA IN COOPERATIVE MANAGEMENT 2023-24</h3> <h4>Tamil Nadu Cooperative Union</h4> <h4>'.$studentDatas[0]->mtr_icm->icm_name.'</h4> <table> <tr> <th style="width:5%" class="slno">SlNo</th> <th style="width:15%">ARN Number</th> <th style="width:20%">Full name</th> <th style="width:10%">MobileNo</th><th style="width:50%">Address</th> </tr> <tbody>';
@@ -464,7 +383,7 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->SetFont( 'Helvetica', 'B', 8 );
         $count = 1;
         $offset = 11;
-        
+        $pageno = 1;
         foreach($studentDatas as $studentData){
 
             if( $count ==  $offset){
@@ -501,59 +420,63 @@ ORDER BY sp.aadhar,sp.transno ASC;
 
             if( $count ==  $offset){
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(100,5,'ICM Manager Name:',0,0);
+                $this->fpdf->Cell(100,5,'ICM Manager / Incharge:',0,0);
                 $this->fpdf->Ln();
                 $this->fpdf->Cell(100,5,'Signature :',0,0);
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(100,5,'Principal Name:',0,0);
+                $this->fpdf->Cell(100,5,'Principal / Incharge:',0,0);
                 $this->fpdf->Ln();
                 $this->fpdf->Cell(100,5,'Signature :',0,0);
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(38,7,'Submitted for Selection committee aproval:',0,0);
+                $this->fpdf->Cell(38,5,'Submitted for Selection committee approved:',0,0);
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(45,7,'Committee Mem Name:',0,0);
-                $this->fpdf->Cell(38,7,'1. :',0,0);
-                $this->fpdf->Cell(38,7,'2. :',0,0);
-                $this->fpdf->Cell(38,7,'3. :',0,0);
-                $this->fpdf->Cell(38,7,'4. :',0,0);
-                $this->fpdf->Cell(38,7,'5. :',0,0);
-                $this->fpdf->Cell(38,7,'6. :',0,0);
+                $this->fpdf->Cell(45,5,'Committee Mem Designation:',0,0);
+                $this->fpdf->Cell(38,5,'1. :',0,0);
+                $this->fpdf->Cell(38,5,'2. :',0,0);
+                $this->fpdf->Cell(38,5,'3. :',0,0);
+                $this->fpdf->Cell(38,5,'4. :',0,0);
+                $this->fpdf->Cell(38,5,'5. :',0,0);
+                $this->fpdf->Cell(38,5,'6. :',0,0);
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(38,7,'Signature :',0,0);
+                $this->fpdf->Cell(38,5,'Signature :',0,0);
                 $this->fpdf->Ln();
-                $this->fpdf->Cell(100,5,'Chairman Name:',0,0);
+                $this->fpdf->Cell(100,5,'Chairman Designation:',0,0);
                 $this->fpdf->Ln();
                 $this->fpdf->Cell(100,5,'Signature :',0,0);
                 $this->fpdf->Ln();
+                $this->fpdf->Cell(500,5,'Page No: '.$pageno,0,0,'C');
+                $this->fpdf->Ln();
+
                 if($offset == 10){
                     $offset = $offset+5;
                 }else{
                     $offset = $offset+17;
                 }
-                
+                $pageno = $pageno+1;
             }
             
         }
 
         
-        $this->fpdf->Ln();
-        $this->fpdf->Cell(100,5,'ICM Manager Name:',0,0);
-        $this->fpdf->Ln();
-        $this->fpdf->Cell(100,5,'Signature :',0,0);
-        $this->fpdf->Ln();
-        $this->fpdf->Cell(100,5,'Principal Name:',0,0);
-        $this->fpdf->Ln();
-        $this->fpdf->Cell(100,5,'Signature :',0,0);
-        $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'Note:',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'1. Verified all orginal certificate of candidate:',0,0);
+        $this->fpdf->Cell(38,7,'1. Verified all orginal certificate of candidate',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'2. Tc,Community,10th,12th,Degree,PG Marksheet orginal are verified :',0,0);
+        $this->fpdf->Cell(38,7,'2. Tc,Community,10th,12th,Degree,PG Marksheet orginal are verified',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(38,7,'Submitted for Selection committee aproval:',0,0);
+        $this->fpdf->Cell(38,7,'3. Original challan / UPI Transaction no verified',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(45,7,'Committee Mem Name:',0,0);
+        $this->fpdf->Cell(100,5,'ICM Manager / Incharge:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Principal / Incharge:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(38,7,'Submitted for Selection committee approved:',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(45,7,'Committee Mem Designation:',0,0);
         $this->fpdf->Cell(38,7,'1. :',0,0);
         $this->fpdf->Cell(38,7,'2. :',0,0);
         $this->fpdf->Cell(38,7,'3. :',0,0);
@@ -563,9 +486,11 @@ ORDER BY sp.aadhar,sp.transno ASC;
         $this->fpdf->Ln();
         $this->fpdf->Cell(38,7,'Signature :',0,0);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(100,5,'Chairman Name:',0,0);
+        $this->fpdf->Cell(100,5,'Chairman Designation:',0,0);
         $this->fpdf->Ln();
         $this->fpdf->Cell(100,5,'Signature :',0,0);
+        $this->fpdf->Ln();
+        $this->fpdf->Cell(500,5,'Page No: '.$pageno,0,0,'C');
         $this->fpdf->Ln();
         $this->fpdf->Ln();
        

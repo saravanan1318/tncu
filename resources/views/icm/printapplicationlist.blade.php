@@ -81,7 +81,7 @@
                     <tr>
                         <th scope="row">{{ $count++ }}</th>
 {{--                        <td>{{ $studentData->mtr_icm->icm_name }}</td>--}}
-                        <td>{{ $studentData->icm_name }}</td>
+                        <td>{{ $studentData->mtr_icm->icm_name }}</td>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
                         <td>{{ $studentData->age }}</td>

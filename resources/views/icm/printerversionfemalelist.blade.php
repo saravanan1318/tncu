@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Application List</h1>
+            <h1 class="m-0">Print version List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Application List</li>
+              <li class="breadcrumb-item active">Female List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,43 +27,55 @@
             <table id="applicationlist" class="table table-responsive table-bordered mb-5">
                 <thead>
                     <tr class="table-success">
-                        <th scope="col">#</th>
-                        <th scope="col">ICM Name</th>
+                        <th scope="col">Sl No</th>
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
-                        <th scope="col" style="width: 200px">Address</th>
+                        <th scope="col">Mobile No</th>
                         <th scope="col">Age</th>
                         <th scope="col">Aadhaar No</th>
-                        <th scope="col">Challon No</th>
-                        <th scope="col">UPI ID</th>
-                        <th scope="col">UPI Transaction No.</th>
-                        <th scope="col">Payment Transaction screenshot</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">10th Org Verfied <br> Yes / No</th>
+                        <th scope="col">12th/Dip Org Verfied <br> Yes / No</th>
+                        <th scope="col">Degree Org Verfied <br> Yes / No</th>
+                        <th scope="col">PG Org Verfied <br> Yes / No</th>
+                        <th scope="col">TC Org Verfied <br> Yes / No</th>
+                        <th scope="col">Community Org Verfied <br> Yes / No</th>
+                        <th scope="col">UPI No. / Challon No </th>
+                        <th scope="col">Selected/Not Selected</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                    <?php  
                       $count = 1;
                     ?>
                     @foreach($studentDatas as $studentData)
+                    <?php  
+                         $trn = "";
+
+                        if(!is_null($studentData->challonno) && !is_null($studentData->transno)){
+                            $trn = $studentData->transno." / ".$studentData->challonno;
+                        }else if(!is_null($studentData->challonno) && is_null($studentData->transno)){
+                            $trn = $studentData->challonno;
+                        }else if(is_null($studentData->challonno) && !is_null($studentData->transno)){
+                            $trn = $studentData->transno;
+                        }else{
+                            $trn = $studentData->transno;
+                        }
+                    ?>
                     <tr>
-                        <th scope="row" >{{ $count++ }}</th>
-                        <td>{{ $studentData->mtr_icm->icm_name }}</td>
+                        <th scope="row">{{ $count++ }}</th>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>
-                        <td >{{$studentData->plotno}},{{$studentData->streetname}},{{$studentData->city}},{{$studentData->district}},{{$studentData->state}},{{$studentData->pincode}}</td>
+                        <td>{{ $studentData->mobile1 }}</td>
                         <td>{{ $studentData->age }}</td>
                         <td>{{ $studentData->aadhar }}</td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="challonfile{{ $studentData->id }}" data-href="/{{$studentData->challonfile}}" >{{ $studentData->challonno }}</a></td>
-                        <td>{{ $studentData->upiid }}</td>
-                        <td>{{ $studentData->transno }}</td>
-                        <td><a href="#" onclick="modalopen(this.id)" id="qrpaymentscreenshotfile{{ $studentData->id }}" data-href="/{{$studentData->qrpaymentscreenshotfile}}" >view</a></td>
-                        <td><select class="form-control actionbutton" data-id="{{$studentData->id}}">
-
-                                <option value="">Please select option</option>
-                                <option value="1">Move to Application list</option>
-                                <option value="0" {{$studentData->duplicateaccept==0?"selected":""}}>Rejected</option>
-                            </select></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ $trn }}</td>
+                        <td></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -97,7 +109,7 @@
       $('#basicModal').modal('show');
     }
     function modalclose(){
-        $('#basicModal').modal('hide');
+        $('#basicModal').modal('hide');   
     }
   </script>
   @endsection

@@ -34,6 +34,7 @@
                               <th scope="col">ICM Name</th>
                               <th scope="col">No of application</th>
                               <th scope="col">Action</th>
+                              <th scope="col">List</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -46,6 +47,7 @@
                               <td>{{ $studentData->icm_name}}</td>
                               <td>{{ $studentData->Noofapps }}</td>
                               <td><a href='/icm/printerapplicationlistpdf/{{$studentData->id}}/Male'>download</a></td>
+                              <td><a href='/icm/printerversionmalelist/{{$studentData->id}}/Male'>View</a></td>
                           </tr>
                           @endforeach
                       </tbody>

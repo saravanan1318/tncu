@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ICM</title>
+  <title>COOP</title>
   @include('icm.partials.styles')
 </head>
 <body class="hold-transition sidebar-mini">
