@@ -313,11 +313,12 @@ class IcmController extends Controller
 
         $html .= '</tbody></table></body></html>';
         
+        $filenametodownload = $studentDatas[0]->mtr_icm->icm_name."_contact.pdf";
         PDF::SetTitle('Hello World');
         PDF::AddPage();
         PDF::writeHTML($html, true, false, true, false, '');
 
-        PDF::Output('hello_world.pdf');
+        PDF::Output($filenametodownload);
         
     }
 
@@ -327,7 +328,7 @@ class IcmController extends Controller
 
         $this->fpdf->AddPage('L');
         $this->fpdf->SetFont( 'Helvetica', 'B', 10 );
-        $this->fpdf->Cell( 0, 10, 'APPLICATION FORM FOR DIPLOMA IN COOPERATIVE MANAGEMENT ', 0, 1, "C" );
+        $this->fpdf->Cell( 0, 10, 'DIPLOMA IN COOPERATIVE MANAGEMENT ', 0, 1, "C" );
         $this->fpdf->Cell( 0, 10, 'Tamil Nadu Cooperative Union', 0, 1, "C" );
 
         $this->fpdf->Cell( 0, 10, $studentDatas[0]->mtr_icm->icm_name, 0, 1, "C" );

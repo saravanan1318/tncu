@@ -63,7 +63,7 @@
                     ?>
                     <tr>
                         <th scope="row">{{ $count++ }}</th>
-                        <td>{{ $studentData->arrn_number }}</td>
+                        <td>{{ $studentData->arrn_number }} <input type="hidden" id="icmname" value="{{ $studentData->mtr_icm->icm_name }} "></td>
                         <td>{{ $studentData->fullname }}</td>
                         <td>{{ $studentData->mobile1 }}</td>
                         <td>{{ $studentData->age }}</td>
