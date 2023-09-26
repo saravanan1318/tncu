@@ -18,7 +18,7 @@ use App\Http\Controllers\PHPMailerController;
 
 Route::get('/', [WebsiteController::class, 'index']);
 Route::get('/notification', [WebsiteController::class, 'notification']);
-//Route::get('/applicationform', [WebsiteController::class, 'applicationform']);
+Route::get('/icmapplicationform', [WebsiteController::class, 'applicationform']);
 Route::get('applicationreview/{id}', [WebsiteController::class, 'applicationreview']);
 Route::get('applicationpdf/{id}', [WebsiteController::class, 'applicationpdf']);
 Route::post('store-applicationform', [WebsiteController::class, 'store']) ;

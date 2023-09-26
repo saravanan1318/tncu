@@ -2799,17 +2799,17 @@ $(document).ready(function (e) {
 });
 
 
-$(document).ready(function () {
-    //Disable full page
-    $("body").on("contextmenu", function (e) {
-        return false;
-    });
+// $(document).ready(function () {
+//     //Disable full page
+//     $("body").on("contextmenu", function (e) {
+//         return false;
+//     });
 
-    //Disable cut copy paste
-    $('body').bind('cut copy paste', function (e) {
-        e.preventDefault();
-    });
+//     //Disable cut copy paste
+//     $('body').bind('cut copy paste', function (e) {
+//         e.preventDefault();
+//     });
 
-});
+// });
 $("#typeof").hide();
 $("#typeofd").val("0").change();

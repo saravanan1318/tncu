@@ -66,6 +66,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{url('/icmapplicationform')}}" target="_blank" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Offline Application form
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
         <li class="nav-header">Printer Version</li>
         <li class="nav-item">
           <a href="{{url('/icm/printerversion/male')}}" class="nav-link">
