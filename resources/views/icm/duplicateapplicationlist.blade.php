@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Application List</h1>
+            <h1 class="m-0">Duplicate transno</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Application List</li>
+              <li class="breadcrumb-item active">Duplicate transno</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -61,8 +61,8 @@
                         <td><select class="form-control actionbutton" data-id="{{$studentData->id}}">
 
                                 <option value="">Please select option</option>
-                                <option value="1">Move to Application list</option>
-                                <option value="0" {{$studentData->duplicateaccept==0?"selected":""}}>Rejected</option>
+                                <option value="0">Move to Application list</option>
+                                <option value="2" {{$studentData->status==2?"selected":""}}>Rejected</option>
                             </select></td>
                     </tr>
                     @endforeach

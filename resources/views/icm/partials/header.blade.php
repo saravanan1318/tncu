@@ -58,20 +58,14 @@
             </p>
           </a>
         </li>
-        <?php
-         if(Auth::user()->role == 1){
-          ?>
-          <li class="nav-item">
-            <a href="{{url('/icm/duplicateapplicationlist')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Repeated Applications
-                {{-- <span class="right badge badge-danger">5</span> --}}
-              </p>
-            </a>
-          </li>
-          <?php
-         }
-        ?>
+        <li class="nav-item">
+          <a href="{{url('/icm/duplicateapplicationlist')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Duplicate transno Applications
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
         <li class="nav-header">Printer Version</li>
         <li class="nav-item">
           <a href="{{url('/icm/printerversion/male')}}" class="nav-link">

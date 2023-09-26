@@ -31,7 +31,7 @@
                 success: function (response) {
                     // Handle the response from the server
                     console.log(response);
-
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     // Handle any errors
@@ -56,6 +56,8 @@
                     data: postData,
                     success: function (response) {
                         // Handle the response from the server
+                        //location.reload();
+                        alert(response.message);
                         location.reload();
                         console.log(response);
 

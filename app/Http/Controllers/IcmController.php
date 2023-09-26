@@ -35,7 +35,7 @@ class IcmController extends Controller
 
         if(Auth::user()->role == 1){
 
-            $allapplication = StudentParams::count();
+            $allapplication = StudentParams::where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('status', 0)->count();
             $selectedapplication = StudentParams::where('status', 1)->count();
             $studentDatas = DB::table('mtr_icm')
@@ -46,7 +46,7 @@ class IcmController extends Controller
             ->get();
         }else{
 
-            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
+            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
             $studentDatas = DB::table('mtr_icm')
@@ -74,13 +74,13 @@ class IcmController extends Controller
 
         if(Auth::user()->role == 1){
 
-            $allapplication = StudentParams::count();
+            $allapplication = StudentParams::where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('status', 0)->count();
             $selectedapplication = StudentParams::where('status', 1)->count();
 
         }else{
 
-            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->count();
+            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
         }
@@ -135,8 +135,11 @@ class IcmController extends Controller
 
     function duplicateapplicationlist(){
 
-        $studentDatas = StudentParams::where('status',2)->get();
-
+        if(Auth::user()->role == 1){
+            $studentDatas = StudentParams::where('status',2)->get();
+        }else{
+            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',2)->get();
+        }
         return view("icm.duplicateapplicationlist", compact('studentDatas'));
     }
 
@@ -168,19 +171,39 @@ class IcmController extends Controller
         {
             return response()->json(['message' => 'Student not found'], 404);
         }
-        $studentDatas->duplicateaccept = $newOption;
+        $studentDatas->status = $newOption;
         $studentDatas->save();
         return response()->json(['message' => 'Option updated successfully']);
     }
     function  selectedlist(Request $request){
         $selectedCheckboxes = $request->input('selectedCheckboxes');
 
+        $message = "";
+        $offset = 0;
+        foreach($selectedCheckboxes as $selectedCheckboxe){       
+            $studentDatas1 = StudentParams::where('id', $selectedCheckboxe)->where('status', 0)->first();
+            if($studentDatas1)
+            {
+                $studentDatas = StudentParams::where('aadhar', $studentDatas1['aadhar'])->where('status', 1)->first();
+                if($studentDatas){
+                    unset($selectedCheckboxes[$offset]);
+                    $message .= $studentDatas->aadhar.", ";
+                }
+            }
+        }
+
+        if(!empty($message)){
+            $message = $message." Adhaar already selected";
+        }else{
+            $message = "Status updated successfully";
+        }
+
         // Update the status for the selected IDs to 1
         StudentParams::whereIn('id', $selectedCheckboxes)
             ->update(['status' => 1]);
 
         // Optionally, you can return a response
-        return response()->json(['message' => 'Status updated successfully']);
+        return response()->json(['message' => $message]);
     }
 
     function  printerversionmale(Request $request){
