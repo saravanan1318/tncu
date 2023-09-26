@@ -40,6 +40,8 @@ Route::get('/{code}', [UrlShortenerController::class, 'redirect'])->name('redire
 
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/icm/passwordChange', [IcmController::class, 'passwordChange']);
+    Route::post('/icm/updatePassword', [IcmController::class, 'updatePassword']);
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
     Route::get('/icm/icmdashboard', [IcmController::class, 'icmdashboard']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);

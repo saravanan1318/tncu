@@ -31,6 +31,33 @@ class IcmController extends Controller
     function index(){
         return view("icm.login");
     }
+
+    function passwordChange(){
+        return view("icm.passwordChange");
+    }
+
+    function updatePassword(Request $request){
+        
+        if($request->password1 <> $request->password2){
+            return redirect()->back()->withInput($request->input())->with('error', 'Password and Confirm password is not same');
+        }
+
+       // dd(Auth::user()->id);
+        User::where('id', Auth::user()->id)
+        ->update(['password' => Hash::make($request->password1), 'forcePasswordChange' => 0]);
+
+        if(Auth::user()->role == 1){
+            return redirect()->intended('/icm/dashboard')
+            ->withSuccess('Signed in');
+        }else if(Auth::user()->role == 2){
+            return redirect()->intended('/icm/icmdashboard')
+                    ->withSuccess('Signed in');
+        } 
+
+        return redirect('login')->with('error', 'Login details are not valid');
+
+    }
+
     function dashboard(){
 
         if(Auth::user()->role == 1){
