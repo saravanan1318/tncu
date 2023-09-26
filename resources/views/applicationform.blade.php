@@ -773,7 +773,7 @@
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input class="form-control" id="Amount" name="Amount" type="text" value="Rs.100" readonly="">
+                                    <input class="form-control" id="Amount" name="Amount" type="text" value="Rs.200" >
                                 </div>
                             </div>
                         </div>
@@ -820,7 +820,7 @@
                     <div class="row" style="margin-top: 10px;display: none;" id="qrdiv" >
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="display: none">
                                     <img id="qrcode" src="{{asset('images/qrcode.jpeg')}}" alt="qrcode" style="margin-top: 10px;width:150px ">
                                 </div>
                                 <div class="col-md-3">

@@ -31,6 +31,7 @@
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
                         <th scope="col">Mobile No</th>
+                        <th scope="col">DOB</th>
                         <th scope="col">Age</th>
                         <th scope="col">Aadhaar No</th>
                         <th scope="col">10th Org Verfied <br> Yes / No</th>
@@ -66,6 +67,7 @@
                         <td>{{ $studentData->arrn_number }} <input type="hidden" id="icmname" value="{{ $studentData->mtr_icm->icm_name }} "></td>
                         <td>{{ $studentData->fullname }}</td>
                         <td>{{ $studentData->mobile1 }}</td>
+                        <td>{{ date("d-m-Y",strtotime($studentData->dob)) }}</td>
                         <td>{{ $studentData->age }}</td>
                         <td>{{ $studentData->aadhar }}</td>
                         <td></td>
