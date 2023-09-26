@@ -108,6 +108,15 @@
             </p>
           </a>
         </li>
+        <li class="nav-header">User Management</li>
+        <li class="nav-item">
+          <a href="{{url('/icm/passwordChange')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Change Password
+              {{-- <span class="right badge badge-danger">5</span> --}}
+            </p>
+          </a>
+        </li>
         <li class="nav-item">
            <a href="{{url('logout')}}" class="nav-link">
              <i class="nav-icon fas fa-file"></i>
