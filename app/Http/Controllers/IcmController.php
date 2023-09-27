@@ -149,16 +149,72 @@ class IcmController extends Controller
 
         return view("icm.printapplicationlist", compact('studentDatas'));
     }
-    function selectedapplicationlist(){
+
+    function selectedapplicationicmlistfemale(Request $request){
 
         if(Auth::user()->role == 1){
-            $studentDatas = StudentParams::where('status',1)->get();
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Female')
+            ->where('student_params.status',1)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
         }else{
-            $studentDatas = StudentParams::where('icm', Auth::user()->icm_id)->where('status',1)->get();
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Female')
+            ->where('student_params.status',1)
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
         }
+
+        return view("icm.selectedapplicationlistfemale", compact('studentDatas'));
+    }
+
+    function selectedapplicationicmlistmale(Request $request){
+
+        if(Auth::user()->role == 1){
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Male')
+            ->where('student_params.status',1)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }else{
+
+            $studentDatas = DB::table('mtr_icm')
+            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            ->where('student_params.gender','=','Male')
+            ->where('student_params.status',1)
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            ->get();
+
+        }
+
+        return view("icm.selectedapplicationlistmale", compact('studentDatas'));
+    }
+
+
+    function selectedapplicationlistgendericm(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender', $request->gender)->where('status',1)->get();
+
 
         return view("icm.selectedapplicationlist", compact('studentDatas'));
     }
+
 
     function duplicateapplicationlist(){
 
