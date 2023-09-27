@@ -14,6 +14,7 @@ use PDF;
 use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -52,7 +53,13 @@ class WebsiteController extends Controller
         App::setLocale($request->lang);
         session()->put('locale', $request->lang);
 
-        $icmlists = Mtr_Icm::orderBy("icm_name", "asc")->get();
+        if(Auth::user()->role == 1){
+            $icmlists = Mtr_Icm::orderBy("icm_name", "asc")->get();
+
+        }else{
+            $icmlists = Mtr_Icm::where('id', Auth::user()->icm_id)->get();
+        }
+
         return view("applicationform",compact('icmlists'));
     }
 

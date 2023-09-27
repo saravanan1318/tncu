@@ -787,9 +787,9 @@
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" required="">
                                         <option value="">- {{__('form.select')}}' -</option>
-                                        <option value="online">online</option>
+                                        {{-- <option value="online">online</option> --}}
                                         <option value="offline">offline</option>
-                                        <option value="qrpayment">QR Payment</option>
+                                        {{-- <option value="qrpayment">QR Payment</option> --}}
                                     </select>
                                 </div>
                             </div>
