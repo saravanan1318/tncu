@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StudentParams;
+use App\Models\Invoice;
+use App\Models\Mtr_Icm;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
 use PDF;
@@ -622,5 +624,52 @@ class IcmController extends Controller
         exit;
     }
 
+    function generateinvoice(){
+        
+        if(Auth::user()->role == 1){
+            $studentDatas = StudentParams::select('id','arrn_number')->where('status',0)->get();
+        }else{
+            $studentDatas = StudentParams::select('id','arrn_number')->where('icm', Auth::user()->icm_id)->where('status',0)->get();
+        }
+
+        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+
+        return view("icm.generateinvoice",compact('studentDatas','icm'));
+    }
+
+    function storeinvoice(Request $request){
+
+        $term = $request->term;
+        $termamount = $request->termamount;
+        $termtotal = $request->termtotal;
+
+        $actualinv = Auth::user()->invoiceNo+1;
+        $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
+        for($i=0;$i<count($term);$i++){
+            $invoice = new Invoice;
+            $invoice->invoiceNo = $invoiceNo;
+            $invoice->student_id = $request->student_id;
+            $invoice->term = $term[$i];
+            $invoice->amount = $termtotal[$i];
+            $invoice->save();
+        }
+
+        $user = User::where('id',Auth::user()->id)->first();
+        $user->invoiceNo = $actualinv;
+        $user->update();
+
+       
+        return redirect('/icm/printinvoice/'.$invoiceNo);
+
+    }
+
+    function printinvoice(Request $request){
+
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+        $icm = Mtr_icm::where('id',$studentData->icm)->first();
+       
+        return view("icm.printinvoice",compact('studentData','invoicedetails','icm'));
+    }
 
 }

@@ -62,6 +62,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/printerapplicationlistpdf/{icm_id}/{gender}', [IcmController::class, 'printerapplicationlistpdf']);
     Route::get('/icm/printerversionmalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionmalelist']);
     Route::get('/icm/printerversionfemalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionfemalelist']);
+   
+
+    Route::get('/icm/invoice/generate', [IcmController::class, 'generateinvoice']);
+    Route::post('/icm/invoice/store', [IcmController::class, 'storeinvoice']);
+    Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
+    
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);

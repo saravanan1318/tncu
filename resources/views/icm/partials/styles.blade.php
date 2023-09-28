@@ -9,5 +9,8 @@
 <link rel="stylesheet" href="/panel/dist/css/adminlte.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+<!-- Select2 -->
+<link rel="stylesheet" href="/panel/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
  
