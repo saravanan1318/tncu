@@ -12,7 +12,9 @@ use App\Models\Invoice;
 use App\Models\Mtr_Icm;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
-use PDF;
+use DomPDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class IcmController extends Controller
 {
@@ -627,9 +629,9 @@ class IcmController extends Controller
     function generateinvoice(){
         
         if(Auth::user()->role == 1){
-            $studentDatas = StudentParams::select('id','arrn_number')->where('status',0)->get();
+            $studentDatas = StudentParams::select('id','arrn_number')->where('status',1)->get();
         }else{
-            $studentDatas = StudentParams::select('id','arrn_number')->where('icm', Auth::user()->icm_id)->where('status',0)->get();
+            $studentDatas = StudentParams::select('id','arrn_number')->where('icm', Auth::user()->icm_id)->where('status',1)->get();
         }
 
         $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
@@ -642,12 +644,14 @@ class IcmController extends Controller
         $term = $request->term;
         $termamount = $request->termamount;
         $termtotal = $request->termtotal;
+        $payment_mode = $request->payment_mode;
 
         $actualinv = Auth::user()->invoiceNo+1;
         $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
         for($i=0;$i<count($term);$i++){
             $invoice = new Invoice;
             $invoice->invoiceNo = $invoiceNo;
+            $invoice->payment_mode = $payment_mode;
             $invoice->student_id = $request->student_id;
             $invoice->term = $term[$i];
             $invoice->amount = $termtotal[$i];
@@ -658,9 +662,37 @@ class IcmController extends Controller
         $user->invoiceNo = $actualinv;
         $user->update();
 
+        $student = StudentParams::where('id',$request->student_id)->first();
        
+        if(is_null($student->admission_number) || empty($student->admission_number)){
+
+            $gender = "F";
+
+            if($student->gender == "Male"){
+                $gender = "M";
+            }
+    
+            $icmname = Mtr_icm::where('id',$student->icm)->first();
+            $short_name =  $icmname['short_name'];
+            $admission_count =  $icmname['admission_count'];
+            $admission_number = $short_name.date("Y").$gender.'AN'.sprintf("%03d", $admission_count);
+            $student->admission_number = $admission_number;
+            $student->update();
+
+            $icmname->admission_count = $admission_count+1;
+            $icmname->update();
+        }
         return redirect('/icm/printinvoice/'.$invoiceNo);
 
+    }
+
+    function printinvoiceold(Request $request){
+
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+        $icm = Mtr_icm::where('id',$studentData->icm)->first();
+       
+        return view("icm.printinvoice",compact('studentData','invoicedetails','icm'));
     }
 
     function printinvoice(Request $request){
@@ -668,8 +700,14 @@ class IcmController extends Controller
         $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
         $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
         $icm = Mtr_icm::where('id',$studentData->icm)->first();
-       
-        return view("icm.printinvoice",compact('studentData','invoicedetails','icm'));
+
+        $data['invoicedetails'] = $invoicedetails;
+        $data['studentData'] = $studentData;
+        $data['icm'] = $icm;
+        $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
+
+        return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+
     }
 
 }

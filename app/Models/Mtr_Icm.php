@@ -12,7 +12,7 @@ class Mtr_Icm extends Model
 
     protected $table = 'mtr_icm';
     protected $primaryKey = 'id';
-
+    public $timestamps = false;
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

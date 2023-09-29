@@ -36,13 +36,13 @@
       var id = $(this).attr("data-id");
       var term = $("#term"+id).val();
 
-      if(term == "term1"){
+      if(term == "TUITION FESS - TERM 1"){
         $("#termamount"+id).val(6750.00);
         $("#termtotal"+id).val(6750.00);
-      }else if(term == "term2"){
+      }else if(term == "TUITION FESS - TERM 2"){
         $("#termamount"+id).val(6000.00);
         $("#termtotal"+id).val(6000.00);
-      }else if(term == "term3"){
+      }else if(term == "TUITION FESS - TERM 3"){
         $("#termamount"+id).val(6000.00);
         $("#termtotal"+id).val(6000.00);
       }else{
@@ -58,7 +58,7 @@
         var newrow = parseInt(id)+1;
         var term = $("#term"+id).val();
         $(".deletebtn").hide();
-        var html = '<tr class="row'+newrow+'"> <td>'+newrow+'</td> <td> <select class="form-control term" name="term[]" id="term'+newrow+'" data-id="'+newrow+'" required> <option value="">SELECT</option> <option value="term1">Term 1</option> <option value="term2">Term 2</option> <option value="term3">Term 3</option> </select> </td> <td style="text-align: center"> 01 </td> <td style="text-align: center"> <input type="number" name="termamount[]" value="" id="termamount'+newrow+'" data-id="'+newrow+'"  required/> </td> <td style="text-align: center"> <input type="number" name="termtotal[]" value="" id="termtotal'+newrow+'" data-id="'+newrow+'"  required/> </td> <td style="text-align: center"> <a class="deletebtn btn btn-danger" id="deletebtn'+newrow+'" data-id="'+newrow+'">Delete row</a> </td></tr>';
+        var html = '<tr class="row'+newrow+'"> <td>'+newrow+'</td> <td> <select class="form-control term" name="term[]" id="term'+newrow+'" data-id="'+newrow+'" required> <option value="">SELECT</option> <option value="TUITION FESS - TERM 1">TUITION FESS - TERM 1</option> <option value="TUITION FESS - TERM 2">TUITION FESS - TERM 2</option> <option value="TUITION FESS - TERM 3">TUITION FESS - TERM 3</option> </select> </td> <td style="text-align: center"> 01 </td> <td style="text-align: center"> <input type="number" name="termamount[]" value="" id="termamount'+newrow+'" data-id="'+newrow+'"  required/> </td> <td style="text-align: center"> <input type="number" name="termtotal[]" value="" id="termtotal'+newrow+'" data-id="'+newrow+'"  required/> </td> <td style="text-align: center"> <a class="deletebtn btn btn-danger" id="deletebtn'+newrow+'" data-id="'+newrow+'">Delete row</a> </td></tr>';
         $("#tablebody").append(html);
         $(this).attr('data-rowid', newrow);
 
@@ -74,18 +74,19 @@
                     return false;
                 }
             }
-            if(term == "term1"){
-            $("#termamount"+id).val(6750.00);
-            $("#termtotal"+id).val(6750.00);
-            }else if(term == "term2"){
-            $("#termamount"+id).val(6000.00);
-            $("#termtotal"+id).val(6000.00);
-            }else if(term == "term3"){
-            $("#termamount"+id).val(6000.00);
-            $("#termtotal"+id).val(6000.00);
+
+            if(term == "TUITION FESS - TERM 1"){
+                $("#termamount"+id).val(6750.00);
+                $("#termtotal"+id).val(6750.00);
+            }else if(term == "TUITION FESS - TERM 2"){
+                $("#termamount"+id).val(6000.00);
+                $("#termtotal"+id).val(6000.00);
+            }else if(term == "TUITION FESS - TERM 3"){
+                $("#termamount"+id).val(6000.00);
+                $("#termtotal"+id).val(6000.00);
             }else{
-            $("#termamount"+id).val(0);
-            $("#termtotal"+id).val(0);
+                $("#termamount"+id).val(0);
+                $("#termtotal"+id).val(0);
             }
 
         });

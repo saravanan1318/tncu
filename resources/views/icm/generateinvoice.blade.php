@@ -38,6 +38,7 @@
                   <div class="col-md-6">
                       <label>BILL FROM: </label>
                       <p>{{ Auth::user()->name }}</p>
+                      <p>{{ $icm->add1.", ".$icm->add2.", ".$icm->city.", ".$icm->pincode }}</p>
                   </div>
                   <div class="col-md-6">
                       <p><b>Invoice Date : </b>{{date("d-m-Y")}}</p>
@@ -61,8 +62,15 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>PAYMENT MODE: </label>
+                    <select class="form-control" name="payment_mode">
+                      <option value="">Select</option>
+                      <option value="CASH">CASH</option>
+                      <option value="QR PAYMENT">QR PAYMENT</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <!-- /.row -->
@@ -85,9 +93,9 @@
                           <td>
                             <select class="form-control term" name="term[]" id="term1" data-id="1" required>
                               <option value="">SELECT</option>
-                              <option value="term1">Term 1</option>
-                              <option value="term2">Term 2</option>
-                              <option value="term3">Term 3</option>
+                              <option value="TUITION FESS - TERM 1">TUITION FESS - TERM 1</option>
+                              <option value="TUITION FESS - TERM 2">TUITION FESS - TERM 2</option>
+                              <option value="TUITION FESS - TERM 3">TUITION FESS - TERM 3</option>
                             </select>
                           </td>
                           <td style="text-align: center">
