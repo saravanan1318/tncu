@@ -18,14 +18,14 @@ class LoginFormController extends Controller
     function index(){
         return view("icm.login");
     }
-    
+
     function checklogin(Request $request){
 
         $validated = $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-        
+
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
 
@@ -39,9 +39,13 @@ class LoginFormController extends Controller
                 }else if(Auth::user()->role == 2){
                     return redirect()->intended('/icm/icmdashboard')
                             ->withSuccess('Signed in');
-                } 
+                }
+                else if(Auth::user()->role == 3){
+                    return redirect()->intended('/student/studentdashboard')
+                        ->withSuccess('Signed in');
+                }
             }
-                       
+
         }
         return redirect('login')->with('error', 'Login details are not valid');
     }
@@ -50,5 +54,5 @@ class LoginFormController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    
+
 }

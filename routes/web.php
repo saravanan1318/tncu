@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\IcmController;
@@ -26,7 +27,7 @@ Route::get('application-acknowledgement/{id}', [WebsiteController::class, 'appli
 Route::post('checkicmeligible', [WebsiteController::class, 'checkicmeligible']);
 Route::get('/checksms', [WebsiteController::class, 'smstest']);
 Route::get('/about-us', [WebsiteController::class, 'aboutus']);
-
+Route::get('/payment', [WebsiteController::class, 'pay']);
 /**AUTH */
 //Route::get('loginform', [ 'as' => 'loginform', 'uses' => 'IcmController@index']);
 Route::get('login', [LoginFormController::class, 'index']);
@@ -62,12 +63,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/printerapplicationlistpdf/{icm_id}/{gender}', [IcmController::class, 'printerapplicationlistpdf']);
     Route::get('/icm/printerversionmalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionmalelist']);
     Route::get('/icm/printerversionfemalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionfemalelist']);
-   
+
 
     Route::get('/icm/invoice/generate', [IcmController::class, 'generateinvoice']);
     Route::post('/icm/invoice/store', [IcmController::class, 'storeinvoice']);
     Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
-    
+
+    Route::get('/student/studentdashboard', [StudentController::class, 'dashboard']);
+    Route::post('/student/payment', [StudentController::class, 'payment']);
+
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);

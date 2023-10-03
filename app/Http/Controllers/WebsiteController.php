@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Storage;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use io\billdesk\client\hmacsha256\BillDeskJWEHS256Client;
+use io\billdesk\client\Logging;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class WebsiteController extends Controller
 {
@@ -40,6 +44,68 @@ class WebsiteController extends Controller
         session()->put('locale', $request->lang);
         return view("aboutus");
     }
+
+    function pay(Request $request){
+        $MerchantID = "BDUATV2TND";
+        $ClientID = "bduatv2tnd";
+        $responseurl = "https://www.merchantwebsite.com/ru.php";
+        $secretkey = 'Cjlj6qiBlQ7qdnglXvlJCKY1t3rNk7x4';
+        $returnURL = "https://www.merchantwebsite.com/paymentresponse.php";
+        $billdesk_URL = "https://pguat.billdesk.io/payments/ve1_2/orders/create";
+        $transaction_id=190;
+        $totalamount=1;
+        $date_atom ="19-10-2023";
+        $CustomerID=1;
+        $PaymentFor=20;
+        $ipaddress= $_SERVER['REMOTE_ADDR'];
+
+        $clientID = $ClientID;
+        $secretKey = $secretkey;
+        $merchantID = $MerchantID;
+
+// Create the client and set up logging
+        $client = new BillDeskJWEHS256Client("https://pguat.billdesk.io", $clientID, $secretKey);
+        $logger = new Logger("default");
+        $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        $client->setLogger($logger);
+
+// Prepare the request data
+        $request = array(
+            'mercid' => $merchantID,
+            'orderid' => uniqid(),
+            'amount' => "1.0",
+            'order_date' => date_format(new \DateTime(), DATE_W3C),
+            'currency' => "356",
+            'ru' => "https://www.billdesk.io",
+            'itemcode' => "DIRECT",
+            'device' => array(
+                'init_channel' => 'internet',
+                'ip' => "$ipaddress",
+                'user_agent' => 'Mozilla/5.0'
+            )
+        );
+
+// Call the createOrder API
+        $response = $client->createOrder($request);
+
+// Handle the response as needed
+        if ($response->getResponseStatus() === 200) {
+            // Success
+            $responseData = $response->getResponse();
+            $bdorderid=$responseData->bdorderid;
+            $authToken=$responseData->links[1]->headers->authorization;
+            $returnUrl=$responseData->ru;
+//            $responseData=json_encode($responseData);
+            // Process $responseData here
+        } else {
+            // Handle the error
+            $errorResponse = $response->getErrorResponse();
+            // Process $errorResponse here
+        }
+
+        return view("payment" ,compact("responseData","bdorderid","merchantID","clientID","secretKey"));
+    }
+
 
     function notification(Request $request){
 
@@ -380,7 +446,7 @@ class WebsiteController extends Controller
         $user->email=$arrn_number;
         $user->update();
 
-       return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
+        return redirect('application-acknowledgement/'.base64_encode($student->id))->with('status', 'Application submitted successfully');
 
     }
 
@@ -420,14 +486,14 @@ class WebsiteController extends Controller
 
         Log::info("http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID)");
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
         ));
 
         $response = curl_exec($curl);
@@ -456,7 +522,7 @@ class WebsiteController extends Controller
     function applicationpdf(Request $request){
 
         $id = base64_decode($request->id);
-       // $id = $request->id;
+        // $id = $request->id;
 
         $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
@@ -866,7 +932,7 @@ class WebsiteController extends Controller
     }
     function applicationpdfonpage($id){
 
-       // $id = $request->id;
+        // $id = $request->id;
 
         $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
 
@@ -1231,7 +1297,7 @@ class WebsiteController extends Controller
 
     function checkicmeligible(Request $request){
 
-      //  dd($request);
+        //  dd($request);
         $icmid = $request->icm;
         $email = $request->email;
         $aadhar = $request->aadhar;
