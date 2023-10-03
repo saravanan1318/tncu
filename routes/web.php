@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/student/studentdashboard', [StudentController::class, 'dashboard']);
     Route::post('/student/payment', [StudentController::class, 'payment']);
 
+    Route::get('/icm/icmwise/paidreport', [IcmController::class, 'icmwisepaidreport']);
+
 });
 
 Route::get('composeEmail/{id}', [PHPMailerController::class, 'composeEmail']);
