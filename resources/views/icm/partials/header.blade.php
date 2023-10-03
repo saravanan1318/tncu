@@ -41,10 +41,11 @@
              </p>
            </a>
          </li>
+         <li class="nav-header">Admission</li>
          <?php
          if(Auth::user()->role == 2){
           ?>
-        <li class="nav-header">Admission</li>
+        
         <li class="nav-item">
           <a href="{{url('/icm/invoice/generate')}}" class="nav-link">
             <i class="nav-icon fas fa-ellipsis-h"></i>
@@ -52,10 +53,17 @@
             </p>
           </a>
         </li>
+        
           <?php
          }
          ?>
-         
+         <li class="nav-item">
+          <a href="{{url('/icm/fees/paid')}}" class="nav-link">
+            <i class="nav-icon fas fa-ellipsis-h"></i>
+            <p>Fees paid
+            </p>
+          </a>
+        </li>
          <li class="nav-header">MISCELLANEOUS</li>
          <li class="nav-item">
            <a href="{{url('/icm/applicationlist')}}" class="nav-link">

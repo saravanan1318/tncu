@@ -75,6 +75,10 @@ class IcmController extends Controller
             ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
+
+            $totalcount = Invoice::select('invoiceNo')->distinct()->count();
+            $totalamount = Invoice::sum('amount');
+
         }else{
 
             $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status',"<>", 2)->count();
@@ -87,6 +91,18 @@ class IcmController extends Controller
             ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
+
+            $totalcount = DB::table('invoice')
+            ->selectRaw('DISTINCT(invoiceNo)')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->distinct()->count();
+
+            $totalamount = DB::table('invoice')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->sum('invoice.amount');
+
         }
 
         
@@ -94,7 +110,9 @@ class IcmController extends Controller
         $data[] = [
            "allapplication" =>  $allapplication,
            "pendingapplication" =>  $pendingapplication,
-           "selectedapplication" =>  $selectedapplication
+           "selectedapplication" =>  $selectedapplication,
+           "totalcount" =>  $totalcount,
+           "totalamount" =>  $totalamount
         ];
 
         return view("icm.dashboard",compact('data','studentDatas'));
@@ -707,6 +725,52 @@ class IcmController extends Controller
         $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
 
         return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+
+    }
+
+    function feespaid(){
+
+        if(Auth::user()->role == 1){
+
+            $studentDatas = Invoice::select('invoiceNo')->distinct()->get();
+            $totalcount = Invoice::select('invoiceNo')->distinct()->count();
+            $totalamount = Invoice::sum('amount');
+
+        }else{
+
+            $studentDatas = DB::table('invoice')
+            ->selectRaw('DISTINCT(invoiceNo)')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->get();
+
+            $totalcount = DB::table('invoice')
+            ->selectRaw('DISTINCT(invoiceNo)')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->distinct()->count();
+
+            $totalamount = DB::table('invoice')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('student_params.icm','=',Auth::user()->icm_id)
+            ->sum('invoice.amount');
+        }
+
+        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+
+        return view("icm.feespaid",compact('studentDatas','icm','totalcount','totalamount'));
+
+    }
+
+    function invoiceview(Request $request){
+
+        $studentDatas = DB::table('invoice')
+            ->selectRaw('*')
+            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+            ->where('invoice.invoiceNo','=',$request->invoiceNo)
+            ->get();
+
+        return view("icm.invoiceview",compact('studentDatas'));
 
     }
 

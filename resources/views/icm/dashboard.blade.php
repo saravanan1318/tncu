@@ -116,6 +116,66 @@
             </div>
 
         </div>
+        <div class="row p-4">
+            <div class="bg-gradient-white col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                <a href="/icm/icmwiselist" class="dashboard-stat2 bordered">
+                    <div class="loading" style="z-index: 100; position: absolute; min-height: 100%; margin-top: 6px; left: 40%; top: 34%; display: none;">
+                        <i class="fa fa-spinner fa-spin fa-fw" style="font-size:50px; color:#ec9a9a;"></i>
+                    </div>
+                    <div style="height: 85px; display: none;" class="DisplaytempDiv"></div>
+                    <div class="display" style="">
+                        <div class="number">
+                            <h3 class="font-green-sharp">
+                                <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['totalcount']}}</span>
+                            </h3>
+                            <small>Total Invoice generated</small>
+                        </div>
+                        <div class="icon">
+                            <i class="icon-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="progress-info" style="">
+                        <div class="progress">
+                    <span id="spnSMSSent" class="progress-bar progress-bar-success green-sharp" style="width: 90%;">
+    
+                    </span>
+                        </div>
+                        <div class="status">
+    
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="bg-gradient-white col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                <div class="dashboard-stat2 bordered">
+                    <div class="loading" style="z-index: 100; position: absolute; min-height: 100%; margin-top: 6px; left: 40%; top: 34%; display: none;">
+                        <i class="fa fa-spinner fa-spin fa-fw" style="font-size:50px; color:#ec9a9a;"></i>
+                    </div>
+                    <div style="height: 85px; display: none;" class="DisplaytempDiv"></div>
+                    <div class="display" style="">
+                        <div class="number">
+                            <h3 class="font-green-sharp">
+                                <span id="ToltalSMSSent" data-counter="counterup">{{$data[0]['totalamount']}}</span>
+                            </h3>
+                            <small>Total Invoice amount received</small>
+                        </div>
+                        <div class="icon">
+                            <i class="icon-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="progress-info" style="">
+                        <div class="progress">
+                    <span id="spnSMSSent" class="progress-bar bg-success green-sharp" style="width: 100%;">
+    
+                    </span>
+                        </div>
+                        <div class="status">
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="content">
             <div class="container-fluid">
               <div class="row table-responsive">
