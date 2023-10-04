@@ -789,4 +789,25 @@ class IcmController extends Controller
 
     }
 
+    function icmwisepaid(Request $request){
+
+       // $studentDatas = DB::select( DB::raw("SELECT * FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  $request->icm_id") );
+        $studentDatas = DB::select( DB::raw("	SELECT *, (SELECT amount FROM invoice WHERE term = 'TUITION FESS - TERM 1' AND student_id = st.id  LIMIT 1) AS term1
+        , (SELECT amount FROM invoice WHERE term = 'TUITION FESS - TERM 2' AND student_id = st.id  LIMIT 1) AS term2
+        , (SELECT amount FROM invoice WHERE term = 'TUITION FESS - TERM 3' AND student_id = st.id  LIMIT 1) AS term3
+        FROM student_params AS st WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  $request->icm_id") );
+
+        return view("icm.icmwisepaid",compact('studentDatas'));
+
+    }
+
+    function icmwisenotpaid(Request $request){
+
+        $studentDatas = DB::select( DB::raw("SELECT * FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  $request->icm_id") );
+
+        return view("icm.icmwisenotpaid",compact('studentDatas'));
+
+    }
+
+
 }

@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">ICM wise paid report</h1>
+            <h1 class="m-0">ICM wise paid List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">ICM wise paid report</li>
+              <li class="breadcrumb-item active">ICM wise paid List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,10 +29,11 @@
                     <thead>
                         <tr class="table-success">
                             <th scope="col">#</th>
-                            <th scope="col">ICM Name</th>
-                            <th scope="col">No. of paid</th>
-                            <th scope="col">No. of Not paid</th>
-                            <th scope="col">Total paid</th>
+                            <th scope="col">Application no.</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Term 1</th>
+                            <th scope="col">Term 2</th>
+                            <th scope="col">Term 3</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,10 +43,11 @@
                         @foreach($studentDatas as $studentData)
                         <tr>
                             <th scope="row">{{ $count++ }}</th>
-                            <td>{{ $studentData->icm_name}}</td>
-                            <td><a href="/icm/icmwise/paid/{{$studentData->id}}">{{ $studentData->paidcount }}</a></td>
-                            <td><a href="/icm/icmwise/notpaid/{{$studentData->id}}">{{ $studentData->notpaidcount }}</a></td>
-                            <td>{{ $studentData->amount }}</td>
+                            <td>{{ $studentData->admission_number}}</td>
+                            <td>{{ $studentData->fullname }}</td>
+                            <td>{{ $studentData->term1 }}</td>
+                            <td>{{ $studentData->term2 }}</td>
+                            <td>{{ $studentData->term3 }}</td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/student/payment', [StudentController::class, 'payment']);
 
     Route::get('/icm/icmwise/paidreport', [IcmController::class, 'icmwisepaidreport']);
+    Route::get('/icm/icmwise/paid/{icm_id}', [IcmController::class, 'icmwisepaid']);
+    Route::get('/icm/icmwise/notpaid/{icm_id}', [IcmController::class, 'icmwisenotpaid']);
 
 });
 
