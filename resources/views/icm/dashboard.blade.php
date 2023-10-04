@@ -118,7 +118,7 @@
         </div>
         <div class="row p-4">
             <div class="bg-gradient-white col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                <a href="/icm/icmwiselist" class="dashboard-stat2 bordered">
+                <a href="/icm/icmwise/paidreport" class="dashboard-stat2 bordered">
                     <div class="loading" style="z-index: 100; position: absolute; min-height: 100%; margin-top: 6px; left: 40%; top: 34%; display: none;">
                         <i class="fa fa-spinner fa-spin fa-fw" style="font-size:50px; color:#ec9a9a;"></i>
                     </div>

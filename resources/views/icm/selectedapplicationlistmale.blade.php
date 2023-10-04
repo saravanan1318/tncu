@@ -33,7 +33,8 @@
                               <th scope="col">#</th>
                               <th scope="col">ICM Name</th>
                               <th scope="col">No of application</th>
-                              <th scope="col">Action</th>
+                              <th scope="col">Male</th>
+                              <th scope="col">Female</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -45,7 +46,8 @@
                               <th scope="row">{{ $count++ }}</th>
                               <td>{{ $studentData->icm_name}}</td>
                               <td>{{ $studentData->Noofapps }}</td>
-                              <td><a href='/icm/selectedapplicationlist/{{$studentData->id}}/Male'>view</a></td>
+                              <td><a href='/icm/selectedapplicationlist/{{$studentData->id}}/Male'>{{ $studentData->malecount }}</a></td>
+                              <td><a href='/icm/selectedapplicationlist/{{$studentData->id}}/Female'>{{ $studentData->femalecount }}</a></td>
                           </tr>
                           @endforeach
                       </tbody>

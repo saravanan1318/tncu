@@ -204,24 +204,23 @@ class IcmController extends Controller
 
         if(Auth::user()->role == 1){
 
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.gender','=','Male')
-            ->where('student_params.status',1)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+
+            $studentDatas = DB::select( DB::raw('SELECT mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps,
+            (SELECT COUNT(student_params.icm) FROM student_params WHERE STATUS = 1 AND gender = "Male" AND icm = mtr_icm.id) AS malecount,
+            (SELECT COUNT(student_params.icm) FROM student_params WHERE STATUS = 1 AND gender = "Female" AND icm = mtr_icm.id) AS femalecount 
+            FROM mtr_icm
+            LEFT JOIN student_params ON mtr_icm.id = student_params.icm
+            WHERE student_params.status = 1 GROUP BY student_params.icm,mtr_icm.icm_name,mtr_icm.id') );
 
         }else{
 
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.gender','=','Male')
-            ->where('student_params.status',1)
-            ->where('student_params.icm','=',Auth::user()->icm_id)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+            $studentDatas = DB::select( DB::raw('SELECT mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps,
+            (SELECT COUNT(student_params.icm) FROM student_params WHERE STATUS = 1 AND gender = "Male" AND icm = mtr_icm.id) AS malecount,
+            (SELECT COUNT(student_params.icm) FROM student_params WHERE STATUS = 1 AND gender = "Female" AND icm = mtr_icm.id) AS femalecount 
+            FROM mtr_icm
+            LEFT JOIN student_params ON mtr_icm.id = student_params.icm
+            WHERE student_params.status = 1 AND mtr_icm.id = '.Auth::user()->icm_id.' GROUP BY student_params.icm,mtr_icm.icm_name,mtr_icm.id') );
+
 
         }
 

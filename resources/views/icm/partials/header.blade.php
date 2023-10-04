@@ -41,8 +41,16 @@
              </p>
            </a>
          </li>
-         <li class="nav-header">Admission</li>
-         <?php
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Admission
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <?php
          if(Auth::user()->role == 2){
           ?>
         
@@ -79,90 +87,123 @@
             </p>
           </a>
         </li>
-         <li class="nav-header">MISCELLANEOUS</li>
-         <li class="nav-item">
-           <a href="{{url('/icm/applicationlist')}}" class="nav-link">
-             <i class="nav-icon fas fa-ellipsis-h"></i>
-             <p>Applications
-               {{-- <span class="right badge badge-danger">5</span> --}}
-             </p>
-           </a>
-         </li>
-         <li class="nav-item">
-          <a href="{{url('/icm/duplicateapplicationlist')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Duplicate transno Applications
-              {{-- <span class="right badge badge-danger">5</span> --}}
-            </p>
-          </a>
-        </li>
+          </ul>
+        </li> 
         <li class="nav-item">
-          <a href="{{url('/icmapplicationform')}}" target="_blank" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Offline Application form
-              {{-- <span class="right badge badge-danger">5</span> --}}
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              MISCELLANEOUS
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-        </li>
-         <li class="nav-header">Selected Applications</li>
-         <li class="nav-item">
-          <a href="{{url('/icm/selectedapplicationlist/Male')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Male
-              {{-- <span class="right badge badge-danger">5</span> --}}
-            </p>
-          </a>
-          <li class="nav-item">
-            <a href="{{url('/icm/selectedapplicationlist/Female')}}" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>Female
-                {{-- <span class="right badge badge-danger">5</span> --}}
-              </p>
-            </a>
-        </li>
-        
-        <li class="nav-header">Printer Version</li>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('/icm/applicationlist')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Applications
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+             <a href="{{url('/icm/duplicateapplicationlist')}}" class="nav-link">
+               <i class="nav-icon fas fa-ellipsis-h"></i>
+               <p>Duplicate transno Applications
+                 {{-- <span class="right badge badge-danger">5</span> --}}
+               </p>
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{{url('/icmapplicationform')}}" target="_blank" class="nav-link">
+               <i class="nav-icon fas fa-ellipsis-h"></i>
+               <p>Offline Application form
+                 {{-- <span class="right badge badge-danger">5</span> --}}
+               </p>
+             </a>
+           </li>
+           <li class="nav-item">
+             <a href="{{url('/icm/selectedapplicationlist/icmwise')}}" class="nav-link">
+               <i class="nav-icon fas fa-ellipsis-h"></i>
+               <p>Selected Applications
+                 {{-- <span class="right badge badge-danger">5</span> --}}
+               </p>
+             </a>
+           </li>
+          </ul>
+        </li>  
         <li class="nav-item">
-          <a href="{{url('/icm/printerversion/male')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Male
-              {{-- <span class="right badge badge-danger">5</span> --}}
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Printer Version
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-        </li>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('/icm/printerversion/male')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Male
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('/icm/printerversion/female')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Female
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li>  
         <li class="nav-item">
-          <a href="{{url('/icm/printerversion/female')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Female
-              {{-- <span class="right badge badge-danger">5</span> --}}
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Contact details
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-        </li>
-        <li class="nav-header">Contact details</li>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('/icm/printerversion/address/Male')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Male
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('/icm/printerversion/address/Female')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Female
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li> 
         <li class="nav-item">
-          <a href="{{url('/icm/printerversion/address/Male')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Male
-              {{-- <span class="right badge badge-danger">5</span> --}}
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              User Management
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{url('/icm/printerversion/address/Female')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Female
-              {{-- <span class="right badge badge-danger">5</span> --}}
-            </p>
-          </a>
-        </li>
-        <li class="nav-header">User Management</li>
-        <li class="nav-item">
-          <a href="{{url('/icm/passwordChange')}}" class="nav-link">
-            <i class="nav-icon fas fa-ellipsis-h"></i>
-            <p>Change Password
-              {{-- <span class="right badge badge-danger">5</span> --}}
-            </p>
-          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('/icm/passwordChange')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Change Password
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
            <a href="{{url('logout')}}" class="nav-link">

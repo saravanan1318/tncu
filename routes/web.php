@@ -47,8 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/icmdashboard', [IcmController::class, 'icmdashboard']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);
     Route::get('/icm/printedformat', [IcmController::class, 'printapplicationlist']);
-    Route::get('/icm/selectedapplicationlist/Male', [IcmController::class, 'selectedapplicationicmlistmale']);
-    Route::get('/icm/selectedapplicationlist/Female', [IcmController::class, 'selectedapplicationicmlistfemale']);
+    Route::get('/icm/selectedapplicationlist/icmwise', [IcmController::class, 'selectedapplicationicmlistmale']);
     Route::get('/icm/selectedapplicationlist/{icm_id}/{gender}', [IcmController::class, 'selectedapplicationlistgendericm']);
     Route::get('/icm/icmwiselist', [IcmController::class, 'icmwiselist']);
     Route::get('/icm/duplicateapplicationlist', [IcmController::class, 'duplicateapplicationlist']);
