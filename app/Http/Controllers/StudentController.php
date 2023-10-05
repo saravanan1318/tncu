@@ -16,37 +16,20 @@ class StudentController extends Controller
 {
     function dashboard(){
 
-        if(Auth::user()->role == 1){
-
-            $allapplication = StudentParams::where('status',"<>", 2)->count();
-            $pendingapplication = StudentParams::where('status', 0)->count();
-            $selectedapplication = StudentParams::where('status', 1)->count();
-
-        }else{
-
-            $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status',"<>", 2)->count();
-            $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
-            $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
+        if(Auth::user()->otp_verified == 0){
+            return redirect('login')->with('error', 'OTP not verified');
         }
 
-        $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.status',0)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
-
-        $data[] = [
-            "allapplication" =>  $allapplication,
-            "pendingapplication" =>  $pendingapplication,
-            "selectedapplication" =>  $selectedapplication
-        ];
-
-        return view("student.studentdashboard",compact('data','studentDatas'));
+        return view("student.studentdashboard");
 
     }
     function payment(Request $request)
     {
+
+        if(Auth::user()->otp_verified == 0){
+            return redirect('login')->with('error', 'OTP not verified');
+        }
+
         $terms=$request->input("terms");
         $amount=0;
         foreach ($terms as $term)

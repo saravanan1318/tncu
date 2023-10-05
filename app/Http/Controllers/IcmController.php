@@ -62,6 +62,29 @@ class IcmController extends Controller
 
     }
 
+
+    function otpscreen(){
+        return view("icm.otpscreen");
+    }
+
+    function verifyotp(Request $request){
+
+        $validated = $request->validate([
+            'otp' => 'required'
+        ]);
+
+        if(Auth::user()->otp_sent == $request->otp){
+
+            User::where('id', Auth::user()->id)
+            ->update(['otp_verified' => 1]);
+
+            return redirect()->intended('/student/studentdashboard')
+            ->withSuccess('Signed in');
+        }else{
+            return redirect('/icm/otpscreen')->with('error', 'OTP entered is not valid');
+        }
+    }
+
     function dashboard(){
 
         if(Auth::user()->role == 1){

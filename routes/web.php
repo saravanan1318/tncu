@@ -33,6 +33,7 @@ Route::get('/payment', [WebsiteController::class, 'pay']);
 Route::get('login', [LoginFormController::class, 'index']);
 Route::post('checklogin', [LoginFormController::class, 'checklogin']);
 Route::get('logout', [LoginFormController::class, 'logout']);
+Route::get('passwordupdateforrolethree', [LoginFormController::class, 'passwordupdateforrolethree']);
 
 use App\Http\Controllers\UrlShortenerController;
 
@@ -41,6 +42,8 @@ Route::get('/{code}', [UrlShortenerController::class, 'redirect'])->name('redire
 
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/icm/otpscreen', [IcmController::class, 'otpscreen']);
+    Route::post('/icm/verifyotp', [IcmController::class, 'verifyotp']);
     Route::get('/icm/passwordChange', [IcmController::class, 'passwordChange']);
     Route::post('/icm/updatePassword', [IcmController::class, 'updatePassword']);
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
