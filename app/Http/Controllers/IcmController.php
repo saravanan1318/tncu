@@ -727,35 +727,39 @@ class IcmController extends Controller
 
     }
 
-    function feespaid(){
+    function icmwiselistfeespaid(){
+
 
         if(Auth::user()->role == 1){
-
-            $studentDatas = Invoice::select('invoiceNo')->distinct()->get();
-            $totalcount = Invoice::select('invoiceNo')->distinct()->count();
-            $totalamount = Invoice::sum('amount');
-
+            $icm = Mtr_icm::get();
         }else{
-
-            $studentDatas = DB::table('invoice')
-            ->selectRaw('DISTINCT(invoiceNo)')
-            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
-            ->where('student_params.icm','=',Auth::user()->icm_id)
-            ->get();
-
-            $totalcount = DB::table('invoice')
-            ->selectRaw('DISTINCT(invoiceNo)')
-            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
-            ->where('student_params.icm','=',Auth::user()->icm_id)
-            ->distinct()->count();
-
-            $totalamount = DB::table('invoice')
-            ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
-            ->where('student_params.icm','=',Auth::user()->icm_id)
-            ->sum('invoice.amount');
+            $icm = Mtr_icm::where('id',Auth::user()->icm_id)->get();
         }
 
-        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+        return view("icm.icmwiselistfeespaid",compact('icm'));
+
+    }
+
+    function feespaid(Request $request){
+
+        $studentDatas = DB::table('invoice')
+        ->selectRaw('DISTINCT(invoiceNo)')
+        ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+        ->where('student_params.icm','=',$request->icm_id)
+        ->get();
+
+        $totalcount = DB::table('invoice')
+        ->selectRaw('DISTINCT(invoiceNo)')
+        ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+        ->where('student_params.icm','=',$request->icm_id)
+        ->distinct()->count();
+
+        $totalamount = DB::table('invoice')
+        ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+        ->where('student_params.icm','=',$request->icm_id)
+        ->sum('invoice.amount');
+
+        $icm = Mtr_icm::where('id',$request->icm_id)->first();
 
         return view("icm.feespaid",compact('studentDatas','icm','totalcount','totalamount'));
 

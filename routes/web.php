@@ -63,9 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/printerversionmalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionmalelist']);
     Route::get('/icm/printerversionfemalelist/{icm_id}/{gender}', [IcmController::class, 'printerversionfemalelist']);
 
-
     Route::get('/icm/invoice/generate', [IcmController::class, 'generateinvoice']);
-    Route::get('/icm/fees/paid', [IcmController::class, 'feespaid']);
+    Route::get('/icm/fees/paid/icmwiselist', [IcmController::class, 'icmwiselistfeespaid']);
+    Route::get('/icm/fees/paid/{icm_id}', [IcmController::class, 'feespaid']);
     Route::get('/icm/fees/paid/{invoiceNo}', [IcmController::class, 'invoiceview']);
     Route::post('/icm/invoice/store', [IcmController::class, 'storeinvoice']);
     Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
