@@ -32,6 +32,20 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 mb-4">
+                    @if(session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                </div>
+            </div>
               <form action="{{url('/icm/invoice/store')}}" method="POST">
                 @csrf
                 <div class="row">
@@ -50,8 +64,8 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label>BILL TO: </label>
-                    <select class="form-control select2" name="student_id">
-                      <option selected="selected">Select</option>
+                    <select class="form-control select2" name="student_id" required>
+                      <option value="" selected="selected">Select</option>
                       <?php
                       foreach($studentDatas as $studentData){
                       ?>
@@ -65,7 +79,7 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label>PAYMENT MODE: </label>
-                    <select class="form-control" name="payment_mode">
+                    <select class="form-control" name="payment_mode" required>
                       <option value="">Select</option>
                       <option value="CASH">CASH</option>
                       <option value="QR PAYMENT">QR PAYMENT</option>

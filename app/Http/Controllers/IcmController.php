@@ -681,6 +681,15 @@ class IcmController extends Controller
 
     function storeinvoice(Request $request){
 
+        $student_id = $request->student_id;
+
+        $invoicedetails = Invoice::where('student_id', $request->student_id)->sum('amount');
+
+        if($invoicedetails > 18750 || $invoicedetails == 18750){
+            return redirect()->back()->with('error', 'Already paid the full amount');
+        }
+
+        //dd($invoicedetails);
         $term = $request->term;
         $termamount = $request->termamount;
         $termtotal = $request->termtotal;
@@ -688,6 +697,17 @@ class IcmController extends Controller
 
         $actualinv = Auth::user()->invoiceNo+1;
         $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
+        $reqtotal = 0;
+        for($i=0;$i<count($term);$i++){
+            $reqtotal += $termtotal[$i];
+        }
+        $total = $reqtotal + $invoicedetails;
+        $remaining = 18750 - $invoicedetails;
+       // dd($total);
+        if($total > 18750){
+            return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
+        }
+
         for($i=0;$i<count($term);$i++){
             $invoice = new Invoice;
             $invoice->invoiceNo = $invoiceNo;
