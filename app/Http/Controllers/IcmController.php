@@ -397,7 +397,6 @@ class IcmController extends Controller
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Male')
-            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
 
@@ -407,7 +406,6 @@ class IcmController extends Controller
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Male')
-            ->where('student_params.status',0)
             ->where('student_params.icm','=',Auth::user()->icm_id)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
@@ -426,7 +424,6 @@ class IcmController extends Controller
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Female')
-            ->where('student_params.status',0)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
 
@@ -436,7 +433,6 @@ class IcmController extends Controller
             ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
             ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
             ->where('student_params.gender','=','Female')
-            ->where('student_params.status',0)
             ->where('student_params.icm','=',Auth::user()->icm_id)
             ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
             ->get();
