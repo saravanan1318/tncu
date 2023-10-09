@@ -471,24 +471,47 @@ class IcmController extends Controller
 
         if(Auth::user()->role == 1){
 
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.gender','=',$gender)
-            ->where('student_params.status',0)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+            $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+            (SELECT COUNT(id) FROM student_params WHERE gender = '".$gender."' AND icm =  mi.id)
+            AS total,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 1 AND gender = '".$gender."' AND icm =  mi.id)
+            AS selected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 0 AND gender = '".$gender."' AND icm =  mi.id)
+            AS notselected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 2 AND gender = '".$gender."' AND icm =  mi.id)
+            AS duplicate
+            FROM mtr_icm AS mi") );
+
+            // $studentDatas = DB::table('mtr_icm')
+            // ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            // ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            // ->where('student_params.gender','=',$gender)
+            // ->where('student_params.status',0)
+            // ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            // ->get();
 
         }else{
 
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.gender','=',$gender)
-            ->where('student_params.status',0)
-            ->where('student_params.icm','=',Auth::user()->icm_id)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+            // $studentDatas = DB::table('mtr_icm')
+            // ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            // ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            // ->where('student_params.gender','=',$gender)
+            // ->where('student_params.status',0)
+            // ->where('student_params.icm','=',Auth::user()->icm_id)
+            // ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            // ->get();
+
+            $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+            (SELECT COUNT(id) FROM student_params WHERE gender = '".$gender."' AND icm =  mi.id)
+            AS total,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 1 AND gender = '".$gender."' AND icm =  mi.id)
+            AS selected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 0 AND gender = '".$gender."' AND icm =  mi.id)
+            AS notselected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 2 AND gender = '".$gender."' AND icm =  mi.id)
+            AS duplicate
+            FROM mtr_icm AS mi WHERE mi.id = ".Auth::user()->icm_id) );
+
 
         }
 
@@ -497,28 +520,35 @@ class IcmController extends Controller
     }
 
     function  contacticmapplicationlist(Request $request){
-
-        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->where('status',0)->get();
-
-
-        $html = '<!DOCTYPE html> <html> <head> <style> table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; font-size: 8px; } td { border: 1px solid #dddddd; text-align: left; padding: 20px; } tr:nth-child(even) { background-color: #dddddd; } h3,h4,.slno{ text-align: center; } th{ background-color: black; color: #fff; text-align: center; border: 1px solid #dddddd; padding: 20px; font-size: 10px !important;} </style> </head> <body> <h3>CONTACT DETAILS OF DIPLOMA IN COOPERATIVE MANAGEMENT 2023-24</h3> <h4>Tamil Nadu Cooperative Union</h4> <h4>'.$studentDatas[0]->mtr_icm->icm_name.'</h4> <table> <tr> <th style="width:5%" class="slno">SlNo</th> <th style="width:15%">ARN Number</th> <th style="width:20%">Full name</th> <th style="width:10%">MobileNo</th><th style="width:50%">Address</th> </tr> <tbody>';
         
-        $count = 1;
-        foreach($studentDatas as $studentData){
-            $address = $studentData->plotno.", ".$studentData->streetname.", ".$studentData->city.", ".$studentData->district.", ".$studentData->state.", ".$studentData->pincode;
+        if($request->status == 'all'){
 
-            $html .= '<tr>
-            <td style="width:5%" class="slno">'.$count++.'</td>
-            <td style="width:15%" class="slno">'.$studentData->arrn_number.'</td>
-            <td style="width:20%" class="slno">'.$studentData->fullname.'</td>
-            <td style="width:10%" class="slno">'.$studentData->mobile1.'</td>
-            <td style="width:50%" class="slno">'.$address.'</td>
-          </tr>';
+            $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->get();
+
+        }else{
+            $studentDatas = StudentParams::where('icm', $request->icm_id)->where('gender',$request->gender)->where('status',$request->status)->get();
+
         }
 
-        $html .= '</tbody></table></body></html>';
+
+        // $html = '<!DOCTYPE html> <html> <head> <style> table { font-family: arial, sans-serif; border-collapse: collapse; width: 100%; font-size: 8px; } td { border: 1px solid #dddddd; text-align: left; padding: 20px; } tr:nth-child(even) { background-color: #dddddd; } h3,h4,.slno{ text-align: center; } th{ background-color: black; color: #fff; text-align: center; border: 1px solid #dddddd; padding: 20px; font-size: 10px !important;} </style> </head> <body> <h3>CONTACT DETAILS OF DIPLOMA IN COOPERATIVE MANAGEMENT 2023-24</h3> <h4>Tamil Nadu Cooperative Union</h4> <h4>'.$studentDatas[0]->mtr_icm->icm_name.'</h4> <table> <tr> <th style="width:5%" class="slno">SlNo</th> <th style="width:15%">ARN Number</th> <th style="width:20%">Full name</th> <th style="width:10%">MobileNo</th><th style="width:50%">Address</th> </tr> <tbody>';
         
-        $filenametodownload = $studentDatas[0]->mtr_icm->icm_name."_contact.pdf";
+        // $count = 1;
+        // foreach($studentDatas as $studentData){
+        //     $address = $studentData->plotno.", ".$studentData->streetname.", ".$studentData->city.", ".$studentData->district.", ".$studentData->state.", ".$studentData->pincode;
+
+        //     $html .= '<tr>
+        //     <td style="width:5%" class="slno">'.$count++.'</td>
+        //     <td style="width:15%" class="slno">'.$studentData->arrn_number.'</td>
+        //     <td style="width:20%" class="slno">'.$studentData->fullname.'</td>
+        //     <td style="width:10%" class="slno">'.$studentData->mobile1.'</td>
+        //     <td style="width:50%" class="slno">'.$address.'</td>
+        //   </tr>';
+        // }
+
+        // $html .= '</tbody></table></body></html>';
+        
+        $filenametodownload = $studentDatas[0]->mtr_icm->icm_name."-".$request->status."_contact.pdf";
         // PDF::SetTitle('Hello World');
         // PDF::AddPage();
         // PDF::writeHTML($html, true, false, true, false, '');

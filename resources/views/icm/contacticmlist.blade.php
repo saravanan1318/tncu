@@ -30,10 +30,12 @@
                   <table id="applicationlist" class="table table-responsive table-bordered mb-5">
                       <thead>
                           <tr class="table-success">
-                              <th scope="col">#</th>
-                              <th scope="col">ICM Name</th>
-                              <th scope="col">No of application</th>
-                              <th scope="col">Action</th>
+                            <th scope="col">#</th>
+                            <th scope="col">ICM Name</th>
+                            <th scope="col">Total Application</th>
+                            <th scope="col">Selected Application</th>
+                            <th scope="col">Not Selected Application</th>
+                            <th scope="col">Duplicate Application</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -42,10 +44,12 @@
                           ?>
                           @foreach($studentDatas as $studentData)
                           <tr>
-                              <th scope="row">{{ $count++ }}</th>
-                              <td>{{ $studentData->icm_name}}</td>
-                              <td>{{ $studentData->Noofapps }}</td>
-                              <td><a href='/icm/printerversion/address/{{$studentData->id}}/{{$gender}}'>download</a></td>
+                            <th scope="row">{{ $count++ }}</th>
+                            <td>{{ $studentData->icm_name}}</td>
+                            <td><a href='/icm/printerversion/address/{{$studentData->id}}/{{$gender}}/all'>{{ $studentData->total }}</a></td>
+                            <td><a href='/icm/printerversion/address/{{$studentData->id}}/{{$gender}}/1'>{{ $studentData->selected }}</a></td>
+                            <td><a href='/icm/printerversion/address/{{$studentData->id}}/{{$gender}}/0'>{{ $studentData->notselected }}</a></td>
+                            <td><a href='/icm/printerversion/address/{{$studentData->id}}/{{$gender}}/2'>{{ $studentData->duplicate }}</a></td>
                           </tr>
                           @endforeach
                       </tbody>
