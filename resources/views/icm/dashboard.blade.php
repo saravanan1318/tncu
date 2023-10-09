@@ -184,8 +184,10 @@
                           <tr class="table-success">
                               <th scope="col">#</th>
                               <th scope="col">ICM Name</th>
-                              <th scope="col">No of application</th>
-                              <th scope="col">Action</th>
+                              <th scope="col">Total Application</th>
+                              <th scope="col">Selected Application</th>
+                              <th scope="col">Not Selected Application</th>
+                              <th scope="col">Duplicate Application</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -196,8 +198,10 @@
                           <tr>
                               <th scope="row">{{ $count++ }}</th>
                               <td>{{ $studentData->icm_name}}</td>
-                              <td>{{ $studentData->Noofapps }}</td>
-                              <td><a href='/icm/icmapplicationlist/{{$studentData->id}}'>view</a></td>
+                              <td><a href='/icm/icmapplicationlist/{{$studentData->id}}'>{{ $studentData->total }}</a></td>
+                              <td><a href='/icm/selectedapplicationlist/{{$studentData->id}}'>{{ $studentData->selected }}</a></td>
+                              <td><a href='/icm/notselectedapplicationlist/{{$studentData->id}}'>{{ $studentData->notselected }}</a></td>
+                              <td><a href='/icm/duplicatedapplicationlist/{{$studentData->id}}'>{{ $studentData->duplicate }}</a></td>
                           </tr>
                           @endforeach
                       </tbody>

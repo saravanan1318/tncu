@@ -92,12 +92,23 @@ class IcmController extends Controller
             $allapplication = StudentParams::where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('status', 0)->count();
             $selectedapplication = StudentParams::where('status', 1)->count();
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.status',0)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+            // $studentDatas = DB::table('mtr_icm')
+            // ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            // ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            // ->where('student_params.status',0)
+            // ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            // ->get();
+
+            $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+            (SELECT COUNT(id) FROM student_params WHERE icm =  mi.id)
+            AS total,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 1 AND icm =  mi.id)
+            AS selected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 0 AND icm =  mi.id)
+            AS notselected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 2 AND icm =  mi.id)
+            AS duplicate
+            FROM mtr_icm AS mi") );
 
             $totalcount = Invoice::select('invoiceNo')->distinct()->count();
             $totalamount = Invoice::sum('amount');
@@ -107,13 +118,24 @@ class IcmController extends Controller
             $allapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status',"<>", 2)->count();
             $pendingapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 0)->count();
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
-            $studentDatas = DB::table('mtr_icm')
-            ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-            ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-            ->where('student_params.icm',Auth::user()->icm_id)
-            ->where('student_params.status',0)
-            ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-            ->get();
+            // $studentDatas = DB::table('mtr_icm')
+            // ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+            // ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+            // ->where('student_params.icm',Auth::user()->icm_id)
+            // ->where('student_params.status',0)
+            // ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+            // ->get();
+
+            $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+            (SELECT COUNT(id) FROM student_params WHERE icm =  mi.id)
+            AS total,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 1 AND icm =  mi.id)
+            AS selected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 0 AND icm =  mi.id)
+            AS notselected,
+            (SELECT COUNT(id) FROM student_params WHERE STATUS = 2 AND icm =  mi.id)
+            AS duplicate
+            FROM mtr_icm AS mi WHERE mi.id = ".Auth::user()->icm_id) );
 
             $totalcount = DB::table('invoice')
             ->selectRaw('DISTINCT(invoiceNo)')
@@ -157,13 +179,23 @@ class IcmController extends Controller
             $selectedapplication = StudentParams::where('icm', Auth::user()->icm_id)->where('status', 1)->count();
         }
 
-        $studentDatas = DB::table('mtr_icm')
-        ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
-        ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
-        ->where('student_params.status',0)
-        ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
-        ->get();
+        // $studentDatas = DB::table('mtr_icm')
+        // ->selectRaw('mtr_icm.id, mtr_icm.icm_name, COUNT(student_params.icm) AS Noofapps')
+        // ->leftJoin('student_params', 'mtr_icm.id', '=', 'student_params.icm')
+        // ->where('student_params.status',0)
+        // ->groupBy('student_params.icm','mtr_icm.icm_name','mtr_icm.id')
+        // ->get();
 
+        $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+        (SELECT COUNT(id) FROM student_params WHERE icm =  mi.id)
+        AS total,
+        (SELECT COUNT(id) FROM student_params WHERE STATUS = 1 AND icm =  mi.id)
+        AS selected,
+        (SELECT COUNT(id) FROM student_params WHERE STATUS = 0 AND icm =  mi.id)
+        AS notselected,
+        (SELECT COUNT(id) FROM student_params WHERE STATUS = 2 AND icm =  mi.id)
+        AS duplicate
+        FROM mtr_icm AS mi WHERE mi.id = ".Auth::user()->icm_id) );
         $data[] = [
            "allapplication" =>  $allapplication,
            "pendingapplication" =>  $pendingapplication,
@@ -259,6 +291,29 @@ class IcmController extends Controller
         return view("icm.selectedapplicationlist", compact('studentDatas'));
     }
 
+    function selectedapplicationlist(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('status', 1)->get();
+
+
+        return view("icm.selectedapplicationlistnew", compact('studentDatas'));
+    }
+
+    function notselectedapplicationlist(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('status', 0)->get();
+
+
+        return view("icm.notselectedapplicationlist", compact('studentDatas'));
+    }
+
+    function duplicatedapplicationlist(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->where('status', 2)->get();
+
+
+        return view("icm.duplicatedapplicationlist", compact('studentDatas'));
+    }
 
     function duplicateapplicationlist(){
 
@@ -464,11 +519,16 @@ class IcmController extends Controller
         $html .= '</tbody></table></body></html>';
         
         $filenametodownload = $studentDatas[0]->mtr_icm->icm_name."_contact.pdf";
-        PDF::SetTitle('Hello World');
-        PDF::AddPage();
-        PDF::writeHTML($html, true, false, true, false, '');
+        // PDF::SetTitle('Hello World');
+        // PDF::AddPage();
+        // PDF::writeHTML($html, true, false, true, false, '');
 
-        PDF::Output($filenametodownload);
+        // PDF::Output($filenametodownload);
+
+        $pdf = Pdf::loadView('icm.contacticmapplicationlistdownload',compact('studentDatas'));
+
+        return $pdf->download($filenametodownload);
+
         
     }
 

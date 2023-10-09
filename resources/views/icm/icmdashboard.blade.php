@@ -116,6 +116,44 @@
             </div>
 
         </div>
+        <div class="content">
+            <div class="container-fluid">
+              <div class="row table-responsive">
+                  <table id="applicationlist" class="table table-responsive table-bordered mb-5">
+                      <thead>
+                          <tr class="table-success">
+                              <th scope="col">#</th>
+                              <th scope="col">ICM Name</th>
+                              <th scope="col">Total Application</th>
+                              <th scope="col">Selected Application</th>
+                              <th scope="col">Not Selected Application</th>
+                              <th scope="col">Duplicate Application</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php  
+                            $count = 1;
+                          ?>
+                          @foreach($studentDatas as $studentData)
+                          <tr>
+                              <th scope="row">{{ $count++ }}</th>
+                              <td>{{ $studentData->icm_name}}</td>
+                              <td><a href='/icm/icmapplicationlist/{{$studentData->id}}'>{{ $studentData->total }}</a></td>
+                              <td><a href='/icm/selectedapplicationlist/{{$studentData->id}}'>{{ $studentData->selected }}</a></td>
+                              <td><a href='/icm/notselectedapplicationlist/{{$studentData->id}}'>{{ $studentData->notselected }}</a></td>
+                              <td><a href='/icm/duplicatedapplicationlist/{{$studentData->id}}'>{{ $studentData->duplicate }}</a></td>
+                          </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+                  {{-- Pagination --}}
+                  {{-- {!! $studentDatas->links() !!} --}}
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+          </div>
+        <!-- /.row -->
               <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
