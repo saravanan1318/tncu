@@ -923,7 +923,7 @@ class IcmController extends Controller
             $invoice_deleted->updated_at =  $invoice->updated_at;
             $invoice_deleted->save();
         }
-
+        
         Invoice::where('invoiceNo', $request->invoiceNo)->delete();
 
         return redirect()->back()->with('status', 'Invoice deleted successfully');

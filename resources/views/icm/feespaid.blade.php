@@ -124,8 +124,8 @@
                             <td>{{ $studentData->fullname}}</td>
                             <td>{{ $studentData->aadhar}}</td>
                             <td>{{ $studentData->amount}}</td>
-                            <td><a href='/icm/printinvoice/{{$studentData->invoiceNo}}'>View</a> |
-                              {{-- <a href='/icm/invoice/edit/{{$studentData->invoiceNo}}'>Edit</a> | --}}
+                            <td><a href='/icm/printinvoice/{{$studentData->invoiceNo}}'>Print</a> |
+                              <a href='/icm/fees/paid/invoice/{{$studentData->invoiceNo}}'>View</a> |
                               <a href='/icm/invoice/delete/{{$studentData->invoiceNo}}'  onclick="return confirm('Are you sure want to delete?')">Delete</a>
                             </td>
                         </tr>
