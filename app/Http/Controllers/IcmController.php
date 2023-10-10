@@ -908,14 +908,30 @@ class IcmController extends Controller
 
     function icmwisepaidreport(Request $request){
 
-        $studentDatas = DB::select( DB::raw("	SELECT mi.id,mi.icm_name,
-        ( SELECT count(id) FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm = mi.id AND STATUS = 1)
-        AS paidcount,
-            (SELECT COUNT(id) FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  mi.id AND STATUS = 1)
-        AS notpaidcount,
-        (SELECT SUM(amount) FROM invoice WHERE student_id IN (SELECT id FROM student_params WHERE icm = mi.id))
-        AS amount
-        FROM mtr_icm AS mi") );
+        if(Auth::user()->role == 1){
+           
+            $studentDatas = DB::select( DB::raw("	SELECT mi.id,mi.icm_name,
+            ( SELECT count(id) FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm = mi.id AND STATUS = 1)
+            AS paidcount,
+                (SELECT COUNT(id) FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  mi.id AND STATUS = 1)
+            AS notpaidcount,
+            (SELECT SUM(amount) FROM invoice WHERE student_id IN (SELECT id FROM student_params WHERE icm = mi.id))
+            AS amount
+            FROM mtr_icm AS mi") );
+
+        }else{
+           
+            $studentDatas = DB::select( DB::raw("	SELECT mi.id,mi.icm_name,
+            ( SELECT count(id) FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm = mi.id AND STATUS = 1)
+            AS paidcount,
+                (SELECT COUNT(id) FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  mi.id AND STATUS = 1)
+            AS notpaidcount,
+            (SELECT SUM(amount) FROM invoice WHERE student_id IN (SELECT id FROM student_params WHERE icm = mi.id))
+            AS amount
+            FROM mtr_icm AS mi WHERE mi.id = '".Auth::user()->icm_id."'") );
+        }
+
+       
 
         return view("icm.icmwisepaidreport",compact('studentDatas'));
 
@@ -924,9 +940,9 @@ class IcmController extends Controller
     function icmwisepaid(Request $request){
 
        // $studentDatas = DB::select( DB::raw("SELECT * FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  $request->icm_id") );
-        $studentDatas = DB::select( DB::raw("	SELECT *, (SELECT SUM(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 1' AND student_id = st.id) AS term1
-        , (SELECT SUM(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 2' AND student_id = st.id) AS term2
-        , (SELECT SUM(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 3' AND student_id = st.id) AS term3
+        $studentDatas = DB::select( DB::raw("	SELECT *, (SELECT GROUP_CONCAT(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 1' AND student_id = st.id) AS term1
+        , (SELECT GROUP_CONCAT(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 2' AND student_id = st.id) AS term2
+        , (SELECT GROUP_CONCAT(amount) FROM invoice WHERE term = 'TUITION FESS - TERM 3' AND student_id = st.id) AS term3
         FROM student_params AS st WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  $request->icm_id") );
 
         return view("icm.icmwisepaid",compact('studentDatas'));
