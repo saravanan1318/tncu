@@ -85,11 +85,30 @@
       <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 mb-4">
+                      @if(session('status'))
+                          <div class="alert alert-success">
+                              {{ session('status') }}
+                          </div>
+                      @endif
+                      @if(session('error'))
+                      <div class="alert alert-danger">
+                          {{ session('error') }}
+                      </div>
+                  @endif
+                  </div>
+              </div>
                 <table id="applicationlist" class="table table-bordered mb-5">
                     <thead>
                         <tr class="table-success">
                             <th scope="col">#</th>
                             <th scope="col">Invoice No</th>
+                            <th scope="col">Application No</th>
+                            <th scope="col">Full name</th>
+                            <th scope="col">Aadhar</th>
+                            <th scope="col">Amount</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -101,7 +120,14 @@
                         <tr>
                             <th scope="row">{{ $count++ }}</th>
                             <td>{{ $studentData->invoiceNo}}</td>
-                            <td><a href='/icm/printinvoice/{{$studentData->invoiceNo}}'>view</a></td>
+                            <td>{{ $studentData->admission_number}}</td>
+                            <td>{{ $studentData->fullname}}</td>
+                            <td>{{ $studentData->aadhar}}</td>
+                            <td>{{ $studentData->amount}}</td>
+                            <td><a href='/icm/printinvoice/{{$studentData->invoiceNo}}'>View</a> |
+                              <a href='/icm/invoice/edit/{{$studentData->invoiceNo}}'>Edit</a> |
+                              <a href='/icm/invoice/delete/{{$studentData->invoiceNo}}'  onclick="return confirm('Are you sure want to delete?')">Delete</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

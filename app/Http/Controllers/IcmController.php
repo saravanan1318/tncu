@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StudentParams;
 use App\Models\Invoice;
+use App\Models\Invoice_Deleted;
 use App\Models\Mtr_Icm;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
@@ -872,9 +873,10 @@ class IcmController extends Controller
     function feespaid(Request $request){
 
         $studentDatas = DB::table('invoice')
-        ->selectRaw('DISTINCT(invoiceNo)')
+        ->selectRaw('invoiceNo,fullname,admission_number,aadhar,SUM(invoice.amount) AS amount')
         ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
         ->where('student_params.icm','=',$request->icm_id)
+        ->groupBy('invoiceNo','fullname','admission_number','aadhar')
         ->get();
 
         $totalcount = DB::table('invoice')
@@ -903,6 +905,28 @@ class IcmController extends Controller
             ->get();
 
         return view("icm.invoiceview",compact('studentDatas'));
+
+    }
+
+    function invoicedelete(Request $request){
+
+        $invoicedelete = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+
+        foreach($invoicedelete as $invoice){
+            $invoice_deleted = new Invoice_Deleted;
+            $invoice_deleted->student_id = $invoice->student_id;
+            $invoice_deleted->invoiceNo =  $invoice->invoiceNo;
+            $invoice_deleted->payment_mode =  $invoice->payment_mode;
+            $invoice_deleted->term =  $invoice->term;
+            $invoice_deleted->amount =  $invoice->amount;
+            $invoice_deleted->created_at =  $invoice->created_at;
+            $invoice_deleted->updated_at =  $invoice->updated_at;
+            $invoice_deleted->save();
+        }
+
+        Invoice::where('invoiceNo', $request->invoiceNo)->delete();
+
+        return redirect()->back()->with('status', 'Invoice deleted successfully');
 
     }
 

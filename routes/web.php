@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/icm/invoice/generate', [IcmController::class, 'generateinvoice']);
+    Route::get('/icm/invoice/delete/{invoiceNo}', [IcmController::class, 'invoicedelete']);
     Route::get('/icm/fees/paid/icmwiselist', [IcmController::class, 'icmwiselistfeespaid']);
     Route::get('/icm/fees/paid/{icm_id}', [IcmController::class, 'feespaid']);
     Route::get('/icm/fees/paid/{invoiceNo}', [IcmController::class, 'invoiceview']);
