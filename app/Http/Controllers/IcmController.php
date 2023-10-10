@@ -911,7 +911,7 @@ class IcmController extends Controller
         $studentDatas = DB::select( DB::raw("	SELECT mi.id,mi.icm_name,
         ( SELECT count(id) FROM student_params WHERE id IN (SELECT DISTINCT(student_id) FROM invoice) AND icm = mi.id AND STATUS = 1)
         AS paidcount,
-            (SELECT COUNT(id) FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  mi.id)
+            (SELECT COUNT(id) FROM student_params WHERE id NOT IN (SELECT DISTINCT(student_id) FROM invoice) AND icm =  mi.id AND STATUS = 1)
         AS notpaidcount,
         (SELECT SUM(amount) FROM invoice WHERE student_id IN (SELECT id FROM student_params WHERE icm = mi.id))
         AS amount
