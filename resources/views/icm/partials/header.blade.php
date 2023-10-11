@@ -65,6 +65,21 @@
           <?php
          }
          ?>
+          <?php
+          if(Auth::user()->role == 2){
+           ?>
+         
+         <li class="nav-item">
+           <a href="/icm/icmwise/paid/{{Auth::user()->icm_id}}" class="nav-link">
+             <i class="nav-icon fas fa-ellipsis-h"></i>
+             <p>Paid List
+             </p>
+           </a>
+         </li>
+         
+           <?php
+          }
+          ?>
          <li class="nav-item">
           <a href="{{url('/icm/icmwise/paidreport')}}" class="nav-link">
             <i class="nav-icon fas fa-ellipsis-h"></i>
