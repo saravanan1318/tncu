@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Generate Invoice</h1>
+            <h1 class="m-0">Edit Invoice</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Generate Invoice</li>
+              <li class="breadcrumb-item active">Edit Invoice</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -46,17 +46,18 @@
                 @endif
                 </div>
             </div>
-              <form action="{{url('/icm/invoice/store')}}" method="POST">
+              <form action="{{url('/icm/invoice/edit')}}" method="POST">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">
                       <label>BILL FROM: </label>
                       <p>{{ Auth::user()->name }}</p>
                       <p>{{ $icm->add1.", ".$icm->add2.", ".$icm->city.", ".$icm->pincode }}</p>
+                      <input type="hidden" value="{{$invoiceNo}}" name="invoiceNo" >
                   </div>
                   <div class="col-md-6">
-                      <p><b>Invoice Date : </b>{{date("d-m-Y")}}</p>
-                      <p><b>Invoice No : </b>{{'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;}}</p>
+                      <p><b>Invoice Date : </b>{{date("d-m-Y",strtotime($invoicedetails[0]->created_at))}}</p>
+                      <p><b>Invoice No : </b>{{$invoiceNo}}</p>
                   </div>
                   <!-- /.col -->
               </div>                                                                                
@@ -69,7 +70,7 @@
                       <?php
                       foreach($studentDatas as $studentData){
                       ?>
-                        <option value="{{$studentData->id}}">{{$studentData->arrn_number}}</option>
+                        <option value="{{$studentData->id}}" {{ $StudentParams['id'] === $studentData->id ? "selected" : "" }}>{{$studentData->arrn_number}}</option>
                       <?php
                       }
                       ?>
@@ -81,9 +82,9 @@
                     <label>PAYMENT MODE: </label>
                     <select class="form-control" name="payment_mode" required>
                       <option value="">Select</option>
-                      <option value="CASH">CASH</option>
-                      <option value="QR PAYMENT">QR PAYMENT</option>
-                      <option value="BANK CHALLAN">BANK CHALLAN</option>
+                      <option value="CASH" {{ $invoicedetails[0]->payment_mode === "CASH" ? "selected" : "" }}>CASH</option>
+                      <option value="QR PAYMENT" {{ $invoicedetails[0]->payment_mode === "QR PAYMENT" ? "selected" : "" }}>QR PAYMENT</option>
+                      <option value="BANK CHALLAN" {{ $invoicedetails[0]->payment_mode === "BANK CHALLAN" ? "selected" : "" }}>BANK CHALLAN</option>
                     </select>
                   </div>
                 </div>
@@ -103,46 +104,44 @@
                         </tr>
                       </thead>
                       <tbody id="tablebody">
-                        <tr class="row1">
-                          <td>1</td>
-                          <td>
-                            <select class="form-control term" name="term[]" id="term1" data-id="1" required>
-                              <option value="">SELECT</option>
-                              <option value="TUITION FESS - TERM 1">TUITION FESS - TERM 1</option>
-                              <option value="TUITION FESS - TERM 2">TUITION FESS - TERM 2</option>
-                              <option value="TUITION FESS - TERM 3">TUITION FESS - TERM 3</option>
-                            </select>
-                          </td>
-                          <td style="text-align: center">
-                            01
-                          </td>
-                          <td style="text-align: center">
-                            <input type="number" name="termamount[]" value="" id="termamount1" data-id="1"  required/>
-                          </td>
-                          <td style="text-align: center">
-                            <input type="number" name="termtotal[]" value="" id="termtotal1" data-id="1"  required/>
-                          </td>
-                          <td style="text-align: center">
-                            {{-- <a class="deletebtn btn btn-danger" id="deletebtn1" data-id="1">Delete row</a> --}}
-                          </td>
-                        </tr>
+                        @foreach ($invoicedetails as $invoice)
+                            <tr class="row{{$loop->iteration}}">
+                                <td>{{$loop->iteration}}</td>
+                                <td>
+                                <select class="form-control term" name="term[]" id="term{{$loop->iteration}}" data-id="{{$loop->iteration}}" required>
+                                    <option value="">SELECT</option>
+                                    <option value="TUITION FESS - TERM 1" {{ $invoice->term === "TUITION FESS - TERM 1" ? "selected" : "" }} >TUITION FESS - TERM 1</option>
+                                    <option value="TUITION FESS - TERM 2" {{ $invoice->term === "TUITION FESS - TERM 2" ? "selected" : "" }} >TUITION FESS - TERM 2</option>
+                                    <option value="TUITION FESS - TERM 3" {{ $invoice->term === "TUITION FESS - TERM 3" ? "selected" : "" }} >TUITION FESS - TERM 3</option>
+                                </select>
+                                </td>
+                                <td style="text-align: center">
+                                01
+                                </td>
+                                <td style="text-align: center">
+                                <input type="number" name="termamount[]" id="termamount{{$loop->iteration}}" data-id="{{$loop->iteration}}" value="{{$invoice->amount}}"  required/>
+                                </td>
+                                <td style="text-align: center">
+                                <input type="number" name="termtotal[]" id="termtotal{{$loop->iteration}}" data-id="{{$loop->iteration}}" value="{{$invoice->amount}}"  required/>
+                                </td>
+                                <td style="text-align: center">
+                                    @if ($loop->first)
+                                        {{-- <a class="deletebtn btn btn-danger" id="deletebtn{{$loop->iteration}}" data-id="{{$loop->iteration}}">Delete row</a> --}}
+                                    @elseif ($loop->last)
+                                        <a class="deletebtn btn btn-danger" id="deletebtn{{$loop->iteration}}" data-id="{{$loop->iteration}}">Delete row</a>
+                                    @else
+                                        <a class="deletebtn btn btn-danger" id="deletebtn{{$loop->iteration}}" data-id="{{$loop->iteration}}" style="display:none">Delete row</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                       </tbody>
-                      {{-- <tfoot>
-                        <tr>
-                          <td style="text-align: center">
-                            Total
-                          </td>
-                          <td style="text-align: center">
-
-                          </td>
-                        </tr>
-                      </tfoot> --}}
                     </table>
                     <div class="row">
                       <div class="col-md-10" style="text-align: center">
                       </div>
                       <div class="col-md-2">
-                        <a class="btn btn-warning" id="addnew" data-rowid="1">Add new</a>
+                        <a class="btn btn-warning" id="addnew" data-rowid="{{count($invoicedetails)}}">Add new</a>
                       </div>
                     </div>
                 </div>

@@ -72,11 +72,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/icm/invoice/generate', [IcmController::class, 'generateinvoice']);
+    Route::get('/icm/invoice/edit/{invoiceNo}', [IcmController::class, 'editinvoice']);
     Route::get('/icm/invoice/delete/{invoiceNo}', [IcmController::class, 'invoicedelete']);
     Route::get('/icm/fees/paid/icmwiselist', [IcmController::class, 'icmwiselistfeespaid']);
     Route::get('/icm/fees/paid/{icm_id}', [IcmController::class, 'feespaid']);
     Route::get('/icm/fees/paid/invoice/{invoiceNo}', [IcmController::class, 'invoiceview']);
     Route::post('/icm/invoice/store', [IcmController::class, 'storeinvoice']);
+    Route::post('/icm/invoice/edit', [IcmController::class, 'updateinvoice']);
     Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
 
     Route::get('/student/studentdashboard', [StudentController::class, 'dashboard']);

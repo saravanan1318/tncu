@@ -102,6 +102,15 @@
 
     });
 
+    $(".deletebtn").click(function(){
+            console.log("deletebtn");
+            var id = $(this).attr("data-id");
+            $(".row"+id).remove();
+            var updatedrow = parseInt(id)-1;
+            $("#addnew").attr('data-rowid', updatedrow);
+            $("#deletebtn"+updatedrow).show();
+    });
+
     $(document).ready(function() {
         $('#applicationlist').DataTable( {
             dom: 'Bfrtip',

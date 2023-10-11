@@ -786,11 +786,20 @@ class IcmController extends Controller
         $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
         $reqtotal = 0;
         for($i=0;$i<count($term);$i++){
+
+            $indterm = Invoice::where('student_id', $request->student_id)->where('term', $term[$i])->get();
+
+            if(count($indterm) > 0){
+                return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
+            }
             $reqtotal += $termtotal[$i];
         }
         $total = $reqtotal + $invoicedetails;
         $remaining = 18750 - $invoicedetails;
        // dd($total);
+        if($reqtotal > 18750){
+            return redirect()->back()->with('error', 'Total amount should not exceed 18,750 ');
+        }
         if($total > 18750){
             return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
         }
@@ -829,6 +838,77 @@ class IcmController extends Controller
             $icmname->admission_count = $admission_count+1;
             $icmname->update();
         }
+        return redirect('/icm/printinvoice/'.$invoiceNo);
+
+    }
+
+    function editinvoice(Request $request){
+        
+        if(Auth::user()->role == 1){
+            $studentDatas = StudentParams::select('id','arrn_number')->where('status',1)->get();
+        }else{
+            $studentDatas = StudentParams::select('id','arrn_number')->where('icm', Auth::user()->icm_id)->where('status',1)->get();
+        }
+
+        $invoiceNo = $request->invoiceNo;
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $StudentParams = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+        $icm = Mtr_icm::where('id',$StudentParams->icm)->first();
+
+        return view("icm.editinvoice",compact('studentDatas','icm','invoicedetails','StudentParams','invoiceNo'));
+    }
+
+    function updateinvoice(Request $request){
+
+        $student_id = $request->student_id;
+        $invoiceNo = $request->invoiceNo;
+        $invoicedetails = Invoice::where('student_id', $request->student_id)->where('invoiceNo','<>', $invoiceNo)->sum('amount');
+
+        if($invoicedetails > 18750 || $invoicedetails == 18750){
+            return redirect()->back()->with('error', 'Already paid the full amount');
+        }
+
+        //dd($invoicedetails);
+        $term = $request->term;
+        $termamount = $request->termamount;
+        $termtotal = $request->termtotal;
+        $payment_mode = $request->payment_mode;
+
+      
+        $reqtotal = 0;
+        for($i=0;$i<count($term);$i++){
+
+            
+            $indterm = Invoice::where('student_id', $request->student_id)->where('invoiceNo','<>', $invoiceNo)->where('term', $term[$i])->get();
+
+            if(count($indterm) > 0){
+                return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
+            }
+
+            $reqtotal += $termtotal[$i];
+        }
+        $total = $reqtotal + $invoicedetails;
+        $remaining = 18750 - $invoicedetails;
+       // dd($total);
+        if($reqtotal > 18750){
+            return redirect()->back()->with('error', 'Total amount should not exceed 18,750 ');
+        }
+        if($total > 18750){
+            return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
+        }
+
+        Invoice::where('invoiceNo', $invoiceNo)->delete();
+
+        for($i=0;$i<count($term);$i++){
+            $invoice = new Invoice;
+            $invoice->invoiceNo = $invoiceNo;
+            $invoice->payment_mode = $payment_mode;
+            $invoice->student_id = $request->student_id;
+            $invoice->term = $term[$i];
+            $invoice->amount = $termtotal[$i];
+            $invoice->save();
+        }
+
         return redirect('/icm/printinvoice/'.$invoiceNo);
 
     }
