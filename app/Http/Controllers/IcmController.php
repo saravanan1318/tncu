@@ -389,6 +389,48 @@ class IcmController extends Controller
         return response()->json(['message' => $message]);
     }
 
+    function  unselectedlist(Request $request){
+        $selectedCheckboxes = $request->input('selectedCheckboxes');
+
+        $message = "";
+        $offset = 0;
+        foreach($selectedCheckboxes as $selectedCheckboxe){       
+            $studentDatas1 = StudentParams::where('id', $selectedCheckboxe)->where('status', 0)->first();
+            if($studentDatas1)
+            {
+                $studentDatas = StudentParams::where('aadhar', $studentDatas1['aadhar'])->first();
+                if($studentDatas){
+                    unset($selectedCheckboxes[$offset]);
+                    $message .= $studentDatas->aadhar.", ";
+                }
+            }
+
+            $studentDatas2 = Invoice::where('student_id', $selectedCheckboxe)->first();
+            if($studentDatas2)
+            {
+                $studentDatas = StudentParams::where('id', $studentDatas2['student_id'])->first();
+                if($studentDatas){
+                    unset($selectedCheckboxes[$offset]);
+                    $message .= $studentDatas->aadhar.", ";
+                }
+            }
+
+        }
+
+        if(!empty($message)){
+            $message = $message." Adhaar already not selected or paid term fees";
+        }else{
+            $message = "Status updated successfully";
+        }
+
+        // Update the status for the selected IDs to 1
+        StudentParams::whereIn('id', $selectedCheckboxes)
+            ->update(['status' => 0]);
+
+        // Optionally, you can return a response
+        return response()->json(['message' => $message]);
+    }
+
     function  printerversionmale(Request $request){
 
 

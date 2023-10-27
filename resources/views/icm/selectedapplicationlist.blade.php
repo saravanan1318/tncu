@@ -24,10 +24,13 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row table-responsive">
+          <div class=""><button class="btn btn-info p-2 unselectactionbutton">apply</button></div>
+            <br>
             <table id="applicationlist" class="table table-responsive table-bordered mb-5">
                 <thead>
                     <tr class="table-success">
                         <th scope="col">#</th>
+                        <th>checkbox</th>
                         <th scope="col">ICM Name</th>
                         <th scope="col">ARN Number</th>
                         <th scope="col">Full name</th>
@@ -82,6 +85,7 @@
                     ?>
                     <tr>
                         <th scope="row">{{ $count++ }}</th>
+                        <td><input type="checkbox" class="checkbox" value="{{ $studentData->id }}"></td>
                         <td>{{ $studentData->mtr_icm->icm_name }}</td>
                         <td>{{ $studentData->arrn_number }}</td>
                         <td>{{ $studentData->fullname }}</td>

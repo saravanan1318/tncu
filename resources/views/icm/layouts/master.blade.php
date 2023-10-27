@@ -73,6 +73,40 @@
              alert("please select one of them then you apply");
             }
         });
+        $(".unselectactionbutton").click(function (e) {
+
+            var selectedCheckboxes = [];
+
+            // Iterate through all checkboxes in the table
+            $('#applicationlist tbody input[type="checkbox"]:checked').each(function () {
+                selectedCheckboxes.push($(this).val());
+            });
+            var countSelected = selectedCheckboxes.length;
+            if(countSelected>0) {
+                var postData = {selectedCheckboxes: selectedCheckboxes};
+                $.ajax({
+                    type: "GET",
+                    url: "/icm/unselectedlist", // Replace with the actual URL or Laravel route
+                    data: postData,
+                    success: function (response) {
+                        // Handle the response from the server
+                        //location.reload();
+                        alert(response.message);
+                        location.reload();
+                        console.log(response);
+
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors
+                        console.error(xhr.responseText);
+                    }
+                });
+                console.log(selectedCheckboxes);
+            }
+            else{
+            alert("please select one of them then you apply");
+            }
+        });
     });
 </script>
 </html>
