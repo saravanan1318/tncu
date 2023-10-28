@@ -31,6 +31,37 @@
                         <h1 class="card-title">Payments</h1>
                     </div>
                     <div class="card-body">
+                        @if(isset($returnMessage))
+                        <div>
+                            @if($returnMessage=="SUCCESS")
+                        <div class="alert alert-success">
+                            <center>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Success!</strong> Your Payment was completed successfully.<br>
+                                <strong>Amount:</strong> {{$amount}}<br>
+                            <strong>Transaction ID:</strong> {{$transactionid}}<br>
+                            <strong>Transaction Date:</strong> {{$transaction_date}}<br>
+
+                            </center>
+                        </div>
+                            @endif
+                                @if($returnMessage=="ERROR")
+                        <div class="alert alert-danger">
+                            <center>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <strong>Error!</strong> Your payment was unsuccessful. Please check your details and try again.<br>
+                            @if(isset($transactionid) && isset($transaction_date))
+                                <strong>Amount:</strong> {{$amount}}<br>
+                                <strong>Transaction ID:</strong> {{$transactionid}}<br>
+                                <strong>Transaction Date:</strong> {{$transaction_date}}<br>
+                            @endif
+                            </center>
+                        </div>
+                                @endif
+                        <div> <a class="btn  btn-outline-success" href="studentdashboard" id="reloadButton">Go to Dashboard</a></div>
+                        </div>
+                        @endif
+                            @if(!isset($returnMessage))
                         <form id="paymentForm" method="POST">
                             <div class="row p-4">
                             <div class="bg-teal col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
@@ -89,6 +120,7 @@
                             <button type="submit" id="paymentbtn" class="btn btn-lg btn-outline-success ">Pay Now</button>
                             </div>
                         </form>
+                            @endif
                         <div id="error-message" style="color: red; display: none;">Please select at least one Term.</div>
                     </div>
                 </div>

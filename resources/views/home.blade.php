@@ -12,8 +12,8 @@
                 <div class="list-wrpaaer nav flex-column d-block  mb-2 p-2 " style="height:337px">
                    <ul class="list-aggregate" id="">
                       <li>
-                         <a href="/applicationform?lang=tm" style="color: darkred;">
-                           Diploma Course Online Application 2023 - 2024
+                         <a href="#" style="color: darkred;">
+                           Diploma Course Online Application 2023 - 2024 is closed
                             <img src="{{asset('images/new.gif')}}" alt="Blink New">
                          </a>
                       </li>

@@ -33,6 +33,12 @@
              <li class="nav-item">
                 <a class="nav-link" href="/doc/Advertisement.pdf"> {{__('header.wpp')}}</a>
                          </li>
+             <li class="nav-item">
+                <a class="nav-link" href="/payment-terms"> Payment Terms & condition</a>
+                         </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/privacy-policy"> Privacy Policy</a>
+                         </li>
           </ul>
           </li>
           </ul>
@@ -41,3 +47,4 @@
     <!-- /navbar -->
  </div>
  <!-- /header div -->
+<marquee><a href ="doc\Restrictpayment.pdf">SELECTED CANDIDATE ONLY MAKE PAYMENT. IF OTHER NOT SELECTED CANDIDATES MAKE PAYMENT WILL NOT BE REFUNDED</a></marquee>

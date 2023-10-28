@@ -16,9 +16,11 @@
         @endif
         </div>
     </div>
+
+{{--    <h1>Application form Closed</h1>--}}
     <div class="row">
-        {{-- <div class="col-sm-1 col-md-1 mb-4">
-        </div> --}}
+         <div class="col-sm-1 col-md-1 mb-4">
+        </div>
        <div class="col-sm-12 col-md-12 mb-4">
         <form action="{{url('store-applicationform')}}" id="regform" enctype="multipart/form-data" method="post" novalidate="novalidate">
             @csrf
@@ -351,7 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="col-md-6">
+                         <div class="col-md-6">
                             <div class="editor-label">
                                 Sub Caste <span style="color:red;">*</span>
                             </div>
@@ -361,7 +363,7 @@
                                     <input autocomplete="off" class="form-control" data-val="true" data-val-required="The Subcaste field is required." id="subcaste" maxlength="20" name="subcaste" onkeydown="return true" placeholder="Sub Caste" type="text" value="" required="">
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="row" id="communitydiv" style="margin-top: 10px">
@@ -405,7 +407,7 @@
 
                     </div>
                     <div class="clearfix"></div>
-                    {{-- <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
+                     <div class="row"  style="margin-top: 10px" style="display: none;" id="typeof">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -439,7 +441,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix"></div> --}}
+                    <div class="clearfix"></div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-12">
                             <div class="row">
@@ -787,9 +789,9 @@
                                 <div class="col-md-12">
                                     <select class="form-control" data-val="true" data-val-required="The Payment Type field is required." id="paymenttype" name="paymenttype" required="">
                                         <option value="">- {{__('form.select')}}' -</option>
-                                        {{-- <option value="online">online</option> --}}
+                                         <option value="online">online</option>
                                         <option value="offline">offline</option>
-                                        {{-- <option value="qrpayment">QR Payment</option> --}}
+                                        <option value="qrpayment">QR Payment</option>
                                     </select>
                                 </div>
                             </div>
@@ -932,15 +934,15 @@
                 </fieldset>
             </form>
        </div>
-       {{-- <div class="col-sm-1 col-md-1 mb-4"></div> --}}
+        <div class="col-sm-1 col-md-1 mb-4"></div>
     </div>
  </div>
 <script>
-    
+
     function modalclose(){
-        $('#largeModal').modal('hide');   
+        $('#largeModal').modal('hide');
     }
-  
-  
+
+
 </script>
 @endsection

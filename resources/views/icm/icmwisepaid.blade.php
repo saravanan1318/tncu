@@ -34,10 +34,11 @@
                             <th scope="col">Term 1</th>
                             <th scope="col">Term 2</th>
                             <th scope="col">Term 3</th>
+                            <th scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php  
+                        <?php
                           $count = 1;
                         ?>
                         @foreach($studentDatas as $studentData)
@@ -48,6 +49,7 @@
                             <td>{{ $studentData->term1 }}</td>
                             <td>{{ $studentData->term2 }}</td>
                             <td>{{ $studentData->term3 }}</td>
+                            <td>{{ date('d-m-Y  H:i:s',strtotime($studentData->created_at)) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -56,7 +58,7 @@
                 {{-- {!! $studentDatas->links() !!} --}}
             </div>
         </div>
-        
+
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
@@ -83,7 +85,7 @@
       $('#basicModal').modal('show');
     }
     function modalclose(){
-        $('#basicModal').modal('hide');   
+        $('#basicModal').modal('hide');
     }
   </script>
   @endsection

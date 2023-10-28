@@ -44,6 +44,16 @@ class WebsiteController extends Controller
         session()->put('locale', $request->lang);
         return view("aboutus");
     }
+    function paymentterms(Request $request){
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);
+        return view("paymentterms");
+    }
+    function privacyPolicy(Request $request){
+        App::setLocale($request->lang);
+        session()->put('locale', $request->lang);
+        return view("privacy");
+    }
 
     function pay(Request $request){
         $MerchantID = "BDUATV2TND";
@@ -132,7 +142,8 @@ class WebsiteController extends Controller
 
     function store(Request $request){
 
-        $Userexistcheck = User::where('email',$request->email)->where('icm_id',$request->icm)->get();
+//        $Userexistcheck = User::where('email',$request->email)->where('icm_id',$request->icm)->get();
+        $Userexistcheck = User::where('email',$request->email)->get();
 
         if(count($Userexistcheck) > 0){
             return redirect()->back()->withInput($request->input())->with('error', 'Email already exist')->with('selectBox', $request->input('selectBox')) // Add select box value

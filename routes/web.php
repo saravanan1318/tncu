@@ -28,6 +28,8 @@ Route::post('checkicmeligible', [WebsiteController::class, 'checkicmeligible']);
 Route::get('/checksms', [WebsiteController::class, 'smstest']);
 Route::get('/about-us', [WebsiteController::class, 'aboutus']);
 Route::get('/payment', [WebsiteController::class, 'pay']);
+Route::get('/payment-terms', [WebsiteController::class, 'paymentterms']);
+Route::get('/privacy-policy', [WebsiteController::class, 'privacyPolicy']);
 /**AUTH */
 //Route::get('loginform', [ 'as' => 'loginform', 'uses' => 'IcmController@index']);
 Route::get('login', [LoginFormController::class, 'index']);
@@ -39,7 +41,7 @@ use App\Http\Controllers\UrlShortenerController;
 
 Route::get('/{code}', [UrlShortenerController::class, 'redirect'])->name('redirect');
 
-
+Route::post('/student/paymentresponse', [StudentController::class, 'paymentresponse']);
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/icm/otpscreen', [IcmController::class, 'otpscreen']);
