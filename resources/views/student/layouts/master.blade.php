@@ -56,11 +56,7 @@
         $("#paymentForm").submit(function (e)
         {
             e.preventDefault();
-            var selectedCheckboxes = $("input[name='terms[]']:checked");
-            if (selectedCheckboxes.length === 0) {
-                $("#error-message").show(); // Show the error message
-                return; // Stop the form submission
-            }
+           
 
             // If at least one checkbox is selected, hide the error message
             $("#error-message").hide();

@@ -28,6 +28,123 @@ class StudentController extends Controller
 
     }
 
+
+    function paymentview(){
+
+        $studentDatas = StudentParams::select('id','arrn_number')->where('user_id', Auth::user()->id)->where('status',1)->get();
+
+        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+
+        return view("student.paymentview",compact('studentDatas','icm'));
+
+    }
+
+
+    function storeinvoice(Request $request){
+
+        $studentselected = StudentParams::where('user_id',Auth::user()->id)->first();
+        $student_id = $studentselected['id'];
+
+        $invoicedetails = Invoice::where('student_id', $student_id)->sum('amount');
+
+        if($invoicedetails > 18750 || $invoicedetails == 18750){
+            return redirect()->back()->with('error', 'Already paid the full amount');
+        }
+
+        //dd($invoicedetails);
+        $term = $request->term;
+        $termamount = $request->termamount;
+        $termtotal = $request->termtotal;
+        $payment_mode = $request->payment_mode;
+
+        $actualinv = Auth::user()->invoiceNo+1;
+        $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
+        $reqtotal = 0;
+        for($i=0;$i<count($term);$i++){
+
+            $indterm = Invoice::where('student_id', $student_id)->where('term', $term[$i])->get();
+
+            if(count($indterm) > 0){
+                return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
+            }
+            $reqtotal += $termtotal[$i];
+        }
+        $total = $reqtotal + $invoicedetails;
+        $remaining = 18750 - $invoicedetails;
+       // dd($total);
+        if($reqtotal > 18750){
+            return redirect()->back()->with('error', 'Total amount should not exceed 18,750 ');
+        }
+        if($total > 18750){
+            return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
+        }
+
+        for($i=0;$i<count($term);$i++){
+            $invoice = new Invoice;
+            $invoice->invoiceNo = $invoiceNo;
+            $invoice->payment_mode = $payment_mode;
+            $invoice->student_id = $student_id;
+            $invoice->term = $term[$i];
+            $invoice->amount = $termtotal[$i];
+            $invoice->save();
+        }
+
+        $user = User::where('id',Auth::user()->id)->first();
+        $user->invoiceNo = $actualinv;
+        $user->update();
+
+        $student = StudentParams::where('user_id',Auth::user()->id)->first();
+       
+        if(is_null($student->admission_number) || empty($student->admission_number)){
+
+            $gender = "F";
+
+            if($student->gender == "Male"){
+                $gender = "M";
+            }
+    
+            $icmname = Mtr_icm::where('id',$student->icm)->first();
+            $short_name =  $icmname['short_name'];
+            $admission_count =  $icmname['admission_count'];
+            $admission_number = $short_name.date("Y").$gender.'AN'.sprintf("%03d", $admission_count);
+            $student->admission_number = $admission_number;
+            $student->update();
+
+            $icmname->admission_count = $admission_count+1;
+            $icmname->update();
+        }
+        return redirect('/student/paymentverify/'.$invoiceNo);
+
+    }
+
+
+    function paymentverify(Request $request){
+
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum("amount");
+        $invoiceNo = $request->invoiceNo;
+        $invoiceDate = $invoicedetails[0]['created_at'];
+ 
+       
+        return view("student.paymentverify",compact('amount','invoiceNo','invoiceDate'));
+
+    }
+
+    function printinvoice(Request $request){
+
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+        $icm = Mtr_icm::where('id',$studentData->icm)->first();
+
+        $data['invoicedetails'] = $invoicedetails;
+        $data['studentData'] = $studentData;
+        $data['icm'] = $icm;
+        $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
+
+        return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+
+    }
+
     function paymentresponse(Request $request)
     {
 
@@ -67,61 +184,24 @@ class StudentController extends Controller
             $Student = User::where('id', $studentID)
                 ->first();
             if ($Student) {
-                Auth::login($Student);
-                $invoiceNo = 'INV'.$ICM_ID.'-'.$actualinv;
-                foreach ($termdetails as $termdetail)
-                {
-                    $invoice = new Invoice;
-                    $invoice->invoiceNo = $invoiceNo;
-                    $invoice->payment_mode = "ONLINE";
-                    $invoice->student_id = $studentID;
-                    $invoice->term = "TUITION FESS - TERM ".$termdetail;
-                    if($termdetail ==1)
-                    {
-                        $termamount=6750.00;
-                    }
-                    if($termdetail ==2)
-                    {
-                        $termamount=6000.00;
-                    }
-                    if($termdetail ==3)
-                    {
-                        $termamount=6000.00;
-                    }
-                    $invoice->amount = $termamount;
-                    $invoice->save();
-                }
-                $user = User::where('id',$ICM_ID)->first();
-                $user->invoiceNo = $actualinv;
-//                $user->update();
 
-                $student = StudentParams::where('user_id',Auth::user()->id)->first();
-
-                if(is_null($student->admission_number) || empty($student->admission_number)){
-
-                    $gender = "F";
-
-                    if($student->gender == "Male"){
-                        $gender = "M";
-                    }
-
-                    $icmname = Mtr_icm::where('id',$ICM_ID)->first();
-                    $short_name =  $icmname['short_name'];
-                    $admission_count =  $icmname['admission_count'];
-                    $admission_number = $short_name.date("Y").$gender.'AN'.sprintf("%03d", $admission_count);
-                    $student->admission_number = $admission_number;
-//                    return  $admission_number;
-//                    $student->update();
-
-                    $icmname->admission_count = $admission_count+1;
-//                    $icmname->update();
-                }
-
-                    $returnMessage="SUCCESS";
+                $returnMessage="SUCCESS";
                 $transaction_date=$payloadData["transaction_date"];
                 $transactionid=$payloadData["transactionid"];
                 $amount=$payloadData["amount"];
-                return   view("student.studentdashboard" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
+
+                $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+                $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+                $icm = Mtr_icm::where('id',$studentData->icm)->first();
+        
+                $data['invoicedetails'] = $invoicedetails;
+                $data['studentData'] = $studentData;
+                $data['icm'] = $icm;
+                $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
+        
+                return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+                
+               // return   view("student.studentdashboard" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
             } else {
                 return back()->withErrors(['email' => 'Invalid credentials']); // Authentication failed
             }
@@ -200,46 +280,9 @@ class StudentController extends Controller
             return redirect('login')->with('error', 'OTP not verified');
         }
 
-        $terms=$request->input("terms");
         $amount=0;
-        foreach ($terms as $term)
-        {
-            if($term==1)
-            {
-                $amount+=6750.00;
-            }
-            if($term==2)
-            {
-                $amount+=6000.00;
-            }
-            if($term==3)
-            {
-                $amount+=6000.00;
-            }
-
-        }
-        if($amount > 18750 || $amount < 6000){
-            $tmp=[];
-            $tmp["status"]="ERROR";
-            $tmp["message"]="Please choose Proper Payments !";
-            $tmp["error_code"]="";
-            $tmp["error_type"]="";
-            $returndata=json_encode($tmp);
-            return $returndata;
-        }
-        $invoicedetails = Invoice::where('student_id', Auth::user()->id)->sum('amount');
-
-        if($invoicedetails > 18750 || $invoicedetails == 18750){
-            $tmp=[];
-            $tmp["status"]="ERROR";
-            $tmp["message"]="Already paid the full amount!";
-            $tmp["error_code"]="";
-            $tmp["error_type"]="";
-            $returndata=json_encode($tmp);
-            return $returndata;
-        }
+        $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum('amount');
         $student=StudentParams::where("status",'1')->where("user_id",Auth::user()->id)->get();
-        $amount=1;
         if(count($student)==1) {
             $MerchantID = "TMLNDUCOUN";
             $ClientID = "tmlnducoun";
@@ -248,7 +291,7 @@ class StudentController extends Controller
             $secretkey = 'nBxE5Uw4i0hGZQia2dETrVAV1KrxALaB';  //Production
             $returnURL = "https://tncuicm.com/student/paymentreturn";
             $billdesk_URL = "https://api.billdesk.com/payments/ve1_2/orders/create";
-            $transaction_id=$student[0]->arrn_number."-".implode(",",$terms);
+            $transaction_id=$student[0]->arrn_number."-".time();
             $totalamount=$amount;
             $date_atom =date("dd-mm-yyyy h:i:s");
             $StudentID=Auth::user()->id;
@@ -266,14 +309,10 @@ class StudentController extends Controller
             $client->setLogger($logger);
 
     // Prepare the request data
-            $payterms=[];
-            foreach ($terms as $term){
-                array_push($payterms,"TERM_".$term);
-
-            }
+           
             $request = array(
                 'mercid' => $merchantID,
-                'orderid' => $StudentID.'-'.implode("",$terms)."-2023-LIVE".time(),
+                'orderid' => $StudentID.'-2023-LIVE'.time(),
                 'amount' => $totalamount,
                 'order_date' => date_format(new \DateTime(), DATE_W3C),
                 'currency' => "356",
@@ -281,7 +320,7 @@ class StudentController extends Controller
                 'additional_info' => array(
                     "additional_info1" => $StudentID, //studentID
                     "additional_info2" =>  Auth::user()->email, // student Email
-                    "additional_info3" =>  implode(",",$terms), // student selecting and Term payments
+                    "additional_info3" =>  $amount, // student selecting and Term payments
                     "additional_info4" => Auth::user()->icm_id, // student ICM ID
                     "additional_info5" => "NA",
                     "additional_info6" => "NA",
