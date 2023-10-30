@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\Mtr_Icm;
 use App\Models\Payment_log;
 use App\Models\StudentParams;
+use App\Models\Payments;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,36 +40,42 @@ class StudentController extends Controller
 
     }
 
+    function paymentpending(){
+
+        $studentselected = StudentParams::where('user_id',Auth::user()->id)->first();
+        $student_id = $studentselected['id'];
+
+        $amountpaid = Invoice::where('student_id', $student_id)->where('payment_status', 1)->sum('amount');
+        $balancetopay = 18750 - $amountpaid;
+        if($balancetopay < 0){
+            $balancetopay = 0;
+        }
+        if($amountpaid == 0){
+            $amountpaid = "NA";
+        }else{
+            $amountpaid = $this->moneyFormatIndia($amountpaid);
+        }
+        return view("student.paymentpending",compact('amountpaid','balancetopay')); 
+
+    }
+
 
     function storeinvoice(Request $request){
 
         $studentselected = StudentParams::where('user_id',Auth::user()->id)->first();
         $student_id = $studentselected['id'];
 
-        $invoicedetails = Invoice::where('student_id', $student_id)->sum('amount');
+        $invoicedetails = Invoice::where('student_id', $student_id)->where('payment_status', 1)->sum('amount');
 
         if($invoicedetails > 18750 || $invoicedetails == 18750){
             return redirect()->back()->with('error', 'Already paid the full amount');
         }
 
         //dd($invoicedetails);
-        $term = $request->term;
-        $termamount = $request->termamount;
-        $termtotal = $request->termtotal;
-        $payment_mode = $request->payment_mode;
 
         $actualinv = Auth::user()->invoiceNo+1;
-        $invoiceNo = 'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
-        $reqtotal = 0;
-        for($i=0;$i<count($term);$i++){
-
-            $indterm = Invoice::where('student_id', $student_id)->where('term', $term[$i])->get();
-
-            if(count($indterm) > 0){
-                return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
-            }
-            $reqtotal += $termtotal[$i];
-        }
+        $invoiceNo = 'PAY_'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;
+        $reqtotal = $request->termamount;
         $total = $reqtotal + $invoicedetails;
         $remaining = 18750 - $invoicedetails;
        // dd($total);
@@ -79,15 +86,13 @@ class StudentController extends Controller
             return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
         }
 
-        for($i=0;$i<count($term);$i++){
-            $invoice = new Invoice;
-            $invoice->invoiceNo = $invoiceNo;
-            $invoice->payment_mode = $payment_mode;
-            $invoice->student_id = $student_id;
-            $invoice->term = $term[$i];
-            $invoice->amount = $termtotal[$i];
-            $invoice->save();
-        }
+        $invoice = new Invoice;
+        $invoice->invoiceNo = $invoiceNo;
+        $invoice->payment_mode = "ONLINE";
+        $invoice->student_id = $student_id;
+        $invoice->term = "TERM";
+        $invoice->amount = $reqtotal;
+        $invoice->save();
 
         $user = User::where('id',Auth::user()->id)->first();
         $user->invoiceNo = $actualinv;
@@ -130,6 +135,28 @@ class StudentController extends Controller
 
     }
 
+    function moneyFormatIndia($num) {
+        $explrestunits = "" ;
+        if(strlen($num)>3) {
+            $lastthree = substr($num, strlen($num)-3, strlen($num));
+            $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
+            $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+            $expunit = str_split($restunits, 2);
+            for($i=0; $i<sizeof($expunit); $i++) {
+                // creates each of the 2's group and adds a comma to the end
+                if($i==0) {
+                    $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
+                } else {
+                    $explrestunits .= $expunit[$i].",";
+                }
+            }
+            $thecash = $explrestunits.$lastthree;
+        } else {
+            $thecash = $num;
+        }
+        return $thecash; // writes the final format where $currency is the currency symbol.
+    }
+
     function printinvoice(Request $request){
 
         $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
@@ -165,23 +192,17 @@ class StudentController extends Controller
         $payloadData = json_decode($decodedPayload, true);
 //        return json_encode($payloadData);
         $paymentlogs=Payment_log::find($payloadData["additional_info"]["additional_info5"]);
-//        $paymentlogs ->userid= $payloadData["additional_info"]["additional_info1"];
+        $payment_id = $payloadData["additional_info"]["additional_info6"];
         $paymentlogs ->response = $token;
         $paymentlogs->save();
         if($payloadData["transaction_error_type"]=="success" && $payloadData["auth_status"]== "0300" ){
             $userid=$payloadData["additional_info"]["additional_info1"];
-            $studentID= $payloadData["additional_info"]["additional_info1"];
             $studentEmail =$payloadData["additional_info"]["additional_info2"];
             $termdetails =$payloadData["additional_info"]["additional_info3"];
             $termdetails= explode(",",$termdetails);
             $ICM_ID= $payloadData["additional_info"]["additional_info4"];
 
-
-
-            $icmdetails = User::where('id',$ICM_ID)->first();
-            $actualinv =$icmdetails->invoiceNo +1;
-
-            $Student = User::where('id', $studentID)
+            $Student = User::where('id', $userid)
                 ->first();
             if ($Student) {
 
@@ -193,15 +214,21 @@ class StudentController extends Controller
                 $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
                 $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
                 $icm = Mtr_icm::where('id',$studentData->icm)->first();
+
+                $payments = Payments::where('id', $payment_id)->first();
+                $payments->status = $returnMessage;
+                $payments->transaction_date = $payloadData["transaction_date"];
+                $payments->transactionid = $payloadData["transactionid"];
+                $payments->update();
         
                 $data['invoicedetails'] = $invoicedetails;
                 $data['studentData'] = $studentData;
                 $data['icm'] = $icm;
                 $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
         
-                return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+                // return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
                 
-               // return   view("student.studentdashboard" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
+                return   view("student.paymentverify" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
             } else {
                 return back()->withErrors(['email' => 'Invalid credentials']); // Authentication failed
             }
@@ -210,63 +237,71 @@ class StudentController extends Controller
         elseif ($payloadData["auth_status"]== "0002")
         {
             $userid=$payloadData["additional_info"]["additional_info1"];
-            $studentID= $payloadData["additional_info"]["additional_info1"];
             $studentEmail =$payloadData["additional_info"]["additional_info2"];
             $termdetails =$payloadData["additional_info"]["additional_info3"];
             $termdetails= explode(",",$termdetails);
             $ICM_ID= $payloadData["additional_info"]["additional_info4"];
 
-            $icmdetails = User::where('id',$ICM_ID)->first();
-            $actualinv =$icmdetails->invoiceNo +1;
 
-            $Student = User::where('id', $studentID)
+            $Student = User::where('id', $userid)
                 ->first();
             Auth::login($Student);
             $returnMessage="ERROR";
             $transaction_date=$payloadData["transaction_date"];
             $transactionid=$payloadData["transactionid"];
             $amount=$payloadData["amount"];
-            return   view("student.studentdashboard" ,compact("returnMessage","transaction_date","transactionid","amount"));
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->transaction_date = $payloadData["transaction_date"];
+            $payments->transactionid = $payloadData["transactionid"];
+            $payments->update();
+            
+            return   view("student.paymentverify" ,compact("returnMessage","transaction_date","transactionid","amount"));
 
         }
         elseif ($payloadData["auth_status"]== "0399")
         {
             $userid=$payloadData["additional_info"]["additional_info1"];
-            $studentID= $payloadData["additional_info"]["additional_info1"];
             $studentEmail =$payloadData["additional_info"]["additional_info2"];
             $termdetails =$payloadData["additional_info"]["additional_info3"];
             $termdetails= explode(",",$termdetails);
             $ICM_ID= $payloadData["additional_info"]["additional_info4"];
 
-            $icmdetails = User::where('id',$ICM_ID)->first();
-            $actualinv =$icmdetails->invoiceNo +1;
-
-            $Student = User::where('id', $studentID)
+            $Student = User::where('id', $userid)
                 ->first();
             Auth::login($Student);
             $returnMessage="ERROR";
             $transaction_date=$payloadData["transaction_date"];
             $transactionid=$payloadData["transactionid"];
             $amount=$payloadData["amount"];
-            return   view("student.studentdashboard" ,compact("returnMessage","transaction_date","transactionid","amount"));
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->transaction_date = $payloadData["transaction_date"];
+            $payments->transactionid = $payloadData["transactionid"];
+            $payments->update();
+
+            return   view("student.paymentverify" ,compact("returnMessage","transaction_date","transactionid","amount"));
 
         }
         else{
             $userid=$payloadData["additional_info"]["additional_info1"];
-            $studentID= $payloadData["additional_info"]["additional_info1"];
             $studentEmail =$payloadData["additional_info"]["additional_info2"];
             $termdetails =$payloadData["additional_info"]["additional_info3"];
             $termdetails= explode(",",$termdetails);
             $ICM_ID= $payloadData["additional_info"]["additional_info4"];
 
-            $icmdetails = User::where('id',$ICM_ID)->first();
-            $actualinv =$icmdetails->invoiceNo +1;
-
-            $Student = User::where('id', $studentID)
+            $Student = User::where('id', $userid)
                 ->first();
             Auth::login($Student);
             $returnMessage="ERROR";
-            return   view("student.studentdashboard" ,compact("returnMessage"));
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->update();
+
+            return   view("student.paymentverify" ,compact("returnMessage"));
         }
 
 
@@ -280,6 +315,7 @@ class StudentController extends Controller
             return redirect('login')->with('error', 'OTP not verified');
         }
 
+        $invoiceNo = $request->invoiceNo;
         $amount=0;
         $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum('amount');
         $student=StudentParams::where("status",'1')->where("user_id",Auth::user()->id)->get();
@@ -294,7 +330,8 @@ class StudentController extends Controller
             $transaction_id=$student[0]->arrn_number."-".time();
             $totalamount=$amount;
             $date_atom =date("dd-mm-yyyy h:i:s");
-            $StudentID=Auth::user()->id;
+            $StudentID=$student[0]->id;
+            $userId=Auth::user()->id;
             $PaymentFor=$amount;
             $ipaddress= $_SERVER['REMOTE_ADDR'];
 
@@ -318,12 +355,12 @@ class StudentController extends Controller
                 'currency' => "356",
                 'ru' => "https://tncuicm.com/student/paymentresponse",
                 'additional_info' => array(
-                    "additional_info1" => $StudentID, //studentID
+                    "additional_info1" => $userId, //userId
                     "additional_info2" =>  Auth::user()->email, // student Email
                     "additional_info3" =>  $amount, // student selecting and Term payments
                     "additional_info4" => Auth::user()->icm_id, // student ICM ID
                     "additional_info5" => "NA",
-                    "additional_info6" => "NA",
+                    "additional_info6" =>  "NA",
                     "additional_info7" => "NA",
                 ),
                 'itemcode' => "DIRECT",
@@ -344,9 +381,25 @@ class StudentController extends Controller
             $paymentRequest->sendPayload=$request;
             $paymentRequest->save();
     // Call the createOrder API
+
+            $payments= new Payments();
+            $payments->student_id = $StudentID;
+            $payments->user_id = Auth::user()->id;
+            $payments->invno = $invoiceNo;
+            $payments->mercid = $merchantID;
+            $payments->orderid = $StudentID.'-2023-LIVE'.time();
+            $payments->amount = $totalamount;
+            $payments->order_date = date("Y-m-d");
+            $payments->status = "INITIATED";
+            $payments->save();
+
+            $request["additional_info"]["additional_info6"]= $payments->id;//payment log-id
+
             $response = $client->createOrder($request);
 
-
+            $getinvoice = Invoice::where('invoiceNo', $invoiceNo)->first();
+            $getinvoice->payment_id = $payments->id;
+            $getinvoice->update();
 
     // Handle the response as needed
             if ($response->getResponseStatus() === 200) {
@@ -355,6 +408,7 @@ class StudentController extends Controller
                 $paymentLogresponse = Payment_log::find($lastInsertId);
                 $paymentLogresponse->createapiresponse = json_encode($responseData);
                 $paymentLogresponse->save();
+
                 $bdorderid=$responseData->bdorderid;
                 $authToken=$responseData->links[1]->headers->authorization;
                 $returnUrl=$responseData->ru;
@@ -376,6 +430,8 @@ class StudentController extends Controller
                 $returndata=json_encode($tmp);
                 // Process $errorResponse here
             }
+
+            
         }
         else{
             $tmp=[];

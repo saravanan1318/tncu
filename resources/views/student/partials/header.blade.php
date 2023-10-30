@@ -41,7 +41,15 @@
              </p>
            </a>
          </li>
+         <li class="nav-item">
+          <a href="{{url('/student/paymentpending')}}" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Tuition Fess
 
+            </p>
+          </a>
+        </li>
         <li class="nav-header">User Management</li>
         <li class="nav-item">
           <a href="{{url('/icm/passwordChange')}}" class="nav-link">

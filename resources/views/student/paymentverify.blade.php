@@ -65,28 +65,22 @@
                         <form id="paymentForm" method="POST">
                             <input type="hidden" name="invoiceNo" value="{{$invoiceNo}}" >
                             <div class="row p-4">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                                    <div class="">
-                                        <center>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                    <div class="position-relative p-3 bg-gray" style="height: 180px">
                                         <strong>Amount:</strong> {{$amount}}<br>
-                                        <strong>Inovice No:</strong> {{$invoiceNo}}<br>
-                                        <strong>Inovice Date:</strong> {{$invoiceDate}}<br>
-                                        </center>
+                                        <strong>Payment Ref No:</strong> {{$invoiceNo}}<br>
+                                        <strong>Payment Ref Date:</strong> {{ date("d-m-Y",strtotime($invoiceDate))}}<br>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
                                 </div>
                             </div>    
                             <div class="row p-4 ">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2" style="text-align: center">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2" style="text-align: center">
                                     <button type="submit" id="paymentbtn" class="btn btn-lg btn-outline-success ">Pay Now</button>
 
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
                                 </div>
                             </div>
                         </form>

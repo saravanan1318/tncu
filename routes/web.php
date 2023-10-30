@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/icm/invoice/edit', [IcmController::class, 'updateinvoice']);
     Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
 
+    Route::get('/student/paymentpending', [StudentController::class, 'paymentpending']);
     Route::get('/student/paymentview', [StudentController::class, 'paymentview']);
     Route::get('/student/paymentverify/{invoiceNo}', [StudentController::class, 'paymentverify']);
     Route::get('/student/printinvoice/{invoiceNo}', [StudentController::class, 'printinvoice']);
