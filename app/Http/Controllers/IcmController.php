@@ -853,6 +853,7 @@ class IcmController extends Controller
             $invoice->student_id = $request->student_id;
             $invoice->term = $term[$i];
             $invoice->amount = $termtotal[$i];
+            $invoice->payment_status = 1;
             $invoice->save();
         }
 
@@ -948,6 +949,7 @@ class IcmController extends Controller
             $invoice->student_id = $request->student_id;
             $invoice->term = $term[$i];
             $invoice->amount = $termtotal[$i];
+            $invoice->payment_status = 1;
             $invoice->save();
         }
 
@@ -998,6 +1000,7 @@ class IcmController extends Controller
         ->selectRaw('invoiceNo,fullname,admission_number,aadhar,SUM(invoice.amount) AS amount')
         ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
         ->where('student_params.icm','=',$request->icm_id)
+        ->where('invoice.payment_status',1)
         ->groupBy('invoiceNo','fullname','admission_number','aadhar')
         ->get();
 
@@ -1005,11 +1008,13 @@ class IcmController extends Controller
         ->selectRaw('DISTINCT(invoiceNo)')
         ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
         ->where('student_params.icm','=',$request->icm_id)
+        ->where('invoice.payment_status',1)
         ->distinct()->count();
 
         $totalamount = DB::table('invoice')
         ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
         ->where('student_params.icm','=',$request->icm_id)
+        ->where('invoice.payment_status',1)
         ->sum('invoice.amount');
 
         $icm = Mtr_icm::where('id',$request->icm_id)->first();
@@ -1041,6 +1046,8 @@ class IcmController extends Controller
             $invoice_deleted->payment_mode =  $invoice->payment_mode;
             $invoice_deleted->term =  $invoice->term;
             $invoice_deleted->amount =  $invoice->amount;
+            $invoice_deleted->payment_id =  $invoice->payment_id;
+            $invoice_deleted->payment_status =  $invoice->payment_status;
             $invoice_deleted->created_at =  $invoice->created_at;
             $invoice_deleted->updated_at =  $invoice->updated_at;
             $invoice_deleted->save();
