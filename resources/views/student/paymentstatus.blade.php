@@ -44,7 +44,7 @@
                                     <strong>Amount:</strong> {{$amount}}<br>
                                 <strong>Transaction ID:</strong> {{$transactionid}}<br>
                                 <strong>Transaction Date:</strong> {{$transaction_date}}<br>
-
+                                <a href="/icm/printinvoice/{{$invoiceNo}}"><strong>Click to download invoice</strong></a><br>
                                 </center>
                             </div>
                           @endif
@@ -57,6 +57,7 @@
                                     <strong>Amount:</strong> {{$amount}}<br>
                                     <strong>Transaction ID:</strong> {{$transactionid}}<br>
                                     <strong>Transaction Date:</strong> {{$transaction_date}}<br>
+                                    <a href="/icm/printinvoice/{{$invoiceNo}}"><strong>Click to download invoice</strong></a><br>
                                 @endif
                                 </center>
                             </div>

@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/student/invoice/store', [StudentController::class, 'storeinvoice']);
     Route::get('/student/studentdashboard', [StudentController::class, 'dashboard']);
     Route::post('/student/payment', [StudentController::class, 'payment']);
+    Route::get('/student/transactionlist', [StudentController::class, 'transactionlist']);
 
     Route::get('/icm/icmwise/paidreport', [IcmController::class, 'icmwisepaidreport']);
     Route::get('/icm/icmwise/paid/{icm_id}', [IcmController::class, 'icmwisepaid']);

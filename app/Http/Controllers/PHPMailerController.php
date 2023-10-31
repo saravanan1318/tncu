@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use App\Models\StudentParams;
+use App\Models\Payments;
 
 class PHPMailerController extends Controller
 {
@@ -138,7 +139,6 @@ class PHPMailerController extends Controller
             $message = str_replace("{CANDIDATE-NAME}", ucfirst($Studentdetails['fullname']), $message);
             $message = str_replace("{TRANSACTION-ID}", $payments['transactionid'], $message);
             $message = str_replace("{TRANSACTION-DATE}", $payments['transaction_date'], $message);
-            $message = str_replace("{RECEIPT-URL}", 'https://tncuicm.com/uploads/applications/'.$Studentdetails['arrn_number'].'.pdf', $message);
 
             $mail->Subject = "TNCU Payment receipt";
 

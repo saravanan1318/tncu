@@ -302,7 +302,7 @@ class StudentController extends Controller
 
                 
 
-                return   view("student.paymentstatus" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
+                return   view("student.paymentstatus" ,compact("returnMessage" , "transactionid","transaction_date","amount","invoiceNo"));
             } else {
                 return back()->withErrors(['email' => 'Invalid credentials']); // Authentication failed
             }
@@ -528,4 +528,18 @@ class StudentController extends Controller
 
     }
     //
+
+    function transactionlist(){
+
+        $studentDatas = DB::table('invoice')
+        ->selectRaw('invoiceNo,fullname,admission_number,aadhar,SUM(invoice.amount) AS amount')
+        ->leftJoin('student_params', 'invoice.student_id', '=', 'student_params.id')
+        ->where('student_params.user_id','=',Auth::user()->id)
+        ->where('invoice.payment_status',1)
+        ->groupBy('invoiceNo','fullname','admission_number','aadhar')
+        ->get();
+
+        return view("student.transactionlist",compact('studentDatas'));
+
+    }
 }

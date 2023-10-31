@@ -50,6 +50,15 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{url('/student/transactionlist')}}" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Transaction history
+
+            </p>
+          </a>
+        </li>
         <li class="nav-header">User Management</li>
         <li class="nav-item">
           <a href="{{url('/icm/passwordChange')}}" class="nav-link">
