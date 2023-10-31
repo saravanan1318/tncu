@@ -79,7 +79,7 @@ class IcmController extends Controller
             User::where('id', Auth::user()->id)
             ->update(['otp_verified' => 1]);
 
-            return redirect()->intended('/student/studentdashboard')
+            return redirect()->intended('/student/paymentview')
             ->withSuccess('Signed in');
         }else{
             return redirect('/icm/otpscreen')->with('error', 'OTP entered is not valid');

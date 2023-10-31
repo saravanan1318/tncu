@@ -42,7 +42,7 @@
            </a>
          </li>
          <li class="nav-item">
-          <a href="{{url('/student/paymentpending')}}" class="nav-link">
+          <a href="{{url('/student/paymentview')}}" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
             <p>
               Tuition Fess

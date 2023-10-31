@@ -16,6 +16,7 @@ use io\billdesk\client\hmacsha256\BillDeskJWEHS256Client;
 use io\billdesk\client\Logging;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use App;
 
 class StudentController extends Controller
 {
@@ -36,7 +37,20 @@ class StudentController extends Controller
 
         $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
 
-        return view("student.paymentview",compact('studentDatas','icm'));
+        $studentselected = StudentParams::where('user_id',Auth::user()->id)->first();
+        $student_id = $studentselected['id'];
+
+        $amountpaid = Invoice::where('student_id', $student_id)->where('payment_status', 1)->sum('amount');
+        $balancetopay = 18750 - $amountpaid;
+        if($balancetopay < 0){
+            $balancetopay = 0;
+        }
+        if($amountpaid == 0){
+            $amountpaid = "NA";
+        }else{
+            $amountpaid = $this->moneyFormatIndia($amountpaid);
+        }
+        return view("student.paymentview",compact('studentDatas','icm','amountpaid','balancetopay')); 
 
     }
 
@@ -125,13 +139,31 @@ class StudentController extends Controller
 
     function paymentverify(Request $request){
 
+
+        $studentDatas = StudentParams::select('id','arrn_number')->where('user_id', Auth::user()->id)->where('status',1)->get();
+
+        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+
         $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
         $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum("amount");
         $invoiceNo = $request->invoiceNo;
         $invoiceDate = $invoicedetails[0]['created_at'];
- 
+        
+        $studentselected = StudentParams::where('user_id',Auth::user()->id)->first();
+        $student_id = $studentselected['id'];
+
+        $amountpaid = Invoice::where('student_id', $student_id)->where('payment_status', 1)->sum('amount');
+        $balancetopay = 18750 - $amountpaid;
+        if($balancetopay < 0){
+            $balancetopay = 0;
+        }
+        if($amountpaid == 0){
+            $amountpaid = "NA";
+        }else{
+            $amountpaid = $this->moneyFormatIndia($amountpaid);
+        }
        
-        return view("student.paymentverify",compact('amount','invoiceNo','invoiceDate'));
+        return view("student.paymentverify",compact('studentDatas','icm','amount','invoiceNo','invoiceDate','amountpaid','balancetopay'));
 
     }
 
@@ -175,6 +207,8 @@ class StudentController extends Controller
     function paymentresponse(Request $request)
     {
 
+        App::setLocale("en");
+
         $token= $request->transaction_response;
         $tokenParts = explode('.', $token);
 
@@ -211,7 +245,9 @@ class StudentController extends Controller
                 $transactionid=$payloadData["transactionid"];
                 $amount=$payloadData["amount"];
 
-                $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+                $invoiceNo = $payloadData["additional_info"]["additional_info7"];
+
+                $invoicedetails = Invoice::where('invoiceNo', $invoiceNo)->get();
                 $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
                 $icm = Mtr_icm::where('id',$studentData->icm)->first();
 
@@ -223,12 +259,50 @@ class StudentController extends Controller
         
                 $data['invoicedetails'] = $invoicedetails;
                 $data['studentData'] = $studentData;
-                $data['icm'] = $icm;
-                $pdf = Pdf::loadView('icm.printinvoice',compact('studentData','invoicedetails','icm'));
-        
-                // return $pdf->download($studentData->admission_number.'_invoice_'.$request->invoiceNo.'.pdf');
+                $data['icm'] = $icm;                       
+
+                $result = (new PHPMailerController)->composepaymentEmail($invoicedetails[0]->student_id,$payment_id);
+
+                $amount = $payments->amount;
+                $arrn_number =  $studentData->arrn_number;
+                $mobilenumber =   $studentData->mobile1;
+                $TEMPLATE_ID = __('smstemplate.application_templateid');
+                $TEMPLATE_ID = __('1107169417053603936');
+                $SMSAPIKEY = env("SMSAPIKEY");
+                $SMSAPIKEY = "jUdpsmb5V7WIR8zdirW+By1lzoxHFgunMlUwJsjz70g=";
+                //$SMSCLIENTID = env("SMSCLIENTID");
+                $SMSCLIENTID = "1c590c3e-ac8b-495a-a355-d184b432a9e8";
                 
-                return   view("student.paymentverify" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
+                $message = __('smstemplate.payment_success');
+                $message = str_replace("{var1}",$amount,$message);
+                $message = str_replace("{var2}",$arrn_number,$message);
+                $curl = curl_init();
+
+                Log::info("http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID)");
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                ));
+
+                $response = curl_exec($curl);
+                Log::info("**response**");
+                Log::info($response);
+
+                curl_close($curl);
+
+                $invoiceupdate = Invoice::where('invoiceNo', $invoiceNo)->first();
+                $invoiceupdate->payment_status = 1;
+                $invoiceupdate->update();
+
+                
+
+                return   view("student.paymentstatus" ,compact("returnMessage" , "transactionid","transaction_date","amount"));
             } else {
                 return back()->withErrors(['email' => 'Invalid credentials']); // Authentication failed
             }
@@ -361,7 +435,7 @@ class StudentController extends Controller
                     "additional_info4" => Auth::user()->icm_id, // student ICM ID
                     "additional_info5" => "NA",
                     "additional_info6" =>  "NA",
-                    "additional_info7" => "NA",
+                    "additional_info7" => $invoiceNo,
                 ),
                 'itemcode' => "DIRECT",
                 'device' => array(

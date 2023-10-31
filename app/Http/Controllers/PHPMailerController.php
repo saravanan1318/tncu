@@ -89,4 +89,76 @@ class PHPMailerController extends Controller
            //  return back()->with('error','Message could not be sent.');
         }
     }
+
+    public function composepaymentEmail($id,$payment_id) {
+
+        require base_path("vendor/autoload.php");
+        $mail = new PHPMailer(true);     // Passing `true` enables exceptions
+
+        try {
+
+            $logo1 = "images/log.png";
+            $logo2 = "images/tncu-logo.png";
+
+            $Studentdetails = StudentParams::where('id',$id)->first()->toArray();
+            $payments = Payments::where('id', $payment_id)->first();
+
+           // dd($Studentdetails);
+
+            // Email server settings
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';             //  smtp host
+            $mail->SMTPAuth = true;
+            $mail->Username = 'noreply@tncuicm.com';   //  sender username
+            $mail->Password = 'wtiwzzhaskaousvf';       // sender password
+            $mail->SMTPSecure = 'tls';                  // encryption - ssl/tls
+            $mail->Port = 587;                          // port - 587/465
+            $mail->AddEmbeddedImage($logo1, 'logo1');
+            $mail->AddEmbeddedImage($logo2, 'logo2');
+
+            $mail->setFrom('no-reply@tncu.com', 'Admin');
+            $mail->addAddress($Studentdetails['email']);
+
+            // if(isset($_FILES['emailAttachments'])) {
+            //     for ($i=0; $i < count($_FILES['emailAttachments']['tmp_name']); $i++) {
+            //         $mail->addAttachment($_FILES['emailAttachments']['tmp_name'][$i], $_FILES['emailAttachments']['name'][$i]);
+            //     }
+            // }
+
+
+            $mail->isHTML(true);                // Set email content format to HTML
+
+
+
+            $message = file_get_contents('emailTemplates/PaymentNotification.html', true);
+            $message = str_replace("{IMG-LOGO1}", 'cid:logo1', $message);
+            $message = str_replace("{IMG-LOGO2}", 'cid:logo2', $message);
+            $message = str_replace("{AMOUNT}", $payments['amount'], $message);
+            $message = str_replace("{CANDIDATE-NAME}", ucfirst($Studentdetails['fullname']), $message);
+            $message = str_replace("{TRANSACTION-ID}", $payments['transactionid'], $message);
+            $message = str_replace("{TRANSACTION-DATE}", $payments['transaction_date'], $message);
+            $message = str_replace("{RECEIPT-URL}", 'https://tncuicm.com/uploads/applications/'.$Studentdetails['arrn_number'].'.pdf', $message);
+
+            $mail->Subject = "TNCU Payment receipt";
+
+            $mail->Body    =  $message;
+
+            // $mail->AltBody = plain text version of email body;
+
+            if( !$mail->send() ) {
+//                echo "Email not sent.";
+               // return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
+            }
+
+            else {
+//                echo "Email has been sent.";
+              //  return back()->with("success", "Email has been sent.");
+            }
+
+        } catch (Exception $e) {
+//            echo 'Message could not be sent.';
+           //  return back()->with('error','Message could not be sent.');
+        }
+    }
 }

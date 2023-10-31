@@ -26,7 +26,15 @@
             <div class="container-fluid">
               <div class="card card-default">
                   <div class="card-header">
-                    <h1 class="card-title">PAY</h1>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <h1 class="card-title">{{$icm->icm_name}}</h1>
+                      </div>
+                      <div class="col-md-4" style="text-align: right !important;color:green">
+                        <h1 class="card-title">ALREADY FESS PAID : {{$amountpaid}}</h1>
+                      </div>
+                      <!-- /.col -->
+                    </div>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -48,16 +56,17 @@
                       @csrf
                       <div class="row">
                         <div class="col-md-6">
-                            <label>PAYMENT FROM: </label>
+                            <label>TO: </label>
                             <p>{{ Auth::user()->name }}</p>
                             <p>{{ $icm->add1.", ".$icm->add2.", ".$icm->city.", ".$icm->pincode }}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><b>Payment Date : </b>{{date("d-m-Y")}}</p>
-                            <p><b>Payment No : </b>{{'INV'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;}}</p>
+                            <p><b>ARN No : </b>{{$studentDatas[0]->arrn_number}}</p>
+                            <p><b>Receipt Date : </b>{{date("d-m-Y")}}</p>
+                            <p><b>Receipt No : </b>{{'PAY_'.Auth::user()->id.'-'.Auth::user()->invoiceNo+1;}}</p>
                         </div>
                         <!-- /.col -->
-                    </div>
+                      </div>
                     <!-- /.row -->
                     <div class="row">
                       <div class="col-md-12">
@@ -67,33 +76,22 @@
                                 <th>Sno.</th>
                                 <th >Description</th>
                                 <th style="text-align: center">Quantity</th>
-                                <th style="text-align: center">Price</th>
-                                <th style="text-align: center">Total</th>
-                                <th style="text-align: center">Action</th>
+                                <th style="text-align: center">Balance fees</th>
                               </tr>
                             </thead>
                             <tbody id="tablebody">
                               <tr class="row1">
                                 <td>1</td>
                                 <td>
-                                  <select class="form-control term" name="term[]" id="term1" data-id="1" required>
-                                    <option value="">SELECT</option>
-                                    <option value="TUITION FESS - TERM 1">TUITION FESS - TERM 1</option>
-                                    <option value="TUITION FESS - TERM 2">TUITION FESS - TERM 2</option>
-                                    <option value="TUITION FESS - TERM 3">TUITION FESS - TERM 3</option>
+                                  <select class="form-control term" name="term" id="term1" data-id="1" required>
+                                    <option value="TUITION FESS">TUITION FESS</option>
                                   </select>
                                 </td>
                                 <td style="text-align: center">
                                   01
                                 </td>
                                 <td style="text-align: center">
-                                  <input type="number" name="termamount[]" value="" id="termamount1" data-id="1"  required/>
-                                </td>
-                                <td style="text-align: center">
-                                  <input type="number" name="termtotal[]" value="" id="termtotal1" data-id="1"  required/>
-                                </td>
-                                <td style="text-align: center">
-                                  {{-- <a class="deletebtn btn btn-danger" id="deletebtn1" data-id="1">Delete row</a> --}}
+                                  <input type="number" name="termamount" value="{{$balancetopay}}" id="termamount" data-id="1" min="1"  required/>
                                 </td>
                               </tr>
                             </tbody>
@@ -108,21 +106,15 @@
                               </tr>
                             </tfoot> --}}
                           </table>
-                          <div class="row">
-                            <div class="col-md-10" style="text-align: center">
-                            </div>
-                            <div class="col-md-2">
-                              <a class="btn btn-warning" id="addnew" data-rowid="1">Add new</a>
-                            </div>
                           </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin: 5px;">
                       <div class="col-md-4">
                           
                       </div>
                       <div class="col-md-4" style="text-align: center">
-                          <button type="submit" class="btn btn-primary" >SUBMIT</button>
+                          <button type="submit" class="btn btn-primary" >PAY NOW</button>
                       </div>
                       <div class="col-md-4">
                           

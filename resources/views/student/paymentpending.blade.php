@@ -73,8 +73,9 @@
                             <div class="col-sm-4">
                                 <form action="{{url('/student/invoice/store')}}" method="POST">
                                     @csrf
+                                    <label>Balance amount to be pay:</label>
                                     <input class="form-control" type="number" name="termamount" value="{{$balancetopay}}" id="termamount"  required/>
-                                    <button type="submit" style="text-align: center;margin-top:10px" class="btn btn-primary" >SUBMIT</button>
+                                    <button type="submit" style="text-align: center;margin-top:10px" class="btn btn-primary" >PAY NOW</button>
                                 </form>
                             </div>
                             <div class="col-sm-4">
