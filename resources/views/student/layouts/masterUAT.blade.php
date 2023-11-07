@@ -3,114 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>COOP</title>
-  @include('icm.partials.styles')
-    <script type="module" src="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>COOP</title>
+  @include('student.partials.styles')
+    {{-- <script type="module" src="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
     <script nomodule="" src="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk.js"></script>
-    <link href="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
+    <link href="https://pay.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet"> --}}
+    <script type="module" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.esm.js"></script>
+    <script nomodule="" src="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk.js"></script>
+    <link href="https://uat.billdesk.com/jssdk/v1/dist/billdesksdk/billdesksdk.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-    @include('icm.partials.header')
+    @include('student.partials.header')
     @yield('content')
-    @include('icm.partials.footer')
+    @include('student.partials.footer')
     </div>
-    @include('icm.partials.scripts')
+    @include('student.partials.scripts')
 </body>
 <script>
     $(document).ready(function () {
-        var table = $('#applicationlist').DataTable();
-        $(".actionbutton").change(function (e) {
-            var id = $(this).data("id");
-            var option = $(this).val();
-            var postData = {
-                id: id,
-                option: option
-            };
-            $.ajax({
-                type: "GET",
-                url: "/icm/duplicateaccept", // Replace with the actual URL or Laravel route
-                data: postData,
-                success: function (response) {
-                    // Handle the response from the server
-                    console.log(response);
-                    location.reload();
-                },
-                error: function (xhr, status, error) {
-                    // Handle any errors
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-        $(".applyactionbutton").click(function (e) {
-
-            var selectedCheckboxes = [];
-
-            // Iterate through all checkboxes in the table
-            $('#applicationlist tbody input[type="checkbox"]:checked').each(function () {
-                selectedCheckboxes.push($(this).val());
-            });
-            var countSelected = selectedCheckboxes.length;
-            if(countSelected>0) {
-                var postData = {selectedCheckboxes: selectedCheckboxes};
-                $.ajax({
-                    type: "GET",
-                    url: "/icm/selectedlist", // Replace with the actual URL or Laravel route
-                    data: postData,
-                    success: function (response) {
-                        // Handle the response from the server
-                        //location.reload();
-                        alert(response.message);
-                        location.reload();
-                        console.log(response);
-
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle any errors
-                        console.error(xhr.responseText);
-                    }
-                });
-                console.log(selectedCheckboxes);
-            }
-            else{
-             alert("please select one of them then you apply");
-            }
-        });
-        $(".unselectactionbutton").click(function (e) {
-
-            var selectedCheckboxes = [];
-
-            // Iterate through all checkboxes in the table
-            $('#applicationlist tbody input[type="checkbox"]:checked').each(function () {
-                selectedCheckboxes.push($(this).val());
-            });
-            var countSelected = selectedCheckboxes.length;
-            if(countSelected>0) {
-                var postData = {selectedCheckboxes: selectedCheckboxes};
-                $.ajax({
-                    type: "GET",
-                    url: "/icm/unselectedlist", // Replace with the actual URL or Laravel route
-                    data: postData,
-                    success: function (response) {
-                        // Handle the response from the server
-                        //location.reload();
-                        alert(response.message);
-                        location.reload();
-                        console.log(response);
-
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle any errors
-                        console.error(xhr.responseText);
-                    }
-                });
-                console.log(selectedCheckboxes);
-            }
-            else{
-            alert("please select one of them then you apply");
-            }
-        });
-
         let globalBase64String;
         const imagePath = '/images/log.png';
         function convertImageToBase64(imagePath, callback) {
@@ -136,7 +48,7 @@
             // Access the globalBase64String variable here if needed
             // console.log(globalBase64String); // Access the Base64 string globally
         });
-        
+
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         $.ajaxSetup({
@@ -157,7 +69,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/icm/payment",
+                url: "/student/payment",
                 data: formData,
                 success: function(response) {
                     var jsonResponse = JSON.parse(response);

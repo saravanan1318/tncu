@@ -11,11 +11,17 @@ use App\Models\StudentParams;
 use App\Models\Invoice;
 use App\Models\Invoice_Deleted;
 use App\Models\Mtr_Icm;
+use App\Models\Payment_log;
+use App\Models\Payments;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DB;
 use DomPDF;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use io\billdesk\client\hmacsha256\BillDeskJWEHS256Client;
+use io\billdesk\client\Logging;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use App;
 
 class IcmController extends Controller
 {
@@ -812,7 +818,7 @@ class IcmController extends Controller
 
         $student_id = $request->student_id;
 
-        $invoicedetails = Invoice::where('student_id', $request->student_id)->sum('amount');
+        $invoicedetails = Invoice::where('student_id', $request->student_id)->where('payment_status', 1)->sum('amount');
 
         if($invoicedetails > 18750 || $invoicedetails == 18750){
             return redirect()->back()->with('error', 'Already paid the full amount');
@@ -829,10 +835,10 @@ class IcmController extends Controller
         $reqtotal = 0;
         for($i=0;$i<count($term);$i++){
 
-            $indterm = Invoice::where('student_id', $request->student_id)->where('term', $term[$i])->get();
+            $indterm = Invoice::where('student_id', $request->student_id)->where('term', $term[$i])->where('payment_status', 1)->get();
 
             if(count($indterm) > 0){
-                return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
+              //  return redirect()->back()->with('error', 'Already '.$indterm[0]->term.' paid with amount '.$indterm[0]->amount);
             }
             $reqtotal += $termtotal[$i];
         }
@@ -846,15 +852,27 @@ class IcmController extends Controller
             return redirect()->back()->with('error', 'Student Already paid '.$invoicedetails.' amount remaining balance to pay '.$remaining);
         }
 
+        $online = 0;
+        $student_id = 0;
         for($i=0;$i<count($term);$i++){
             $invoice = new Invoice;
             $invoice->invoiceNo = $invoiceNo;
             $invoice->payment_mode = $payment_mode;
             $invoice->student_id = $request->student_id;
             $invoice->term = $term[$i];
+
+            if( $invoice->payment_mode == "ONLINE"){
+                $invoice->payment_status = 0;
+                $online = 1;
+            }else{
+                $invoice->payment_status = 1;
+            }
+
             $invoice->amount = $termtotal[$i];
-            $invoice->payment_status = 1;
+           
             $invoice->save();
+
+            $student_id = $request->student_id;
         }
 
         $user = User::where('id',Auth::user()->id)->first();
@@ -881,7 +899,372 @@ class IcmController extends Controller
             $icmname->admission_count = $admission_count+1;
             $icmname->update();
         }
-        return redirect('/icm/printinvoice/'.$invoiceNo);
+
+        if($online == 1){
+            return redirect('/icm/paymentverify/'.$student_id.'/'.$invoiceNo);
+        }else{
+            return redirect('/icm/printinvoice/'.$invoiceNo);
+        }
+
+    }
+
+    function paymentverify(Request $request){
+
+
+        $studentDatas = StudentParams::select('id','arrn_number','user_id')->where('id', $request->student_id)->where('status',1)->get();
+        $user_id = $studentDatas[0]['user_id'];
+        $icm = Mtr_icm::where('id',Auth::user()->icm_id)->first();
+
+        $invoicedetails = Invoice::where('invoiceNo', $request->invoiceNo)->get();
+        $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum("amount");
+        $invoiceNo = $request->invoiceNo;
+        $invoiceDate = $invoicedetails[0]['created_at'];
+        $student_id = $request->student_id;
+
+        $amountpaid = Invoice::where('student_id', $student_id)->where('payment_status', 1)->sum('amount');
+        $balancetopay = 18750 - $amountpaid;
+        if($balancetopay < 0){
+            $balancetopay = 0;
+        }
+        if($amountpaid == 0){
+            $amountpaid = "NA";
+        }else{
+            $amountpaid = $this->moneyFormatIndia($amountpaid);
+        }
+       
+        return view("icm.paymentverify",compact('studentDatas','icm','amount','invoiceNo','invoiceDate','amountpaid','balancetopay','user_id'));
+
+    }
+
+    function moneyFormatIndia($num) {
+        $explrestunits = "" ;
+        if(strlen($num)>3) {
+            $lastthree = substr($num, strlen($num)-3, strlen($num));
+            $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
+            $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+            $expunit = str_split($restunits, 2);
+            for($i=0; $i<sizeof($expunit); $i++) {
+                // creates each of the 2's group and adds a comma to the end
+                if($i==0) {
+                    $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
+                } else {
+                    $explrestunits .= $expunit[$i].",";
+                }
+            }
+            $thecash = $explrestunits.$lastthree;
+        } else {
+            $thecash = $num;
+        }
+        return $thecash; // writes the final format where $currency is the currency symbol.
+    }
+
+    function payment(Request $request)
+    {
+
+        $invoiceNo = $request->invoiceNo;
+        $amount=0;
+        $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum('amount');
+        $student=StudentParams::where("status",'1')->where("user_id",$request->user_id)->get();
+        if(count($student)==1) {
+            $MerchantID = "TMLNDUCOUN";
+            $ClientID = "tmlnducoun";
+            $responseurl = "https://tncuicm.com/student/paymentresponse";
+          //  $secretkey = 'Cjlj6qiBlQ7qdnglXvlJCKY1t3rNk7x4';  //Developement
+            $secretkey = 'nBxE5Uw4i0hGZQia2dETrVAV1KrxALaB';  //Production
+            $returnURL = "https://tncuicm.com/student/paymentreturn";
+            $billdesk_URL = "https://api.billdesk.com/payments/ve1_2/orders/create";
+            $transaction_id=$student[0]->arrn_number."-".time();
+            $totalamount=$amount;
+            $date_atom =date("dd-mm-yyyy h:i:s");
+            $StudentID=$student[0]->id;
+            $userId=$student[0]->user_id;
+            $PaymentFor=$amount;
+            $ipaddress= $_SERVER['REMOTE_ADDR'];
+
+            $clientID = $ClientID;
+            $secretKey = $secretkey;
+            $merchantID = $MerchantID;
+
+    // Create the client and set up logging
+            $client = new BillDeskJWEHS256Client("https://api.billdesk.com", $clientID, $secretKey);
+            $logger = new Logger("default");
+            $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+            $client->setLogger($logger);
+
+    // Prepare the request data
+           
+            $request = array(
+                'mercid' => $merchantID,
+                'orderid' => $StudentID.'-2023-LIVE'.time(),
+                'amount' => $totalamount,
+                'order_date' => date_format(new \DateTime(), DATE_W3C),
+                'currency' => "356",
+                'ru' => "https://tncuicm.com/student/paymentresponse",
+                'additional_info' => array(
+                    "additional_info1" => $userId, //userId
+                    "additional_info2" =>  $student[0]->email, // student Email
+                    "additional_info3" =>  $amount, // student selecting and Term payments
+                    "additional_info4" => Auth::user()->icm_id, // student ICM ID
+                    "additional_info5" => "NA",
+                    "additional_info6" =>  "NA",
+                    "additional_info7" => $invoiceNo,
+                ),
+                'itemcode' => "DIRECT",
+                'device' => array(
+                    'init_channel' => 'internet',
+                    'ip' => "$ipaddress",
+                    'user_agent' => 'Mozilla/5.0'
+                )
+            );
+
+            $paymentRequest= new Payment_log();
+            $paymentRequest->userid=$userId;
+            $paymentRequest->sendPayload = json_encode($request);
+            $paymentRequest->save();
+            $lastInsertId = $paymentRequest->id;
+            $request["additional_info"]["additional_info5"]=$lastInsertId;//payment log-id
+            $paymentRequest = Payment_log::find($lastInsertId);
+            $paymentRequest->sendPayload=$request;
+            $paymentRequest->save();
+    // Call the createOrder API
+
+            $payments= new Payments();
+            $payments->student_id = $StudentID;
+            $payments->user_id = $userId;
+            $payments->invno = $invoiceNo;
+            $payments->mercid = $merchantID;
+            $payments->orderid = $StudentID.'-2023-LIVE'.time();
+            $payments->amount = $totalamount;
+            $payments->order_date = date("Y-m-d");
+            $payments->status = "INITIATED";
+            $payments->save();
+
+            $request["additional_info"]["additional_info6"]= $payments->id;//payment log-id
+
+            $response = $client->createOrder($request);
+
+            $getinvoice = Invoice::where('invoiceNo', $invoiceNo)->first();
+            $getinvoice->payment_id = $payments->id;
+            $getinvoice->update();
+
+    // Handle the response as needed
+            if ($response->getResponseStatus() === 200) {
+                // Success
+                $responseData = $response->getResponse();
+                $paymentLogresponse = Payment_log::find($lastInsertId);
+                $paymentLogresponse->createapiresponse = json_encode($responseData);
+                $paymentLogresponse->save();
+
+                $bdorderid=$responseData->bdorderid;
+                $authToken=$responseData->links[1]->headers->authorization;
+                $returnUrl=$responseData->ru;
+                $tmp=[];
+                $tmp["status"]="SUCCESS";
+                $tmp["merchantID"]=$merchantID;
+                $tmp["bdorderid"]=$bdorderid;
+                $tmp["authToken"]=$authToken;
+                $tmp["returnUrl"]=$returnUrl;
+                $returndata=json_encode($tmp);
+            } else {
+                // Handle the error
+                $responseData = $response->getResponse();
+                $tmp=[];
+                $tmp["status"]="ERROR";
+                $tmp["message"]=$responseData->message;
+                $tmp["error_code"]=$responseData->error_code;
+                $tmp["error_type"]=$responseData->error_type;
+                $returndata=json_encode($tmp);
+                // Process $errorResponse here
+            }
+
+            
+        }
+        else{
+            $tmp=[];
+            $tmp["status"]="ERROR";
+            $tmp["message"]="you are facing dome issue please contact admin!";
+            $returndata=json_encode($tmp);
+        }
+
+        return $returndata;
+    }
+
+    function paymentresponse(Request $request)
+    {
+
+        App::setLocale("en");
+
+        $token= $request->transaction_response;
+        $tokenParts = explode('.', $token);
+
+        if (count($tokenParts) !== 3) {
+            // Invalid JWT format
+            return null;
+        }
+        list($header, $payload, $signature) = $tokenParts;
+        // Base64 decode the parts
+        $decodedHeader = base64_decode($header);
+        $decodedPayload = base64_decode($payload);
+
+        // JSON decode the decoded parts
+        $headerData = json_decode($decodedHeader, true);
+        $payloadData = json_decode($decodedPayload, true);
+//        return json_encode($payloadData);
+        $paymentlogs=Payment_log::find($payloadData["additional_info"]["additional_info5"]);
+        $payment_id = $payloadData["additional_info"]["additional_info6"];
+        $paymentlogs ->response = $token;
+        $paymentlogs->save();
+        if($payloadData["transaction_error_type"]=="success" && $payloadData["auth_status"]== "0300" ){
+            $userid=$payloadData["additional_info"]["additional_info1"];
+            $studentEmail =$payloadData["additional_info"]["additional_info2"];
+            $termdetails =$payloadData["additional_info"]["additional_info3"];
+            $termdetails= explode(",",$termdetails);
+            $ICM_ID= $payloadData["additional_info"]["additional_info4"];
+
+            $Student = User::where('id', $userid)
+                ->first();
+            if ($Student) {
+
+                $returnMessage="SUCCESS";
+                $transaction_date=$payloadData["transaction_date"];
+                $transactionid=$payloadData["transactionid"];
+                $amount=$payloadData["amount"];
+
+                $invoiceNo = $payloadData["additional_info"]["additional_info7"];
+
+                $invoicedetails = Invoice::where('invoiceNo', $invoiceNo)->get();
+                $studentData = StudentParams::where('id', $invoicedetails[0]->student_id)->first();
+                $icm = Mtr_icm::where('id',$studentData->icm)->first();
+
+                $payments = Payments::where('id', $payment_id)->first();
+                $payments->status = $returnMessage;
+                $payments->transaction_date = $payloadData["transaction_date"];
+                $payments->transactionid = $payloadData["transactionid"];
+                $payments->update();
+        
+                $data['invoicedetails'] = $invoicedetails;
+                $data['studentData'] = $studentData;
+                $data['icm'] = $icm;                       
+
+                $result = (new PHPMailerController)->composepaymentEmail($invoicedetails[0]->student_id,$payment_id);
+
+                $amount = $payments->amount;
+                $arrn_number =  $studentData->arrn_number;
+                $mobilenumber =   $studentData->mobile1;
+                $TEMPLATE_ID = __('smstemplate.application_templateid');
+                $TEMPLATE_ID = __('1107169417053603936');
+                $SMSAPIKEY = env("SMSAPIKEY");
+                $SMSAPIKEY = "jUdpsmb5V7WIR8zdirW+By1lzoxHFgunMlUwJsjz70g=";
+                //$SMSCLIENTID = env("SMSCLIENTID");
+                $SMSCLIENTID = "1c590c3e-ac8b-495a-a355-d184b432a9e8";
+                
+                $message = __('smstemplate.payment_success');
+                $message = str_replace("{var1}",$amount,$message);
+                $message = str_replace("{var2}",$arrn_number,$message);
+                $curl = curl_init();
+
+                Log::info("http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID)");
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'http://sms.dial4sms.com/api/v2/SendSMS?SenderId=TNCUCO&Message='.urlencode($message).'&MobileNumbers='.$mobilenumber.'&TemplateId='.urlencode($TEMPLATE_ID).'&ApiKey='.urlencode($SMSAPIKEY).'&ClientId='.urlencode($SMSCLIENTID),
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                ));
+
+                $response = curl_exec($curl);
+                Log::info("**response**");
+                Log::info($response);
+
+                curl_close($curl);
+
+                $invoiceupdate = Invoice::where('invoiceNo', $invoiceNo)->first();
+                $invoiceupdate->payment_status = 1;
+                $invoiceupdate->update();
+
+                
+
+                return   view("student.paymentstatus" ,compact("returnMessage" , "transactionid","transaction_date","amount","invoiceNo"));
+            } else {
+                return back()->withErrors(['email' => 'Invalid credentials']); // Authentication failed
+            }
+
+        }
+        elseif ($payloadData["auth_status"]== "0002")
+        {
+            $userid=$payloadData["additional_info"]["additional_info1"];
+            $studentEmail =$payloadData["additional_info"]["additional_info2"];
+            $termdetails =$payloadData["additional_info"]["additional_info3"];
+            $termdetails= explode(",",$termdetails);
+            $ICM_ID= $payloadData["additional_info"]["additional_info4"];
+
+
+            $Student = User::where('id', $userid)
+                ->first();
+            Auth::login($Student);
+            $returnMessage="ERROR";
+            $transaction_date=$payloadData["transaction_date"];
+            $transactionid=$payloadData["transactionid"];
+            $amount=$payloadData["amount"];
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->transaction_date = $payloadData["transaction_date"];
+            $payments->transactionid = $payloadData["transactionid"];
+            $payments->update();
+            
+            return   view("icm.paymentverify" ,compact("returnMessage","transaction_date","transactionid","amount"));
+
+        }
+        elseif ($payloadData["auth_status"]== "0399")
+        {
+            $userid=$payloadData["additional_info"]["additional_info1"];
+            $studentEmail =$payloadData["additional_info"]["additional_info2"];
+            $termdetails =$payloadData["additional_info"]["additional_info3"];
+            $termdetails= explode(",",$termdetails);
+            $ICM_ID= $payloadData["additional_info"]["additional_info4"];
+
+            $Student = User::where('id', $userid)
+                ->first();
+            Auth::login($Student);
+            $returnMessage="ERROR";
+            $transaction_date=$payloadData["transaction_date"];
+            $transactionid=$payloadData["transactionid"];
+            $amount=$payloadData["amount"];
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->transaction_date = $payloadData["transaction_date"];
+            $payments->transactionid = $payloadData["transactionid"];
+            $payments->update();
+
+            return   view("icm.paymentverify" ,compact("returnMessage","transaction_date","transactionid","amount"));
+
+        }
+        else{
+            $userid=$payloadData["additional_info"]["additional_info1"];
+            $studentEmail =$payloadData["additional_info"]["additional_info2"];
+            $termdetails =$payloadData["additional_info"]["additional_info3"];
+            $termdetails= explode(",",$termdetails);
+            $ICM_ID= $payloadData["additional_info"]["additional_info4"];
+
+            $Student = User::where('id', $userid)
+                ->first();
+            Auth::login($Student);
+            $returnMessage="ERROR";
+
+            $payments = Payments::where('id', $payment_id)->first();
+            $payments->status = $returnMessage;
+            $payments->update();
+
+            return   view("icm.paymentverify" ,compact("returnMessage"));
+        }
+
+
+//        return $decodedPayload;
 
     }
 

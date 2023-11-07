@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Log;
+Use Redirect;
 
 class LoginFormController extends Controller
 {
@@ -59,7 +60,7 @@ class LoginFormController extends Controller
                 }
             }
         }
-        return redirect('login')->with('error', 'Login details are not valid');
+        return Redirect::back()->with('error', 'Login details are not valid');
     }
 
     public function sendotp($mobilenumber) {

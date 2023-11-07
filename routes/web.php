@@ -37,10 +37,13 @@ Route::post('checklogin', [LoginFormController::class, 'checklogin']);
 Route::get('logout', [LoginFormController::class, 'logout']);
 Route::get('passwordupdateforrolethree', [LoginFormController::class, 'passwordupdateforrolethree']);
 
+Route::get('student/login', [StudentController::class, 'index']);
+
 use App\Http\Controllers\UrlShortenerController;
 
 Route::get('/{code}', [UrlShortenerController::class, 'redirect'])->name('redirect');
 
+Route::post('/icm/paymentresponse', [IcmController::class, 'paymentresponse']);
 Route::post('/student/paymentresponse', [StudentController::class, 'paymentresponse']);
 /**ICM */
 Route::group(['middleware' => 'auth'], function () {
@@ -83,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/icm/invoice/store', [IcmController::class, 'storeinvoice']);
     Route::post('/icm/invoice/edit', [IcmController::class, 'updateinvoice']);
     Route::get('/icm/printinvoice/{invoiceNo}', [IcmController::class, 'printinvoice']);
+    Route::get('/icm/paymentverify/{student_id}/{invoiceNo}', [IcmController::class, 'paymentverify']);
+    Route::post('/icm/payment', [IcmController::class, 'payment']);
 
     Route::get('/student/paymentpending', [StudentController::class, 'paymentpending']);
     Route::get('/student/paymentview', [StudentController::class, 'paymentview']);

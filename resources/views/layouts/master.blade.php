@@ -31,7 +31,10 @@
                             <li class="nav-item d-inline"><a href="?lang={{ __('header.shortlang') }}">{{ __('header.lang') }}</a> | </li>
                         </ul>
                         <ul class="navbar-nav d-inline">
-                            <li class="nav-item d-inline"><a href="/login?lang={{ __('header.shortlang') }}">Login</a> </li>
+                            <li class="nav-item d-inline"><a href="/login?lang={{ __('header.shortlang') }}">ICM Login</a> | </li>
+                        </ul>
+                        <ul class="navbar-nav d-inline">
+                            <li class="nav-item d-inline"><a href="/student/login">Student Login</a> </li>
                         </ul>
                     </div>
                 </div>

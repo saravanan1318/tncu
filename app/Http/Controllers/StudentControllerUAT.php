@@ -20,11 +20,6 @@ use App;
 
 class StudentController extends Controller
 {
-
-    function index(){
-        return view("student.login");
-    }
-
     function dashboard(){
 
         if(Auth::user()->otp_verified == 0){
@@ -399,13 +394,23 @@ class StudentController extends Controller
         $amount = Invoice::where('invoiceNo', $request->invoiceNo)->sum('amount');
         $student=StudentParams::where("status",'1')->where("user_id",Auth::user()->id)->get();
         if(count($student)==1) {
-            $MerchantID = "TMLNDUCOUN";
-            $ClientID = "tmlnducoun";
+
+            //uat
+            $MerchantID = "BDUATV2TND";
+            $ClientID = "bduatv2tnd";
+            $secretkey = 'Cjlj6qiBlQ7qdnglXvlJCKY1t3rNk7x4';
+            $billdesk_URL = "https://pguat.billdesk.io/payments/ve1_2/orders/create";
+         
+            //production
+            // $MerchantID = "TMLNDUCOUN";
+            // $ClientID = "tmlnducoun";
+            // $secretkey = 'nBxE5Uw4i0hGZQia2dETrVAV1KrxALaB';
+            // $billdesk_URL = "https://api.billdesk.com/payments/ve1_2/orders/create";
+
             $responseurl = "https://tncuicm.com/student/paymentresponse";
-          //  $secretkey = 'Cjlj6qiBlQ7qdnglXvlJCKY1t3rNk7x4';  //Developement
-            $secretkey = 'nBxE5Uw4i0hGZQia2dETrVAV1KrxALaB';  //Production
             $returnURL = "https://tncuicm.com/student/paymentreturn";
-            $billdesk_URL = "https://api.billdesk.com/payments/ve1_2/orders/create";
+            
+            
             $transaction_id=$student[0]->arrn_number."-".time();
             $totalamount=$amount;
             $date_atom =date("dd-mm-yyyy h:i:s");
@@ -419,7 +424,8 @@ class StudentController extends Controller
             $merchantID = $MerchantID;
 
     // Create the client and set up logging
-            $client = new BillDeskJWEHS256Client("https://api.billdesk.com", $clientID, $secretKey);
+            //$client = new BillDeskJWEHS256Client("https://api.billdesk.com", $clientID, $secretKey);
+            $client = new BillDeskJWEHS256Client("https://pguat.billdesk.io", $clientID, $secretKey);
             $logger = new Logger("default");
             $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
             $client->setLogger($logger);

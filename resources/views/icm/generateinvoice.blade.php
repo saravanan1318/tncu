@@ -84,6 +84,7 @@
                       <option value="CASH">CASH</option>
                       <option value="QR PAYMENT">QR PAYMENT</option>
                       <option value="BANK CHALLAN">BANK CHALLAN</option>
+                      <option value="ONLINE">ONLINE</option>
                     </select>
                   </div>
                 </div>

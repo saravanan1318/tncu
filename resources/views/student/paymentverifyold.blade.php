@@ -34,18 +34,18 @@
                         @if(isset($returnMessage))
                         <div>
                             @if($returnMessage=="SUCCESS")
-                            <div class="alert alert-success">
-                                <center>
-                                <i class="fas fa-check-circle"></i>
-                                <strong>Success!</strong> Your Payment was completed successfully.<br>
-                                    <strong>Amount:</strong> {{$amount}}<br>
-                                <strong>Transaction ID:</strong> {{$transactionid}}<br>
-                                <strong>Transaction Date:</strong> {{$transaction_date}}<br>
+                        <div class="alert alert-success">
+                            <center>
+                            <i class="fas fa-check-circle"></i>
+                            <strong>Success!</strong> Your Payment was completed successfully.<br>
+                                <strong>Amount:</strong> {{$amount}}<br>
+                            <strong>Transaction ID:</strong> {{$transactionid}}<br>
+                            <strong>Transaction Date:</strong> {{$transaction_date}}<br>
 
-                                </center>
+                            </center>
                         </div>
-                        @endif
-                        @if($returnMessage=="ERROR")
+                            @endif
+                                @if($returnMessage=="ERROR")
                         <div class="alert alert-danger">
                             <center>
                             <i class="fas fa-exclamation-circle"></i>
@@ -57,35 +57,34 @@
                             @endif
                             </center>
                         </div>
-                        @endif
-                        <div> 
-                            <a class="btn  btn-outline-success" href="studentdashboard" id="reloadButton">Go to Dashboard</a></div>
+                                @endif
+                        <div> <a class="btn  btn-outline-success" href="studentdashboard" id="reloadButton">Go to Dashboard</a></div>
                         </div>
                         @endif
                             @if(!isset($returnMessage))
-                            <form id="paymentForm" method="POST">
-                                <input type="hidden" name="invoiceNo" value="{{$invoiceNo}}" >
-                                <div class="row p-4">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
-                                        <div class="position-relative p-3 bg-gray" style="height: 180px">
-                                            <strong>Amount:</strong> {{$amount}}<br>
-                                            <strong>Payment Ref No:</strong> {{$invoiceNo}}<br>
-                                            <strong>Payment Ref Date:</strong> {{ date("d-m-Y",strtotime($invoiceDate))}}<br>
-                                        </div>
-                                    </div>
-                                </div>    
-                                <div class="row p-4 ">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2" style="text-align: center">
-                                        <button type="submit" id="paymentbtn" class="btn btn-lg btn-outline-success ">PROCEED TO PAY</button>
-
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                        <form id="paymentForm" method="POST">
+                            <input type="hidden" name="invoiceNo" value="{{$invoiceNo}}" >
+                            <div class="row p-4">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                    <div class="position-relative p-3 bg-gray" style="height: 180px">
+                                        <strong>Amount:</strong> {{$amount}}<br>
+                                        <strong>Payment Ref No:</strong> {{$invoiceNo}}<br>
+                                        <strong>Payment Ref Date:</strong> {{ date("d-m-Y",strtotime($invoiceDate))}}<br>
                                     </div>
                                 </div>
-                            </form>
-                        @endif
+                            </div>    
+                            <div class="row p-4 ">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2" style="text-align: center">
+                                    <button type="submit" id="paymentbtn" class="btn btn-lg btn-outline-success ">PROCEED TO PAY</button>
+
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 p-lg-3 mr-2">
+                                </div>
+                            </div>
+                        </form>
+                            @endif
                         <div id="error-message" style="color: red; display: none;">Please select at least one Term.</div>
                     </div>
                 </div>
