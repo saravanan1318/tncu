@@ -96,6 +96,31 @@
         </li>
           </ul>
         </li> 
+        <?php
+         if(Auth::user()->role == 1){
+          ?>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              APPLICATION FORM
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('/icm/applications')}}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Applications
+                  {{-- <span class="right badge badge-danger">5</span> --}}
+                </p>
+              </a>
+            </li>
+          </ul>
+        </li> 
+        <?php
+         }
+        ?> 
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>

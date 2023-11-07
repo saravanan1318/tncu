@@ -53,6 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/icm/updatePassword', [IcmController::class, 'updatePassword']);
     Route::get('/icm/dashboard', [IcmController::class, 'dashboard']);
     Route::get('/icm/icmdashboard', [IcmController::class, 'icmdashboard']);
+    Route::get('/icm/applications', [IcmController::class, 'icmwiseapplications']);
+    Route::get('/icm/totalapplications/{icm_id}', [IcmController::class, 'totalapplications']);
+    Route::get('/icm/upiapplications/{icm_id}', [IcmController::class, 'upiapplications']);
+    Route::get('/icm/challonapplications/{icm_id}', [IcmController::class, 'challonapplications']);
     Route::get('/icm/applicationlist', [IcmController::class, 'applicationlist']);
     Route::get('/icm/printedformat', [IcmController::class, 'printapplicationlist']);
     Route::get('/icm/selectedapplicationlist/icmwise', [IcmController::class, 'selectedapplicationicmlistmale']);

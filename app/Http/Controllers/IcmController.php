@@ -213,6 +213,49 @@ class IcmController extends Controller
 
     }
 
+    function icmwiseapplications(){
+
+        $studentDatas = DB::select( DB::raw("SELECT mi.id,mi.icm_name,
+        (SELECT COUNT(id) FROM student_params WHERE icm =  mi.id)
+        AS total,
+        (SELECT COUNT(id) FROM student_params WHERE icm =  mi.id)
+        AS selected,
+        (SELECT sum(REPLACE(`Amount`, 'Rs.', '')) FROM student_params WHERE icm =  mi.id)
+        AS amountreceived,
+        (SELECT sum(REPLACE(`Amount`, 'Rs.', '')) FROM student_params WHERE upiid is not null AND icm =  mi.id)
+        AS upiamount,
+        (SELECT sum(REPLACE(`Amount`, 'Rs.', '')) FROM student_params WHERE challonno is not null AND icm =  mi.id)
+        AS chequeamount
+        FROM mtr_icm AS mi") );
+
+        return view("icm.icmwiseapplications",compact('studentDatas'));
+
+    }
+
+    function totalapplications(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->get();
+
+        return view("icm.totalapplications", compact('studentDatas'));
+
+    }
+
+    function upiapplications(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->whereNotNull('upiid')->get();
+
+        return view("icm.upiapplications", compact('studentDatas'));
+
+    }
+
+    function challonapplications(Request $request){
+
+        $studentDatas = StudentParams::where('icm', $request->icm_id)->whereNotNull('challonno')->get();
+
+        return view("icm.challonapplications", compact('studentDatas'));
+
+    }
+
     function applicationlist(){
 
         if(Auth::user()->role == 1){
